@@ -1,4 +1,5 @@
 import Image from "next/image";
+import clientPromise from "../lib/mongodb";
 
 export default function Home() {
   return (
