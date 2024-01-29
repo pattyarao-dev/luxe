@@ -18,6 +18,27 @@
   .solid-button {
     @apply bg-purple p-2 rounded-md text-white text-sm uppercase
   }
+
+  .profile-header {
+    @apply bg-dark-pink w-full h-36
+  }
+
+  .image-section {
+    @apply absolute top-24 w-full flex justify-center
+  }
+
+  .information {
+    @apply flex flex-col gap-2 p-2
+  }
+
+  .profile-title {
+    @apply font-bold
+  }
+
+  .profile-data {
+    @apply text-sm text-gray-main border-b pb-2 border-dark-pink
+  }
+
 }
 
 @layer utilities {
