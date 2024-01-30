@@ -1,4 +1,4 @@
-import SignupComp from '@/components/pages/signupComponent'
+import SignupComp from '@/components/pages/signup/signupComponent'
 import React from 'react'
 
 
