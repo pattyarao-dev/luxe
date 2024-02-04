@@ -27,3 +27,22 @@ export async function POST(req: NextRequest, res: NextResponse) {
           });
       }
 }
+
+export async function GET(req: NextRequest) {
+  try {
+    const data = await req.body;
+    console.log(data)
+    // console.log(_id)
+    // const user = await User.findOne({ _id: _id });
+    return Response.json({ data })
+    
+  } catch (error) {
+    console.log(error)
+    return Response.json({
+      status: 500,
+      message: (error as Error).message,
+    });
+  }
+  
+}
+

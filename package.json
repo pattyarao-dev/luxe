@@ -13,6 +13,7 @@
     "cookies-next": "^4.1.1",
     "dotenv": "^16.4.1",
     "jsonwebtoken": "^9.0.2",
+    "jwt-decode": "^4.0.0",
     "mongodb": "^6.3.0",
     "mongoose": "^8.1.1",
     "next": "14.1.0",
