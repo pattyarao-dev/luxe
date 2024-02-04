@@ -32,7 +32,7 @@ export default function authorizedComponent<P>(
       // Your Code here
       const authorizedComponentWithInfo = (props: P) => {
         // At this point, the props being passed in are the original props the component expects.
-        return <WrappedComponent {...props} _id={extraInfo} user_type={extraInfo}/>;
+        return <WrappedComponent {...props} _id={user_jwt.user_type} user_type={user_jwt._id}/>;
       };
       
       return authorizedComponentWithInfo;

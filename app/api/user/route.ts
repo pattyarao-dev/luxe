@@ -30,11 +30,10 @@ export async function POST(req: NextRequest, res: NextResponse) {
 
 export async function GET(req: NextRequest) {
   try {
-    const data = await req.body;
-    console.log(data)
-    // console.log(_id)
-    // const user = await User.findOne({ _id: _id });
-    return Response.json({ data })
+    const _id = req.body;
+    console.log()
+    const user = await User.findOne({ _id: _id });
+    return Response.json({ user })
     
   } catch (error) {
     console.log(error)
