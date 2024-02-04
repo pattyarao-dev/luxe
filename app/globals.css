@@ -2,32 +2,72 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+@layer components {
+  .gradient-background{
+    @apply bg-gradient-to-b from-gray-main to-white
   }
-}
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  .gradient-background-dark {
+    @apply bg-gradient-to-b from-midnight-blue to-dark-purple
+  }
+
+  .input-style {
+    @apply w-full p-2 bg-white rounded-md border-2 border-dark-purple text-xs
+  }
+
+  .gradient-button {
+    @apply bg-gradient-to-br from-purple to-midnight-blue p-2 rounded-md text-white text-sm uppercase
+  }
+
+  .solid-button {
+    @apply bg-purple p-2 rounded-md text-white text-sm uppercase
+  }
+
+  .profile-header {
+    @apply bg-dark-pink w-full h-36
+  }
+
+  .image-section {
+    @apply absolute top-24 w-full flex justify-center
+  }
+
+  .information {
+    @apply flex flex-col gap-2 p-2
+  }
+
+  .profile-title {
+    @apply font-bold
+  }
+
+  .profile-data {
+    @apply text-sm text-gray-main border-b pb-2 border-dark-pink
+  }
+
+  .reward-card {
+    @apply w-fit h-32 bg-white border border-dark-purple p-4 flex items-center gap-3 rounded-lg drop-shadow-dark-purple
+  }
+
 }
 
 @layer utilities {
-  .text-balance {
-    text-wrap: balance;
+
+  .drop-shadow-midnight-blue {
+    @apply drop-shadow-[0_4px_4px_rgba(3,6,55,0.90)]
+  }
+
+  .drop-shadow-dark-purple {
+    @apply drop-shadow-[0_4px_4px_rgba(60,7,83,0.90)]
+  }
+
+  .drop-shadow-purple {
+    @apply drop-shadow-[0_4px_4px_rgba(114,4,85,0.90)]
+  }
+
+  .drop-shadow-dark-pink {
+    @apply drop-shadow-[0_4px_4px_rgba(145,10,103,0.90)]
+  }
+
+  .gradient-text{
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-dark-purple to-purple
   }
 }
