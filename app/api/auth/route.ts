@@ -3,6 +3,7 @@ import { cookies } from 'next/headers';
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import User from "@/app/(models)/User";
+import { serialize } from "cookie";
 
 export async function POST(req: NextRequest, res: NextResponse) {
   try {
@@ -20,14 +21,29 @@ export async function POST(req: NextRequest, res: NextResponse) {
 
         // Generate Cookie
         // https://stackoverflow.com/questions/76546264/how-to-set-cookie-using-nextresponse-at-server-side
-        const cookieStore = cookies();
-        cookieStore.set('token', token, {
-          httpOnly: true
+        // const cookieStore = cookies();
+        // cookieStore.set('token', token, {
+        //   httpOnly: true
+        // });
+
+        const seralized = serialize("token", token, {
+          httpOnly: true,
+          sameSite: "strict",
+          path: "/",
         });
 
-        return new Response(JSON.stringify({ token }), {
+        // return new Response(JSON.stringify({ token }), {
+        //   status: 200,
+        //   headers: { 'auth-jwt': `auth-jwt=${token}`},
+        // });
+
+        const response = {
+          message: "Authenticated!",
+        };
+      
+        return new Response(JSON.stringify(response), {
           status: 200,
-          headers: { 'auth-jwt': `auth-jwt=${token}`},
+          headers: { "Set-Cookie": seralized },
         });
 
       } else {

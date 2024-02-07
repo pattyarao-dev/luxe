@@ -2,7 +2,6 @@ import { HomeRewards } from '@/components/pages/homepage/homeRewards'
 import Header from '@/components/reusable/header'
 import SearchBar from '@/components/reusable/searchbar'
 import React from 'react'
-
 export default function Home() {
 
   return (

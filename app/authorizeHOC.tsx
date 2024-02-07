@@ -1,55 +1,62 @@
-import React, { useState } from 'react';
-import { cookies } from 'next/headers';
-import { jwtDecode } from "jwt-decode";
-import { useRouter } from 'next/router';
+// Import necessary modules
+"use client"
+import { jwtDecode } from 'jwt-decode';
+import React, { useState, useEffect } from 'react';
+// import { useRouter } from 'next/router'; // Changed import to useRouter
 
-
-// First we need to add a type to let us extend the incoming component.
+// Define the type for cookie information
 type CookieInfoType = {
   _id: string,
   user_type: string;
 };
 
-const router = useRouter();
-
-// Mark the function as a generic using P (or whatever variable you want)
+// Define the higher-order component
 export default function authorizedComponent<P>(
-  // Then we need to type the incoming component.
-  // This creates a union type of whatever the component
-  // already accepts AND our extraInfo prop
-  WrappedComponent: React.ComponentType<P & CookieInfoType>,
+  WrappedComponent: React.ComponentType<P & CookieInfoType>, // Component with added props
   allowedUserTypes: string[]
 ) {
-  const [extraInfo, setExtraInfo] = useState('');
-  setExtraInfo('important data.');
+  return function AuthorizedComponent(props: P) {
+    // const router = useRouter(); // Use useRouter directly within the functional component
+    const [tokenAuth, setTokenAuth] = useState<string | undefined>(undefined);
 
-  const token_auth: string | undefined = cookies().get('token')?.value;
-
-  if (token_auth) {
-    const user_jwt: any = jwtDecode(token_auth);
-
-    if (allowedUserTypes.includes(user_jwt.user_type)){
-      // Your Code here
-      const authorizedComponentWithInfo = (props: P) => {
-        // At this point, the props being passed in are the original props the component expects.
-        return <WrappedComponent {...props} _id={user_jwt.user_type} user_type={user_jwt._id}/>;
+    useEffect(() => {
+      const fetchTokenFromAPI = async () => {
+        try {
+          const response = await fetch(process.env.NEXT_PUBLIC_API_URL! + "/token");
+          if (response.ok) {
+            const data = await response.json();
+            setTokenAuth(data);
+          } else {
+            console.error('Failed to fetch token:', response.statusText);
+          }
+        } catch (error) {
+          console.error('Error fetching token:', error);
+        }
       };
-      
-      return authorizedComponentWithInfo;
-    }
-    else{
-      console.log('Not Authorized')
-      router.push('/unauthorized-page');
-      return;
-    }
-    // Now you can use user_jwt safely
-  } else {
-    // Handle the case where token_auth is undefined
-    console.log('Token not found');
-    router.push('/unauthorized-page');
-    return;
-  }
 
+      fetchTokenFromAPI();
+    }, []); // Run this effect only once, when the component mounts
+
+    console.log(tokenAuth)
+
+    if (tokenAuth) {
+      const user_jwt: any = jwtDecode(tokenAuth);
+
+      if (allowedUserTypes.includes(user_jwt.user_type)){
+        // Pass additional props to the wrapped component
+        return <WrappedComponent {...props} _id={user_jwt.user_type} user_type={user_jwt._id} />;
+      }
+      else{
+        console.log('Not Authorized')
+        // router.push('/login');
+        return null; // Return null as component won't render if not authorized
+      }
+    } else {
+      console.log('Token not found');
+      // router.push('/login');
+      return null; // Return null as component won't render if token not found
+    }
+  };
 }
 
 
