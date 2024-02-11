@@ -12,7 +12,7 @@ const Schema = mongoose.Schema
 const RewardDateSchema = new Schema({
     reward_name: { type: String, required: true },
     reward_desc: { type: String, required: true },
-    brand_name: [{ type: Schema.Types.ObjectId, ref: 'Brand' }],
+    brand_id: {type: Schema.Types.ObjectId, ref: 'Brand'},
     allowed_branches: [String],
     cap: { type: Number, required: true },
     reward_type: { type: String, enum: ['DISCOUNT', 'FREEBIE'], required: true },
