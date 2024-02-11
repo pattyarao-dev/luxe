@@ -32,7 +32,7 @@ const brandSchema = new Schema({
             type: { type: String, default: 'Point' },
             coordinates: { type: [Number] }
         },
-        brand_status: { type: Boolean, default: true }
+        branch_status: { type: Boolean, default: true }
     }],
     status: { type: Boolean, default: true }
 });

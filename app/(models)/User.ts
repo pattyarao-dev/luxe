@@ -17,7 +17,6 @@ const UserDataSchema = new Schema({
   email: { type: String, required: true },
   password: { type: String, required: true },
   user_type: { type: String, enum: ['CLIENT', 'ADMIN_ALL', 'ADMIN', 'CASHIER'], required: true },
-  user_status: { type: Boolean, default: true, required: true },
   password_changed: { type: Boolean, default: false},
   
   //--- FOR CLIENT TYPE ONLY ----
