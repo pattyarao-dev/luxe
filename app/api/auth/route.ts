@@ -44,7 +44,8 @@ export async function POST(req: NextRequest, res: NextResponse) {
         return new Response(JSON.stringify(response), {
           status: 200,
           headers: { "Set-Cookie": seralized },
-        });
+        });   
+        
 
       } else {
         return NextResponse.json({
@@ -52,6 +53,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
           message: "Invalid Password",
         });
       }
+
     } else {
       return NextResponse.json({
         status: 500,

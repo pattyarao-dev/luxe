@@ -106,29 +106,3 @@
     opacity: 1;
   }
 }
-
-.side-menu-slideOut {
-  animation: slideOutMenu 0.3s forwards;
-}
-
-.side-menu-overlay-slideOut {
-  animation: fadeOutOverlay 0.3s forwards;
-}
-
-@keyframes slideOutMenu {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-100%);
-  }
-}
-
-@keyframes fadeOutOverlay {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-  }
-}

@@ -1,10 +1,12 @@
 "use client"
 import React, { useState } from 'react';
+import { useRouter } from "next/navigation"
 
 export default function LoginComp() {
   // State for email and password
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const {push} = useRouter();
 
   // Function to handle form submission
   const handleSubmit = async () => {
@@ -21,6 +23,9 @@ export default function LoginComp() {
       // Handle response as needed
       const data = await response.json();
       console.log(data); // Log response data
+      push("/home");
+
+
     } catch (error) {
       console.error('Error submitting form:', error);
     }
