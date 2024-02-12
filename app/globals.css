@@ -19,6 +19,10 @@
     @apply bg-gradient-to-br from-purple to-midnight-blue p-2 rounded-md text-white text-sm uppercase
   }
 
+  .outlined-button {
+    @apply bg-white border-2 border-dark-pink p-2 rounded-md text-midnight-blue font-bold
+  }
+
   .solid-button {
     @apply bg-purple p-2 rounded-md text-white text-sm uppercase
   }
@@ -67,7 +71,64 @@
     @apply drop-shadow-[0_4px_4px_rgba(145,10,103,0.90)]
   }
 
+  .drop-shadow-gray {
+    @apply drop-shadow-[0_4px_4px_rgba(171,171,171,0.90)]
+  }
+
   .gradient-text{
     @apply bg-clip-text text-transparent bg-gradient-to-r from-dark-purple to-purple
+  }
+}
+
+
+.side-menu-overlay {
+  animation: fadeInOverlay 0.3s forwards;
+}
+
+.side-menu {
+  animation: slideInMenu 0.3s forwards;
+}
+
+@keyframes slideInMenu {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeInOverlay {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.side-menu-slideOut {
+  animation: slideOutMenu 0.3s forwards;
+}
+
+.side-menu-overlay-slideOut {
+  animation: fadeOutOverlay 0.3s forwards;
+}
+
+@keyframes slideOutMenu {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes fadeOutOverlay {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
   }
 }
