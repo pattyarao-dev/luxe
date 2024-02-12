@@ -10,7 +10,7 @@ establishConnection();
 const Schema = mongoose.Schema
 
 const ClaimsDataSchema = new Schema({
-    purchases: [{
+    claims_transactions: [{
         timestamp: { type: Date, default: Date.now },
         claimed_by: { type: Schema.Types.ObjectId, ref: 'User' },
         processed_by: { type: Schema.Types.ObjectId, ref: 'User' },
@@ -18,8 +18,8 @@ const ClaimsDataSchema = new Schema({
         sales_value: { type: Number, required: true }
     }],
     bucket_claim_count: { type: Number, default: 0 },
-    bucket_purchases_total: { type: Number, default: 0 },
-    bucket_purchases_count: { type: Number, default: 0 },
+    bucket_sales_total: { type: Number, default: 0 },
+    bucket_sales_count: { type: Number, default: 0 },
     is_full: { type: Boolean, default: false }
 
 });

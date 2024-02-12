@@ -21,10 +21,10 @@ const RewardDateSchema = new Schema({
         name: { type: String},
         qty: { type: Number}
     }],
-    claim_type: { type: String, enum: ['PURCHASE_VALUE', 'ITEM_NUMBER'], required: true },
-    // Reward Conditions
-    min_spent: { type: Number },
-    min_items: { type: Number },
+    claim_type: [{ type: String, enum: ['PURCHASE_VALUE', 'ITEM_QTY']}],
+    // Reward Conditions                                                                                                                                                                                                                                                                         
+    min_spent: { type: Number, default: null },
+    min_items: { type: Number, default: null },
 
     status: { type: Boolean, default: true },
     createdAt: { type: Date, default: Date.now },
