@@ -14,18 +14,18 @@ const brandSchema = new Schema({
     brand_name: { type: String, required: true },
     brand_desc: { type: String, required: true },
     brand_tags: [{ type: String }],
-    follow_data: {
-        total_fcount: { type: Number, default: 0 },
-        fcount_audit: [{
+
+    total_fcount: { type: Number, default: 0 },
+    fcount_audit: [{
             date_counted: { type: Date, default: Date.now },
             fcount: { type: Number, default: 0 }
         }],
-        users_followedby: [{
-            date_followed: { type: Date, default: Date.now },
-            user_id: { type: Schema.Types.ObjectId, ref: 'User' }
-        }],
-        is_full: { type: Boolean, default: false }
-    },
+        // users_followedby: [{
+        //     date_followed: { type: Date, default: Date.now },
+        //     user_id: { type: Schema.Types.ObjectId, ref: 'User' }
+        // }],
+    is_full: { type: Boolean, default: false },
+ 
     branches: [{
         branch_name: { type: String },
         location: {
