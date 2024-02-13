@@ -16,15 +16,15 @@
   }
 
   .gradient-button {
-    @apply bg-gradient-to-br from-purple to-midnight-blue p-2 rounded-md text-white text-sm uppercase
+    @apply bg-gradient-to-br from-purple to-midnight-blue px-2 py-3 rounded-xl text-white 
   }
 
   .outlined-button {
-    @apply bg-white border-2 border-dark-pink p-2 rounded-md text-midnight-blue font-bold
+    @apply bg-white border-2 border-dark-pink px-2 py-3  rounded-xl text-midnight-blue font-bold
   }
 
   .solid-button {
-    @apply bg-purple p-2 rounded-md text-white text-sm uppercase
+    @apply bg-purple px-2 py-3 rounded-xl text-white text-sm uppercase
   }
 
   .profile-header {
@@ -32,7 +32,7 @@
   }
 
   .image-section {
-    @apply absolute top-24 w-full flex justify-center
+    @apply absolute top-36 w-full flex justify-center
   }
 
   .information {

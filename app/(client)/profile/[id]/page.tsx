@@ -1,8 +1,8 @@
 import React from 'react'
 import Image from 'next/image'
 import { useState } from 'react'
-import IconComp from '@/components/pages/profile/iconComponent'
 import ProfileDetails from '@/components/pages/profile/profileDetailsComponent'
+import IconComp from '@/components/pages/profile/iconComponent'
 
 export default function Profile({params}:  {params: {slug: string}}) {
 

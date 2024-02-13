@@ -12,7 +12,7 @@ export default function Header() {
 
   return (
     <>
-      <div className="w-full gradient-background-dark">
+      <div className="top-0 sticky z-40 w-full gradient-background-dark">
         <div className="w-full flex justify-between items-center p-6 text-white">
           <IoMdMenu className="text-2xl" onClick={() => setShowSideMenu(true)}/>
           <p className="text-4xl uppercase font-bold">Luxe.</p>
@@ -22,7 +22,7 @@ export default function Header() {
 
       {showSideMenu && (
         <>
-        <div className="fixed z-30 w-full min-h-screen bg-midnight-blue/70 side-menu-overlay"> </div>
+        <div className="fixed z-40 w-full min-h-screen bg-midnight-blue/70 side-menu-overlay"> </div>
 
         <div className="fixed z-40 w-[90%] h-screen bg-white/80 drop-shadow-lg side-menu">
           <section className="w-full p-6 flex items-center justify-between bg-dark-pink">
