@@ -1,8 +1,8 @@
 export interface RewardTypes {
-    slug: string
+    id: number
     name: string
     brand: string
     desc: string
-    start: Date
-    end: Date
+    start: string
+    end: string
   }
