@@ -1,20 +1,60 @@
-import { HomeRewards } from '@/components/pages/homepage/homeRewards'
-import Header from '@/components/reusable/header'
-import SearchBar from '@/components/reusable/searchbar'
-import React from 'react'
-export default function Home() {
+import { RewardTypes } from '@/app/types/rewardTypes'
+import Image from 'next/image';
+import { IoIosStarOutline } from "react-icons/io";
+import SearchBar from '@/components/reusable/searchbar';
+import Link from 'next/link';
+import Reward from '@/app/(models)/Rewards';
+import Rewards from '@/app/(models)/Rewards';
+
+// async function getRewards() {
+//   const res = await fetch(`http://localhost:4000/rewards`);
+//   return res.json();
+// }
+async function getRewards() {
+  try {
+    const rewards = await Rewards.find().exec();
+    return rewards;
+  } catch (error) {
+    console.error('Error fetching rewards', error);
+    return [];
+  }
+}
+
+export default async function Home() {
+
+  const rewards = await getRewards()
 
   return (
-    <main className="w-full min-h-screen flex flex-col items-center justify-start gap-10">
-        <div className="top-20 sticky z-20 w-full flex flex-col gap-3 bg-white">
-          <SearchBar/>
-        </div>
-        <div className="">
-          <h1 className="px-4 text-3xl font-bold">Browse Rewards</h1>
-          <HomeRewards/>
-        </div>
+    <main className="w-full">
+      <div>
+        <SearchBar/>
+      </div>
+      <div className="w-full p-4 flex flex-col gap-6">
+        <h1>
+          Browse Rewards
+        </h1>
+        {rewards.map((reward) => (
+            <div key={reward.id} className="w-full">
+              <Link href={`/reward/${reward.id}`}>
+                <div className="reward-card">
+                <div className="w-[25%] h-[90px] rounded-md flex justify-center bg-gray-main h-full">
+                <Image src="/cuate.png" width={80} height={80} alt="reward image" className="p-2"></Image>
+              </div>
+              <div className="w-[60%] flex flex-col gap-4">
+                <div>
+                  <h1 className="font-bold">{reward.reward_name}</h1>
+                  <p className="text-xs">{reward.brand_id}</p>
+                </div>
+              </div>
+              <div className="w-[10%] flex justify-center">
+              <IoIosStarOutline className="text-2xl" />
+                {/* <IoIosStar /> */}
+              </div>
+                </div>
+              </Link>
+            </div>
+        ))}
+      </div>
     </main>
-        
-
   )
 }
