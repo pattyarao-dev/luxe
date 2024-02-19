@@ -9,10 +9,12 @@ interface rewardForm {
     brand_id: string; 
     allowed_branches: string[];
     cap: number;
-    reward_type: 'DISCOUNT' | 'FREEBIE' | 'CUSTOM';
+    reward_type: 'DISCOUNT' | 'FREEBIE' ;
     discount?: number;
     freebies?: { name: string; qty: number }[];
-    claim_type: 'PURCHASE_VALUE' | 'ITEM_NUMBER';
+    boolean_conditions? : {question_description: String, value:Boolean}[];
+    value_conditions? : {question_description: String, operator: '<' | '<=' | '=' | '>=' | '>', value:Number}[];
+    claim_type: 'PURCHASE_VALUE' | 'ITEM_NUMBER' | 'CUSTOM';
     min_spent?: number;
     min_items?: number;
     expiry?: Date;

@@ -28,13 +28,10 @@ export async function POST(req: NextRequest, res: NextResponse) {
   export async function GET(req: NextRequest, res: NextResponse) {
     try {
         // Fetch all rewards from the database
-        const tags = await Tag.find();
-        const tagNames = tags.map(tag => tag.tag_name);
+        const get_tags = await Tag.find();
+        const tags = get_tags.map(tag => tag.tag_name);
         // Return the rewards as JSON response
-        return NextResponse.json({
-            status: 200,
-            data: tagNames,
-        });
+        return Response.json({ tags })
     } catch (err: any) { // Explicitly specify the type of err as any or Error
         console.error("Error while fetching rewards:", err);
         return NextResponse.json({
