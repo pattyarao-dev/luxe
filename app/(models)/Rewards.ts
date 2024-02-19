@@ -13,6 +13,7 @@ const RewardDateSchema = new Schema({
     reward_name: { type: String, required: true },
     reward_desc: { type: String, required: true },
     brand_id: {type: Schema.Types.ObjectId, ref: 'Brand'},
+    brand_name: { type: String, required: true },
     allowed_branches: [String],
     cap: { type: Number, required: true },
     reward_type: { type: String, enum: ['DISCOUNT', 'FREEBIE'], required: true },
@@ -21,8 +22,21 @@ const RewardDateSchema = new Schema({
         name: { type: String},
         qty: { type: Number}
     }],
-    claim_type: [{ type: String, enum: ['PURCHASE_VALUE', 'ITEM_QTY']}],
-    // Reward Conditions                                                                                                                                                                                                                                                                         
+    claim_type: [{ type: String, enum: ['PURCHASE_VALUE', 'ITEM_QTY', 'CUSTOM']}],
+    // Reward Conditions        
+    boolean_conditions: [
+        {
+            question_description: { type: String},
+            value: { type: Boolean}
+        }
+    ],    
+    value_conditions: [
+        {
+            question_description: { type: String},
+            operator: {type: String, enum: ['<', '<=', '=', '>=', '>']},
+            value: { type: Number}
+        }
+    ],                                                                                                                                                                                                                                                      
     min_spent: { type: Number, default: null },
     min_items: { type: Number, default: null },
 

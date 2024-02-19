@@ -1,19 +1,19 @@
 import mongoose from "mongoose";
 import connectDB from "@/app/lib/db";
 
+// Establish database connection
 const establishConnection = async () => {
     await connectDB()
 };
 
 establishConnection(); 
 
+// Define Mongoose Schema
 const Schema = mongoose.Schema
 
 const TagsSchema = new Schema({
-    preferences: [{
-        tag_name: { type: String }
-    }], 
-    is_full: {type: Boolean, default: false}
+    tag_name: { type: String }
 });
 
-export default mongoose.models.Tag || mongoose.model("tag", TagsSchema);
+// Define and export the model
+export default mongoose.models.Tag || mongoose.model("Tag", TagsSchema);
