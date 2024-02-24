@@ -2,15 +2,15 @@ import React from 'react'
 
 export default function ViewRewards() {
     return (
-        <div className="w-full min-h-screen flex flex-col justify-center items-center gap-7 px-10 py-10">
+        <div className="w-full min-h-screen flex flex-col justify-center items-center gap-7 px-10">
             <h1 className="w-full px-10 text-4xl font-bold text-center">Brand 1</h1>
             <div className='w-full flex flex-row justify-end'>
                 <div className='flex gap-2'>
-                    <button className='px-5 gradient-button'>Add a Reward</button>
-                    <button className='px-5 outlined-button'>Delete a Reward</button>
+                    <button className='px-5 gradient-button shadow-lg'>Add a Reward</button>
+                    <button className='px-5 outlined-button shadow-lg'>Delete a Reward</button>
                 </div>
             </div>
-            <div className='w-full flex flex-row justify-end'>
+            <div className='w-full p-0 flex flex-row justify-end'>
                 <div className='flex gap-2'>
                     <button className='px-5 outlined-button'>status: all</button>
                     <button className='px-5 outlined-button'>capacity: all</button>
@@ -18,7 +18,97 @@ export default function ViewRewards() {
                     <button className='px-5 outlined-button'>Search a reward</button>
                 </div>
             </div>
-            <table className="w-full table-auto">
+            <table className="w-full text-sm text-left rtl:text-right">
+                <thead className="text-md border-b-2 uppercase dark:bg-gray-700 dark:text-black">
+                    <tr>
+                        <th scope="col" className="px-6 py-3">
+                            Reward name
+                        </th>
+                        <th scope="col" className="px-6 py-3 text-center">
+                            Expiry Date
+                        </th>
+                        <th scope="col" className="px-6 py-3 text-center">
+                            Capacity
+                        </th>
+                        <th scope="col" className="px-6 py-3 text-center">
+                            Status
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
+                        <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                            Reward 1
+                        </th>
+                        <td className="px-6 py-4 text-center">
+                            MM/DD/YYY
+                        </td>
+                        <td className="px-6 py-4 text-center">
+                            90%
+                        </td>
+                        <td className="px-6 py-4 text-center">
+                            <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                        </td>
+                    </tr>
+                    <tr className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
+                        <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                            Reward 2
+                        </th>
+                        <td className="px-6 py-4 text-center">
+                            MM/DD/YYY
+                        </td>
+                        <td className="px-6 py-4 text-center">
+                            90%
+                        </td>
+                        <td className="px-6 py-4 text-center">
+                            <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                        </td>
+                    </tr>
+                    <tr className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
+                        <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                            Reward 3
+                        </th>
+                        <td className="px-6 py-4 text-center">
+                            MM/DD/YYY
+                        </td>
+                        <td className="px-6 py-4 text-center">
+                            90%
+                        </td>
+                        <td className="px-6 py-4 text-center">
+                            <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                        </td>
+                    </tr>
+                    <tr className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
+                        <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                            Reward 4
+                        </th>
+                        <td className="px-6 py-4 text-center">
+                            MM/DD/YYY
+                        </td>
+                        <td className="px-6 py-4 text-center">
+                            90%
+                        </td>
+                        <td className="px-6 py-4 text-center">
+                            <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                            Reward 5
+                        </th>
+                        <td className="px-6 py-4 text-center">
+                            MM/DD/YYY
+                        </td>
+                        <td className="px-6 py-4 text-center">
+                            90%
+                        </td>
+                        <td className="px-6 py-4 text-center">
+                            <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            {/* <table className="w-full table-fixed">
                 <thead>
                     <tr className='text-2xl'>
                     <th className='text-start'>Rewards</th>
@@ -54,7 +144,7 @@ export default function ViewRewards() {
                     <td>ACTIVE</td>
                     </tr>
                 </tbody>
-            </table>
+            </table> */}
             {/* <div className='w-full flex flex-row justify-between'>
                 <h1 className='text-2xl text-start'>Rewards</h1>
                 <div className='flex flex-row'>
