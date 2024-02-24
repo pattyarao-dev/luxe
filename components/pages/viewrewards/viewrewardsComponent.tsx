@@ -48,7 +48,8 @@ export default function ViewRewardsComp() {
                             90%
                         </td>
                         <td className="px-6 py-4 text-center">
-                            <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                            {/* <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a> */}
+                            <span className="bg-yellow-100 text-yellow-800 font-medium px-5 py-1.5 rounded-full dark:bg-yellow-900 dark:text-yellow-300">Ongoing</span>
                         </td>
                     </tr>
                     <tr className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
@@ -62,7 +63,8 @@ export default function ViewRewardsComp() {
                             90%
                         </td>
                         <td className="px-6 py-4 text-center">
-                            <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                            {/* <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a> */}
+                            <span className="bg-red-100 text-red-800 font-medium px-5 py-1.5 rounded-full dark:bg-red-900 dark:text-red-300">Cancelled</span>
                         </td>
                     </tr>
                     <tr className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
@@ -76,7 +78,8 @@ export default function ViewRewardsComp() {
                             90%
                         </td>
                         <td className="px-6 py-4 text-center">
-                            <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                            {/* <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a> */}
+                            <span className="bg-green-100 text-green-800 font-medium px-5 py-1.5 rounded-full dark:bg-green-900 dark:text-green-300">Completed</span>
                         </td>
                     </tr>
                     <tr className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
@@ -90,7 +93,8 @@ export default function ViewRewardsComp() {
                             90%
                         </td>
                         <td className="px-6 py-4 text-center">
-                            <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                            {/* <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a> */}
+                            <span className="bg-gray-100 text-gray-800 font-medium px-5 py-1.5 rounded-full dark:bg-gray-900 dark:text-gray-300">Scheduled</span>
                         </td>
                     </tr>
                     <tr>
@@ -104,7 +108,8 @@ export default function ViewRewardsComp() {
                             90%
                         </td>
                         <td className="px-6 py-4 text-center">
-                            <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                            {/* <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a> */}
+                            <span className="bg-green-100 text-green-800 font-medium px-5 py-1.5 rounded-full dark:bg-green-900 dark:text-green-300">Completed</span>
                         </td>
                     </tr>
                 </tbody>
