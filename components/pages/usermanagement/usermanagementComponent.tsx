@@ -14,7 +14,7 @@ export default function UserManagementComp() {
     }
     
     return (
-        <div className="w-full min-h-screen flex flex-col justify-center items-center gap-8">
+        <div className="w-full flex flex-col justify-center items-center gap-8 p-20">
             <h1 className="w-full px-10 text-4xl font-bold text-center">Brand 1</h1>
             <div className='w-1/3 flex flex-row gap-4'>
                 <button className='outlined-button w-full flex items-center justify-between tracking-wider active:border-white duration-300 active:text-white'>sort:branch</button>
