@@ -24,8 +24,8 @@ export default function BrandComp() {
     }
 
     return (
-        <div className="w-full min-h-screen flex flex-col justify-center items-center gap-8">
-            <h1 className="w-full px-10 text-3xl font-bold text-start">Brands</h1>
+        <div className="w-full flex flex-col justify-center items-center gap-8 p-20">
+            <h1 className="w-full px-10 text-3xl font-bold text-center">Brands</h1>
             <div className="w-full px-10 flex gap-6">
             <div className="w-fit rounded overflow-hidden shadow-lg">
                 <Image className="w-full" width={500} height={500} src="/lv.png" alt="Sunset in the mountains"></Image>
