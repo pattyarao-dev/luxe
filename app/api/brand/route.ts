@@ -28,3 +28,20 @@ export async function POST(req: NextRequest, res: NextResponse) {
           });
       }
 }
+
+export async function GET(req: NextRequest) { 
+  const brand_id = req.nextUrl.searchParams.get('id') as string
+  try {
+      // Fetch all rewards from the database
+      let brand_data = await Brand.findById(brand_id);
+      let branches = brand_data.branches
+      // Return the rewards as JSON response
+      return Response.json({ branches })
+  } catch (err: any) { // Explicitly specify the type of err as any or Error
+      console.error("Error while fetching rewards:", err);
+      return NextResponse.json({
+          status: 500,
+          message: "Internal Server Error",
+      });
+  }
+}
