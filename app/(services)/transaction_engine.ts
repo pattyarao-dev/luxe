@@ -33,9 +33,8 @@ function booleanConditionHelper(boolean_conditions: booleanCondition[], boolean_
 
 function valueConditionHelper(value_conditions: valueCondition[], value_input: number[]): boolean {
     for (let i = 0; i < value_conditions.length; i++) {
-        const condition = value_conditions[i];
-        const inputValue = value_input[i];
-
+        let condition = value_conditions[i];
+        let inputValue = value_input[i];
         switch (condition.operator) {
             case '<=':
                 if (!(inputValue <= condition.value)) return false;
@@ -99,19 +98,15 @@ export function transactionEngine(
             }
         }
 
-        if(boolean_conditions !== null){
-            if (sales_data.sales_count <= min_items!){
-                return false;
-            }
-        }
-
         if(value_conditions !== null){
+            console.log(valueConditionHelper(value_conditions, value_input))
             if (!valueConditionHelper(value_conditions, value_input)){
                 return false;
             }
         }
 
-        if(value_conditions !== null){
+        if(boolean_conditions !== null){
+            console.log(booleanConditionHelper(boolean_conditions, boolean_input))
             if (!booleanConditionHelper(boolean_conditions, boolean_input)){
                 return false;
             }
