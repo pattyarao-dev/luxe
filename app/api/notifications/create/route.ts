@@ -4,17 +4,13 @@ import Brand from "@/app/(models)/Brand";
 import User from "@/app/(models)/User";
 import bcrypt from "bcrypt"
 
-// CREATE A NEW BRAND
+// CREATE A NOTIFICATION BY BRAND ID
 export async function POST(req: NextRequest, res: NextResponse) {
   const data = await req.json();
-  const admin_all_id = req.nextUrl.searchParams.get('id') as string
+  const brand_id = req.nextUrl.searchParams.get('id') as string
       try {
 
-        let brand_create = await Brand.create(data)
-        const brand_id : string =  brand_create._id.toString()
-        
-        let response = await User.updateOne({_id: admin_all_id}, 
-            { $push: { brands: brand_id } })
+        let brand_data = await Brand.findById(brand_id)
 
         return NextResponse.json({
             status: 200,
