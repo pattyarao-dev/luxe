@@ -3,9 +3,33 @@ import React, { Fragment, useState, useEffect, useRef } from 'react'
 import {Menu, Dialog, Transition} from '@headlessui/react'
 import Image from 'next/image'
 
-export default function BrandComp() {
+interface BrandCompProps {
+    id: string,
+    userType: string;
+}
+
+export default function BrandComp({id, userType} : BrandCompProps) {
     let [isOpen, setIsOpen] = useState(false);
     const [checkedItems, setCheckedItems] = useState<string[]>([]);
+    const [brands, setBrands] = useState<any[]>([]);
+
+    useEffect(() => {
+        async function fetchBrands() {
+            try {
+                const response = await fetch(`/api/allbrands?id=${id}&userType=${userType}`);
+                if (response.ok) {
+                    const data = await response.json();
+                    setBrands(data.brands);
+                } else {
+                    console.error('Failed to fetch brands:', response.statusText);
+                }
+            } catch (error) {
+                console.error('Error while fetching brands:', error);
+            }
+        }
+
+        fetchBrands();
+    }, [id, userType]);
 
     function closeModal() {
         setIsOpen(false)
@@ -26,8 +50,17 @@ export default function BrandComp() {
     return (
         <div className="w-full flex flex-col justify-center items-center gap-8 p-20">
             <h1 className="w-full px-10 text-3xl font-bold text-center">Brands</h1>
-            <div className="w-full px-10 flex gap-6">
-            <div className="w-fit rounded overflow-hidden shadow-lg">
+            <div className="w-full flex flex-wrap justify-center gap-6">
+                {brands.map((brand, index) => (
+                    <div key={index} className="w-96 rounded overflow-hidden shadow-lg">
+                        <Image className="w-full" width={500} height={500} src="/lv.png" alt="Sunset in the mountains"></Image>
+                        <div className="px-6 py-4">
+                            <div className="font-bold text-xl mb-2">{brand.brand_name}</div>
+                            <p className="text-gray-700 text-base">{brand.brand_desc}</p>
+                        </div>
+                    </div>
+                ))}
+            {/* <div className="w-fit rounded overflow-hidden shadow-lg">
                 <Image className="w-full" width={500} height={500} src="/lv.png" alt="Sunset in the mountains"></Image>
                 <div className="px-6 py-4">
                     <div className="font-bold text-xl mb-2">Brand 1</div>
@@ -56,7 +89,7 @@ export default function BrandComp() {
                         perferendis eaque, exercitationem praesentium nihil.
                     </p>
                 </div>
-            </div>
+            </div> */}
             </div>
             <div className='py-2'>
                 <button onClick={openModal} className='w-fit px-5 py-2 gradient-button'>Add a Brand</button>
