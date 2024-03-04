@@ -5,6 +5,7 @@ import User from "@/app/(models)/User";
 import Claim_Bucket from "@/app/(models)/Claim_Bucket";
 import { salesCounter } from "@/app/(services)/sales_counter";
 import { transactionEngine } from "@/app/(services)/transaction_engine";
+import { checkIfClaimedRewardByID } from "@/app/(services)/claimed_reward_checker";
 
 interface SalesInfo {
     sales_total: number, 
@@ -35,6 +36,11 @@ export async function POST(req: NextRequest, res: NextResponse) {
         if (!reward_data) {
             console.log("Reward not found")
             throw new Error("Reward not found");
+        }
+
+        if(await checkIfClaimedRewardByID(data.client_id,reward_id)){
+            console.log("Client has claimed this reward")
+            throw new Error("Client has claimed this reward");
         }
 
 
@@ -80,7 +86,15 @@ export async function POST(req: NextRequest, res: NextResponse) {
 
         let calculatedSales : SalesInfo = salesCounter(data.purchases)
 
-        if (transactionEngine(calculatedSales, reward_data.claim_type, reward_data.min_spent, reward_data.min_items)){
+        if (transactionEngine(calculatedSales, 
+            reward_data.claim_type, 
+            reward_data.min_spent, 
+            reward_data.min_items,
+            reward_data.boolean_conditions,
+            reward_data.value_conditions,
+            data.boolean_input,
+            data.value_input)){
+            
             let claim_transaction : ClaimTransactions = {
                 claimed_by: data.client_id, 
                 processed_by: data.cashier_id, 

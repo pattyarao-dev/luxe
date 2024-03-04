@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "../globals.css";
 import Header from "@/components/reusable/header";
+import { getTokenContent } from "../(services)/frontend/get_token";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -11,12 +12,15 @@ export const metadata: Metadata = {
 };
 
 export default function ClientLayout({ children }: Readonly<{ children: React.ReactNode;}>) {
+
+  const user = getTokenContent();
+  const {_id, user_type} = user;
+
   return (
     <html lang="en">
-        
         <body className={inter.className}>
             <div className="w-full min-h-screen flex flex-col">
-                <Header/>
+                <Header params={{slug: user._id}}/>
                 {children}
             </div>
         </body>

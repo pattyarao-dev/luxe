@@ -24,6 +24,7 @@ const UserDataSchema = new Schema({
   total_follow_count: { type: Number, default: 0 },
   following_brands: [{ type: Schema.Types.ObjectId, ref: 'Brand' }],
   following_brands_full: { type: Boolean, default: false },
+  saved_rewards: [{ type: Schema.Types.ObjectId, ref: 'Reward' }],
 
   //--- FOR ADMIN_ALL TYPE ONLY ----
   company_name: { type: String },

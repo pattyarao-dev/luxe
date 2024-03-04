@@ -30,7 +30,7 @@ export default async function Reward({params}:  {params: RewardTypes}) {
         <div className="w-full flex flex-col gap-8">
           <div>
             <h1 className="text-2xl font-bold">{reward.reward_name}</h1>
-            <h3>{reward.brand_id}</h3>
+            <h3>{reward.brand_name}</h3>
           </div>
           <div>
             <Image src="/reward-stockimage.jpg" width={300} height={300} alt='stock image' className="w-full rounded-xl" />

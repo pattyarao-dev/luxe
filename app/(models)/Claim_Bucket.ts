@@ -24,4 +24,4 @@ const ClaimsDataSchema = new Schema({
 
 });
 
-export default mongoose.models.Claim || mongoose.model("Claim_bucket", ClaimsDataSchema);
+export default mongoose.models.Claim_bucket || mongoose.model("Claim_bucket", ClaimsDataSchema);

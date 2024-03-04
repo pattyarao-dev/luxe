@@ -5,6 +5,7 @@ import SearchBar from '@/components/reusable/searchbar';
 import Link from 'next/link';
 import Reward from '@/app/(models)/Rewards';
 import Rewards from '@/app/(models)/Rewards';
+import { getTokenContent } from '../../(services)/frontend/get_token'
 
 // async function getRewards() {
 //   const res = await fetch(`http://localhost:4000/rewards`);
@@ -20,7 +21,11 @@ async function getRewards() {
   }
 }
 
+
+
 export default async function Home() {
+
+  console.log(getTokenContent());
 
   const rewards = await getRewards()
 
@@ -43,7 +48,7 @@ export default async function Home() {
               <div className="w-[60%] flex flex-col gap-4">
                 <div>
                   <h1 className="font-bold">{reward.reward_name}</h1>
-                  <p className="text-xs">{reward.brand_id}</p>
+                  <p className="text-xs">{reward.brand_name}</p>
                 </div>
               </div>
               <div className="w-[10%] flex justify-center">
