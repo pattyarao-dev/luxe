@@ -1,6 +1,7 @@
 "use client"
 import React, { Fragment, useState, useEffect, useRef } from 'react'
 import {Menu, Dialog, Transition} from '@headlessui/react'
+import Link from 'next/link'
 import Image from 'next/image'
 
 interface BrandCompProps {
@@ -53,43 +54,15 @@ export default function BrandComp({id, userType} : BrandCompProps) {
             <div className="w-full flex flex-wrap justify-center gap-6">
                 {brands.map((brand, index) => (
                     <div key={index} className="w-96 rounded overflow-hidden shadow-lg">
-                        <Image className="w-full" width={500} height={500} src="/lv.png" alt="Sunset in the mountains"></Image>
-                        <div className="px-6 py-4">
-                            <div className="font-bold text-xl mb-2">{brand.brand_name}</div>
-                            <p className="text-gray-700 text-base">{brand.brand_desc}</p>
-                        </div>
+                        <Link href={`/brandprofile?id=${brand._id}`} passHref>
+                            <Image className="w-full" width={500} height={500} src="/lv.png" alt="Sunset in the mountains"></Image>
+                            <div className="px-6 py-4">
+                                <div className="font-bold text-xl mb-2">{brand.brand_name}</div>
+                                <p className="text-gray-700 text-base">{brand.brand_desc}</p>
+                            </div>
+                        </Link>
                     </div>
                 ))}
-            {/* <div className="w-fit rounded overflow-hidden shadow-lg">
-                <Image className="w-full" width={500} height={500} src="/lv.png" alt="Sunset in the mountains"></Image>
-                <div className="px-6 py-4">
-                    <div className="font-bold text-xl mb-2">Brand 1</div>
-                    <p className="text-gray-700 text-base">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et
-                        perferendis eaque, exercitationem praesentium nihil.
-                    </p>
-                </div>
-            </div>
-            <div className="w-fit rounded overflow-hidden shadow-lg">
-                <Image className="w-full" width={500} height={500} src="/lv.png" alt="Sunset in the mountains"></Image>
-                <div className="px-6 py-4">
-                    <div className="font-bold text-xl mb-2">Brand 2</div>
-                    <p className="text-gray-700 text-base">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et
-                        perferendis eaque, exercitationem praesentium nihil.
-                    </p>
-                </div>
-            </div>
-            <div className="w-fit rounded overflow-hidden shadow-lg">
-                <Image className="w-full" width={500} height={500} src="/lv.png" alt="Sunset in the mountains"></Image>
-                <div className="px-6 py-4">
-                    <div className="font-bold text-xl mb-2">Brand 3</div>
-                    <p className="text-gray-700 text-base">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et
-                        perferendis eaque, exercitationem praesentium nihil.
-                    </p>
-                </div>
-            </div> */}
             </div>
             <div className='py-2'>
                 <button onClick={openModal} className='w-fit px-5 py-2 gradient-button'>Add a Brand</button>
