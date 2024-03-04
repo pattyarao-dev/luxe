@@ -41,10 +41,20 @@ export default function BrandProfileComp() {
             <div className='w-full flex flex-row justify-between'>
                     <h1 className="text-3xl font-bold">{data.brand_name}</h1>
                     <div className='flex gap-2'>
-                        <Link href={`/viewrewards?id=${data._id}`} passHref>
-                            <button className='px-5 py-3 gradient-button'>View Rewards</button>
+                        <Link 
+                            href={`/viewrewards?id=${data._id}`} 
+                            className='px-5 gradient-button flex items-center text-center' 
+                            passHref
+                        >
+                            View Rewards
                         </Link>
-                        <button className='px-5 outlined-button'>User Management</button>
+                        <Link 
+                            href={`/usermanagement?id=${data._id}`} 
+                            className='px-5 outlined-button flex items-center text-center' 
+                            passHref
+                        >
+                            User Management
+                        </Link>
                     </div>
             </div>
             <div className='w-full py-4'>
