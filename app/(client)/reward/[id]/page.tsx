@@ -3,6 +3,7 @@ import { RewardTypes } from '@/app/types/rewardTypes';
 import Image from 'next/image';
 import { ObjectId } from 'mongoose';
 import Rewards from '@/app/(models)/Rewards';
+import Link from 'next/link';
 
 // async function getReward(id: number) {
 //   const res = await fetch(`http://localhost:4000/rewards/${id}`);
@@ -22,7 +23,8 @@ async function getReward(id: ObjectId) {
 export default async function Reward({params}:  {params: RewardTypes}) {
   const reward = await getReward(params.id)
   return (
-    <main className="w-full h-full p-10 flex flex-col gap-16">
+    <main className="w-full h-full p-10 flex flex-col gap-10">
+      <Link href="/home"><h1 className="w-fit font-semibold bg-dark-pink py-1 px-2 rounded-lg text-white">Go Back</h1></Link>
         <div className="flex flex-col gap-16">
       {reward && (
         <div className="w-full flex flex-col gap-8">

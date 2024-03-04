@@ -30,7 +30,7 @@ export default async function Home() {
         <SearchBar/>
       </div>
       <div className="w-full p-4 flex flex-col gap-6">
-        <h1>
+        <h1 className="w-full text-2xl font-semibold">
           Browse Rewards
         </h1>
         {rewards.map((reward) => (
