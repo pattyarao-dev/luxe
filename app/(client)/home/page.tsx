@@ -1,9 +1,7 @@
-import { RewardTypes } from '@/app/types/rewardTypes'
 import Image from 'next/image';
 import { IoIosStarOutline } from "react-icons/io";
 import SearchBar from '@/components/reusable/searchbar';
 import Link from 'next/link';
-import Reward from '@/app/(models)/Rewards';
 import Rewards from '@/app/(models)/Rewards';
 import { getTokenContent } from '../../(services)/frontend/get_token'
 
