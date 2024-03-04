@@ -1,5 +1,6 @@
 "use client"
 import React, { useEffect, useState } from 'react'
+import Link from 'next/link';
 import { useSearchParams } from 'next/navigation'
 
 export default function BrandProfileComp() {
@@ -40,7 +41,9 @@ export default function BrandProfileComp() {
             <div className='w-full flex flex-row justify-between'>
                     <h1 className="text-3xl font-bold">{data.brand_name}</h1>
                     <div className='flex gap-2'>
-                        <button className='px-5 gradient-button'>View Rewards</button>
+                        <Link href={`/viewrewards?id=${data._id}`} passHref>
+                            <button className='px-5 py-3 gradient-button'>View Rewards</button>
+                        </Link>
                         <button className='px-5 outlined-button'>User Management</button>
                     </div>
             </div>
