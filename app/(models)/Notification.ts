@@ -16,10 +16,9 @@ const NotificationSchema  = new Schema({
     sender: {type:mongoose.Schema.Types.ObjectId, ref:'Brand'}, 
     receiver: [{type:mongoose.Schema.Types.ObjectId, ref:'User'}], 
     message: { type: String, required: true }, 
-    allowed_branches: [{ type: String }],
     reward: {type:mongoose.Schema.Types.ObjectId, ref:'Reward'}, 
     read_by:[{
-     client_id:{type: mongoose.Schema.Types.ObjectId, ref:'User'},
+     type: mongoose.Schema.Types.ObjectId, ref:'User',
     }],
     is_scheduled:{ type: Boolean, default: false }, 
     scheduled_post_date:{type: Date},
