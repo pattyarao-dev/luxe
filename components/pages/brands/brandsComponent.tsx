@@ -4,6 +4,12 @@ import {Menu, Dialog, Transition} from '@headlessui/react'
 import Link from 'next/link'
 import Image from 'next/image'
 
+interface Brand {
+    _id: string;
+    brand_name: string;
+    brand_desc: string;
+}
+
 interface BrandCompProps {
     id: string,
     userType: string;
@@ -12,7 +18,7 @@ interface BrandCompProps {
 export default function BrandComp({id, userType} : BrandCompProps) {
     let [isOpen, setIsOpen] = useState(false);
     const [checkedItems, setCheckedItems] = useState<string[]>([]);
-    const [brands, setBrands] = useState<any[]>([]);
+    const [brands, setBrands] = useState<Brand[]>([]);
 
     useEffect(() => {
         async function fetchBrands() {
@@ -20,7 +26,11 @@ export default function BrandComp({id, userType} : BrandCompProps) {
                 const response = await fetch(`/api/allbrands?id=${id}&userType=${userType}`);
                 if (response.ok) {
                     const data = await response.json();
-                    setBrands(data.brands);
+                    const modifiedBrands = data.brands.map((brand: Brand) => ({
+                        ...brand,
+                        brand_desc: brand.brand_desc.split(/[.!?]/)[0] // Split by '.', '!', or '?', and take the first part
+                    }));
+                    setBrands(modifiedBrands);
                 } else {
                     console.error('Failed to fetch brands:', response.statusText);
                 }

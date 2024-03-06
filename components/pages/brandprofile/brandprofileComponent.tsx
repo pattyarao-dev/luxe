@@ -2,6 +2,9 @@
 import React, { useEffect, useState } from 'react'
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation'
+import BranchCard from '@/components/reusable/branchCard'
+import Image from 'next/image';
+
 
 export default function BrandProfileComp() {
     const searchParams = useSearchParams();
@@ -64,6 +67,12 @@ export default function BrandProfileComp() {
                 <h1 className="text-3xl font-bold">Branches</h1>
                 <button className='px-5 outlined-button'>Add a Branch</button>
             </div>
+            <div className='flex flex-col gap-3'>
+                {data.branches.map((branch: { branch_name: string }, index: number) => (
+                <BranchCard key={index} branch_name={branch.branch_name} />
+            ))}
+            </div>
+            
         </div>
         <div className='w-full rounded items-center border-solid border-2 px-10 py-4 gradient-background'>
             <h1 className='text-center text-3xl font-bold'>Subscriber Count</h1>
