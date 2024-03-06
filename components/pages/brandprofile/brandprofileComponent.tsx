@@ -2,6 +2,9 @@
 import React, { useEffect, useState } from 'react'
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation'
+import BranchCard from '@/components/reusable/branchCard'
+import Image from 'next/image';
+
 
 export default function BrandProfileComp() {
     const searchParams = useSearchParams();
@@ -41,10 +44,20 @@ export default function BrandProfileComp() {
             <div className='w-full flex flex-row justify-between'>
                     <h1 className="text-3xl font-bold">{data.brand_name}</h1>
                     <div className='flex gap-2'>
-                        <Link href={`/viewrewards?id=${data._id}`} passHref>
-                            <button className='px-5 py-3 gradient-button'>View Rewards</button>
+                        <Link 
+                            href={`/viewrewards?id=${data._id}`} 
+                            className='px-5 gradient-button flex items-center text-center' 
+                            passHref
+                        >
+                            View Rewards
                         </Link>
-                        <button className='px-5 outlined-button'>User Management</button>
+                        <Link 
+                            href={`/usermanagement?id=${data._id}`} 
+                            className='px-5 outlined-button flex items-center text-center' 
+                            passHref
+                        >
+                            User Management
+                        </Link>
                     </div>
             </div>
             <div className='w-full py-4'>
@@ -54,6 +67,12 @@ export default function BrandProfileComp() {
                 <h1 className="text-3xl font-bold">Branches</h1>
                 <button className='px-5 outlined-button'>Add a Branch</button>
             </div>
+            <div className='flex flex-col gap-3'>
+                {data.branches.map((branch: { branch_name: string }, index: number) => (
+                <BranchCard key={index} branch_name={branch.branch_name} />
+            ))}
+            </div>
+            
         </div>
         <div className='w-full rounded items-center border-solid border-2 px-10 py-4 gradient-background'>
             <h1 className='text-center text-3xl font-bold'>Subscriber Count</h1>

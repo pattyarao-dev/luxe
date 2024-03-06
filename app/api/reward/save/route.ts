@@ -18,6 +18,15 @@ export async function PATCH(req: NextRequest, res: NextResponse) {
             throw new Error("Invalid User or Reward");
         }
 
+        // CHECK IF REWARD IS ALREADY SAVED
+        if (client_data.saved_rewards.includes(reward_id)){
+          return NextResponse.json({
+            status: 200,
+            message: "STATUS: REWARD ALREADY SAVED",
+        });
+        
+        }
+
         // ADD TO SAVED_REWARDS
         await User.updateOne({_id: client_id}, 
             {
@@ -25,6 +34,11 @@ export async function PATCH(req: NextRequest, res: NextResponse) {
             }
             )
 
+        return NextResponse.json({
+              status: 200,
+              message: "SUCCESS: REWARD SAVED",
+          });
+          
         
     } catch (err: any) { // Explicitly specify the type of err as any or Error
         console.log("err", err);
