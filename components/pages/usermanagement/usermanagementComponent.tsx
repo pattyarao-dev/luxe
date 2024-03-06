@@ -23,6 +23,9 @@ export default function UserManagementComp() {
             <div className='px-10 py-10'>
                 There are no active users for this brand
             </div>
+            <div className='px-10 py-10'>
+                There are no active users for this brand
+            </div>
             <button className='px-20 outlined-button' onClick={openModal}>ADD USER</button>
 
             <Transition appear show={isOpen} as={Fragment}>

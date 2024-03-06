@@ -1,26 +1,64 @@
 "use client"
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import Link from 'next/link';
+import { useSearchParams } from 'next/navigation'
 
 export default function BrandProfileComp() {
+    const searchParams = useSearchParams();
+    const id = searchParams.get('id');
+    console.log(id)
+
+    const [brandData, setBrandData] = useState<any>();
+    useEffect(() => {
+        async function fetchBrandData() {
+            try {
+                const response = await fetch(`/api/allbrands/selected/?id=${id}`);
+                if (response.ok) {
+                    const data = await response.json();
+                    setBrandData(data);
+                } else {
+                    console.error('Failed to fetch brand data:', response.statusText);
+                }
+            } catch (error) {
+                console.error('Error while fetching brand data:', error);
+            }
+        }
+
+        if (id){
+           fetchBrandData(); 
+        }
+    }, [id]);
+
+    if (!brandData) {
+        return <div>Loading...</div>;
+    }
+
+    const { data } = brandData;
+
     return (
     <div className="w-full flex flex-row justify-center gap-8 px-20 py-20">
         <div className='w-full'>
             <div className='w-full flex flex-row justify-between'>
-                    <h1 className="text-3xl font-bold">Brand 1</h1>
+                    <h1 className="text-3xl font-bold">{data.brand_name}</h1>
                     <div className='flex gap-2'>
-                        <button className='px-5 gradient-button'>View Rewards</button>
-                        <button className='px-5 outlined-button'>User Management</button>
+                        <Link 
+                            href={`/viewrewards?id=${data._id}`} 
+                            className='px-5 gradient-button flex items-center text-center' 
+                            passHref
+                        >
+                            View Rewards
+                        </Link>
+                        <Link 
+                            href={`/usermanagement?id=${data._id}`} 
+                            className='px-5 outlined-button flex items-center text-center' 
+                            passHref
+                        >
+                            User Management
+                        </Link>
                     </div>
             </div>
             <div className='w-full py-4'>
-                <p className='w-fit'>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
-                    tempor incididunt ut. It has survived not only five centuries, but also 
-                    the leap into electronic typesetting, remaining essentially unchanged. 
-                    It was popularised in the 1960s with the release of Letraset sheets 
-                    containing Lorem Ipsum passages, and more recently with desktop publishing 
-                    software like Aldus PageMaker including versions of Lorem Ipsum.
-                </p>
+                <p className='w-fit'>{data.brand_desc}</p>
             </div>
             <div className='w-full py-4 flex flex-row justify-between'>
                 <h1 className="text-3xl font-bold">Branches</h1>
