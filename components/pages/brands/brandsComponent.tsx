@@ -60,7 +60,7 @@ export default function BrandComp({id, userType} : BrandCompProps) {
 
     return (
         <div className="w-full flex flex-col justify-center items-center gap-8 p-20">
-            <h1 className="w-full px-10 text-3xl font-bold text-center">Brands</h1>
+            <h1 className="w-full px-10 text-4xl font-bold text-center">Brands</h1>
             <div className="w-full flex flex-wrap justify-center gap-6">
                 {brands.map((brand, index) => (
                     <div key={index} className="w-96 rounded overflow-hidden shadow-lg">
