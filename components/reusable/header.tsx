@@ -10,7 +10,7 @@ import { ObjectId } from 'mongoose';
 import User from '@/app/(models)/User';
 import { getTokenContent } from '@/app/(services)/frontend/get_token';
 
-export default function Header({params}:  {params: {slug: ObjectId}}) {
+export default function Header({params}:  {params: {slug: string}}) {
 
   const [showSideMenu, setShowSideMenu] = useState<boolean>(false);
 

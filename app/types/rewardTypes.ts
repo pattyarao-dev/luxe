@@ -20,6 +20,7 @@ export interface RewardTypes {
     min_items: number
     status: boolean
     createdAt: Date
+    expiry: Date
     is__expired: boolean
     reward_tags: string[]
     claim_buckets: ObjectId
