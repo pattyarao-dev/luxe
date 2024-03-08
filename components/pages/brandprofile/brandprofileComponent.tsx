@@ -2,6 +2,8 @@
 import React, { useEffect, useState } from 'react'
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation'
+import BranchCard from '@/components/reusable/branchCard'
+
 
 export default function BrandProfileComp() {
     const searchParams = useSearchParams();
@@ -39,7 +41,7 @@ export default function BrandProfileComp() {
     <div className="w-full flex flex-row justify-center gap-8 px-20 py-20">
         <div className='w-full'>
             <div className='w-full flex flex-row justify-between'>
-                    <h1 className="text-3xl font-bold">{data.brand_name}</h1>
+                    <h1 className="text-4xl font-bold">{data.brand_name}</h1>
                     <div className='flex gap-2'>
                         <Link 
                             href={`/viewrewards?id=${data._id}`} 
@@ -64,9 +66,16 @@ export default function BrandProfileComp() {
                 <h1 className="text-3xl font-bold">Branches</h1>
                 <button className='px-5 outlined-button'>Add a Branch</button>
             </div>
+            <div className='flex flex-col gap-3'>
+                {data.branches.map((branch: { branch_name: string }, index: number) => (
+                <BranchCard key={index} branch_name={branch.branch_name} />
+            ))}
+            </div>
+            
         </div>
-        <div className='w-full rounded items-center border-solid border-2 px-10 py-4 gradient-background'>
-            <h1 className='text-center text-3xl font-bold'>Subscriber Count</h1>
+        <div className='w-full rounded-md items-center border-solid border-2 px-10 py-4 gradient-background'>
+            <h1 className='text-center pt-6 text-3xl font-medium'>Subscriber Count</h1>
+            <h2 className='text-center text-4xl font-bold'>{data.total_fcount}</h2>
         </div>
     </div>
     )

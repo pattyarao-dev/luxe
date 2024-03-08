@@ -51,6 +51,10 @@
     @apply w-fit h-32 bg-white border border-dark-purple p-4 flex items-center gap-3 rounded-lg drop-shadow-dark-purple
   }
 
+  .branch-card {
+    @apply w-fit h-20 bg-white border border-dark-purple p-4 flex items-center gap-3 rounded-lg drop-shadow-dark-purple
+  }
+
 }
 
 @layer utilities {
