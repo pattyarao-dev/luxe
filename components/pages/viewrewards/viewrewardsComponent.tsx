@@ -67,7 +67,7 @@ export default function ViewRewardsComp() {
                 </div>
             </div>
             <table className="w-full text-sm text-left rtl:text-right">
-                <thead className="text-md border-b-2 uppercase dark:bg-gray-700 dark:text-black">
+                <thead className="text-md border-b-2 uppercase">
                     <tr>
                         <th scope="col" className="px-6 py-3">
                             Reward name
@@ -85,8 +85,8 @@ export default function ViewRewardsComp() {
                 </thead>
                 <tbody>
                     {rewardsData.map(reward => (
-                        <tr key={reward._id} className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
-                            <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        <tr key={reward._id} className="odd:bg-white even:bg-gray-50 border-b">
+                            <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                                 {reward.reward_name}
                             </th>
                             <td className="px-6 py-4 text-center">
@@ -96,7 +96,7 @@ export default function ViewRewardsComp() {
                                 {reward.cap}
                             </td>
                             <td className="px-6 py-4 text-center">
-                                <span className="bg-yellow-100 text-yellow-800 font-medium px-5 py-1.5 rounded-full dark:bg-yellow-900 dark:text-yellow-300">{reward.status ? "Ongoing" : "Expired"}</span>
+                                <span className="bg-yellow-100 text-yellow-800 font-medium px-5 py-1.5 rounded-full">{reward.status ? "Ongoing" : "Expired"}</span>
                             </td>
                         </tr>
                     ))}
