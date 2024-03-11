@@ -9,6 +9,7 @@ export interface RewardTypes {
     id: ObjectId
     reward_name: string
     reward_desc: string
+    brand_name: string
     brand_id: ObjectId
     allowed_branches: string[]
     cap: number

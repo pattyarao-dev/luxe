@@ -3,7 +3,6 @@
 import { RewardTypes } from '@/app/types/rewardTypes';
 import React, { useState, useEffect } from 'react'
 import Image from 'next/image';
-import RewardCard from '@/components/reusable/rewardCard';
 
 
 export const UserSavedRewards = ({userId}: {userId: string}) => {
@@ -27,7 +26,7 @@ export const UserSavedRewards = ({userId}: {userId: string}) => {
   return (
     <div className="w-full flex flex-col gap-6">
       {savedRewards.map((reward, index) => (
-        <div key={index} className="w-full border rounded-lg border-black bg-gradient-to-br from-white to-gray-main drop-shadow-lg">
+        <div key={index} className="w-full bg-white border border-dark-pink drop-shadow-md p-2 rounded-lg">
             
             <div className="w-full p-4 flex flex-col gap-6">
                 <div className="w-full flex items-center justify-start gap-8">
@@ -36,6 +35,7 @@ export const UserSavedRewards = ({userId}: {userId: string}) => {
                     </div>
                     <div className="">
                         <p>{reward.reward_name}</p>
+                        <p>{reward.brand_name}</p>
                         <p>Expires on {new Date(reward.expiry).toLocaleString().slice(0, 10)}</p>  
                     </div>
                 </div>

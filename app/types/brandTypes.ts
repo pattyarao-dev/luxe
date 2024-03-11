@@ -17,7 +17,7 @@ interface LocationTypes {
 }
 
 export interface BrandTypes {
-    id: ObjectId
+    _id: ObjectId
     brand_name: string
     brand_desc: string
     brand_tags: string[]
