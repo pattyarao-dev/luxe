@@ -20,9 +20,16 @@ export async function PATCH(req: NextRequest, res: NextResponse) {
 
         // CHECK IF REWARD IS ALREADY SAVED
         if (client_data.saved_rewards.includes(reward_id)){
+
+        // REMOVE TO SAVED_REWARDS
+        await User.updateOne({_id: client_id}, 
+          {
+              $pull: { saved_rewards: reward_id}
+          }
+          )
           return NextResponse.json({
             status: 200,
-            message: "STATUS: REWARD ALREADY SAVED",
+            message: "SUCCESS: REWARD REMOVED FROM SAVED REWARDS",
         });
         
         }
