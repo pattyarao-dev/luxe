@@ -22,10 +22,10 @@ export async function GET(req: NextRequest) {
             const notifications = await Notification.find({ sender: client_data.assigned_brand })
                 .populate('reward', 'reward_name')
                 .populate('sender', 'brand_name');
-            return Response.json({ notifications })
+            return NextResponse.json({ notifications })
         }
         else if (client_data.user_type === "ADMIN_ALL"){
-            const brand_ids = client_data.brands.map(brand => brand.toString());
+            const brand_ids: string[] = client_data.brands.map((brand: string) => brand.toString());
             console.log(brand_ids);
             const notifications = await Notification.find({ sender: { $in: brand_ids } })
                 .populate('reward', 'reward_name') // Populate the reward field with only the 'reward_name' field
