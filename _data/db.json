@@ -1,0 +1,42 @@
+{
+
+
+    "rewards": [
+
+        {
+            "id": 1,
+            "name": "Exclusive early access to New Model bag",
+            "brand": "Louis Vuitton",
+            "desc": "Exciting News! Claim exclusive early access to Louis Vuitton's Model Bag – the epitome of 2024 fashion. As a valued member, be a trendsetter with this iconic piece before its public release. Limited quantities available, so seize this opportunity now! Click the link to claim your early access.",
+            "start": "January 10, 2024",
+            "end": "February 10, 2024"
+        },
+        {
+            "id": 2,
+            "name": "Personalized Consultation with Brand Representative",
+            "brand": "Kate Spade",
+            "desc": "Exciting News! Claim exclusive early access to Louis Vuitton's Model Bag – the epitome of 2024 fashion. As a valued member, be a trendsetter with this iconic piece before its public release. Limited quantities available, so seize this opportunity now! Click the link to claim your early access.",
+            "start": "January 10, 2024",
+            "end": "February 10, 2024"
+        },
+        {
+            "id": 3,
+            "name": "Customizable Designs for Bag",
+            "brand": "Kate Spade",
+            "desc": "Exciting News! Claim exclusive early access to Louis Vuitton's Model Bag – the epitome of 2024 fashion. As a valued member, be a trendsetter with this iconic piece before its public release. Limited quantities available, so seize this opportunity now! Click the link to claim your early access.",
+            "start": "January 10, 2024",
+            "end": "February 10, 2024"
+        },
+        {
+            "id": 3,
+            "name": "Exclusive Access to Limited Edition Bag",
+            "brand": "Gucci",
+            "desc": "Exciting News! Claim exclusive early access to Louis Vuitton's Model Bag – the epitome of 2024 fashion. As a valued member, be a trendsetter with this iconic piece before its public release. Limited quantities available, so seize this opportunity now! Click the link to claim your early access.",
+            "start": "January 10, 2024",
+            "end": "February 10, 2024"
+        }
+
+    ]
+
+
+}

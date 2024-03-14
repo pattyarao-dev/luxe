@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { useRouter } from "next/navigation"
 
-export default function LoginComp() {
+export default function LoginComp({userType}: {userType: string}) {
   // State for email and password
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -23,8 +23,7 @@ export default function LoginComp() {
       // Handle response as needed
       const data = await response.json();
       console.log(data); // Log response data
-      push("/home");
-
+      push("/home");  
 
     } catch (error) {
       console.error('Error submitting form:', error);
