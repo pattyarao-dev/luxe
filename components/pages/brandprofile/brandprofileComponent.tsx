@@ -1,5 +1,5 @@
 "use client"
-import React, { useEffect, useState, Fragment, Suspense } from 'react'
+import React, { useEffect, useState, Fragment } from 'react'
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation'
 import BranchCard from '@/components/reusable/branchCard'
@@ -47,7 +47,6 @@ export default function BrandProfileComp() {
     const { data } = brandData;
 
     return (
-        <Suspense fallback={<div>Loading...</div>}>
             <div className="w-full flex flex-row justify-center gap-8 px-20 py-20">
                 <div className='w-full'>
                     <div className='w-full flex flex-row justify-between'>
@@ -150,6 +149,5 @@ export default function BrandProfileComp() {
                     <h2 className='text-center text-4xl font-bold'>{data.total_fcount}</h2>
                 </div>
             </div>
-        </Suspense>
     )
   }

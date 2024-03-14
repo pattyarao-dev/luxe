@@ -1,5 +1,5 @@
 "use client"
-import React, {useEffect, useState, Suspense} from 'react'
+import React, {useEffect, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 
 interface Reward {
@@ -50,7 +50,6 @@ export default function ViewRewardsComp() {
     console.log(rewardsData)
 
     return (
-        <Suspense fallback={<div>Loading...</div>}>
             <div className="w-full flex flex-col justify-center items-center gap-7 p-20">
                     <h1 className="w-full px-10 text-4xl font-bold text-center">{rewardsData[0].brand_name}</h1>
                 <div className='w-full flex flex-row justify-end'>
@@ -104,6 +103,5 @@ export default function ViewRewardsComp() {
                     </tbody>
                 </table>
             </div>
-        </Suspense>
     )
 }

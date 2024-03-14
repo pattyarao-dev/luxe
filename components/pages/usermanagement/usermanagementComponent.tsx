@@ -1,5 +1,5 @@
 "use client"
-import React, { Fragment, useState, useEffect, Suspense } from 'react'
+import React, { Fragment, useState, useEffect } from 'react'
 import {Menu, Dialog, Transition} from '@headlessui/react'
 import UserCard from '@/components/reusable/userCard'
 import { useSearchParams } from 'next/navigation'
@@ -61,7 +61,6 @@ export default function UserManagementComp() {
     console.log(usersData)
     
     return (
-        <Suspense fallback={<div>Loading...</div>}>
             <div className="w-full flex flex-col justify-center items-center gap-8 p-20">
                 <h1 className="w-full px-10 text-4xl font-bold text-center">Brand 1</h1>
                 <div className='w-1/3 flex flex-row gap-4'>
@@ -193,6 +192,5 @@ export default function UserManagementComp() {
                     </Dialog>
                 </Transition>
             </div>
-        </Suspense>
     )
 }
