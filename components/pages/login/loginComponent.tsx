@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { useRouter } from "next/navigation"
 
-export default function LoginComp({userType}: {userType: string}) {
+export default function LoginComp() {
   // State for email and password
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
