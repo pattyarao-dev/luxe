@@ -23,8 +23,7 @@ export default function LoginComp() {
       // Handle response as needed
       const data = await response.json();
       console.log(data); // Log response data
-      push("/home");
-
+      push("/home");  
 
     } catch (error) {
       console.error('Error submitting form:', error);

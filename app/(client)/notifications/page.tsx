@@ -5,7 +5,6 @@ import React from 'react'
 export default function Notifications() {
   return (
     <main className="w-full min-h-screen flex flex-col">
-        <Header/>
         <NotificationsList/>
     </main>
   )
