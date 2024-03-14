@@ -5,9 +5,10 @@ import SearchBar from '@/components/reusable/searchbar';
 import Link from 'next/link';
 import Rewards from '@/app/(models)/Rewards';
 import { UserSavedRewards } from '@/components/pages/savedrewards/viewSavedRewardsComponent';
+import { ObjectId } from 'mongoose';
 
 
-export default async function Favorites({params}:  {params: {id: string}}) {
+export default async function Favorites({params}:  {params: {id: ObjectId}}) {
 
   return (
     <main className="w-full min-h-screen flex flex-col">
