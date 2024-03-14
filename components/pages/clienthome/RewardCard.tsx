@@ -43,7 +43,7 @@ export const RewardCard: React.FC<RewardCardProps> = ({id, reward_name, brand_na
               <div className="w-[60%] flex flex-col gap-4">
                 <Link href={`/reward/${id}`}>
                   <div>
-                    <h1 className="font-bold">{reward_name}</h1>
+                    <h1 className="text-dark-purple text-md font-bold">{reward_name}</h1>
                     <p className="text-xs">{brand_name}</p>
                   </div>
                 </Link>

@@ -3,9 +3,11 @@
 import { RewardTypes } from '@/app/types/rewardTypes';
 import React, { useState, useEffect } from 'react'
 import Image from 'next/image';
+import { RewardCard } from '../clienthome/RewardCard';
+import { ObjectId } from 'mongoose';
 
 
-export const UserSavedRewards = ({userId}: {userId: string}) => {
+export const UserSavedRewards = ({userId}: {userId: ObjectId}) => {
     const [savedRewards, setSavedRewards] = useState<RewardTypes[]>([])
   
   
@@ -22,13 +24,13 @@ export const UserSavedRewards = ({userId}: {userId: string}) => {
     };
 
     fetchSavedRewards();
-  }, []);
+  }, [userId]);
   return (
     <div className="w-full flex flex-col gap-6">
       {savedRewards.map((reward, index) => (
-        <div key={index} className="w-full bg-white border border-dark-pink drop-shadow-md p-2 rounded-lg">
+        <div key={index}>
             
-            <div className="w-full p-4 flex flex-col gap-6">
+            {/* <div className="w-full p-4 flex flex-col gap-6">
                 <div className="w-full flex items-center justify-start gap-8">
                     <div className="">
                         <Image src="/cuate.png" width={70} height={70} alt="image" className="object-cover"/>
@@ -42,7 +44,8 @@ export const UserSavedRewards = ({userId}: {userId: string}) => {
                 <div className="w-full flex justify-end">
                     <button className="gradient-button px-4 py-2">Claim Now</button>
                 </div>
-            </div>
+            </div> */}
+            <RewardCard id={reward.id} reward_name={reward.reward_name} brand_name={reward.brand_name} userId={userId} />
             
         </div>
         
