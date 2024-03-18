@@ -4,6 +4,8 @@ import Image from 'next/image';
 import { ObjectId } from 'mongoose';
 import Rewards from '@/app/(models)/Rewards';
 import Link from 'next/link';
+import { getTokenContent } from '@/app/(services)/frontend/get_token';
+import RewardActions from '@/components/reusable/rewardActions';
 
 // async function getReward(id: number) {
 //   const res = await fetch(`http://localhost:4000/rewards/${id}`);
@@ -21,6 +23,9 @@ async function getReward(id: ObjectId) {
 }
 
 export default async function Reward({params}:  {params: RewardTypes}) {
+  const token_content = getTokenContent()
+  const qr_content = {client_id: token_content._id, reward_id: params.id}
+  const qr_string = `${qr_content.client_id}-${qr_content.reward_id}`;
   const reward = await getReward(params.id)
   return (
     <main className="w-full h-full p-10 flex flex-col gap-10">
@@ -46,8 +51,7 @@ export default async function Reward({params}:  {params: RewardTypes}) {
         </div>
       )}
       <div className="w-full flex flex-col gap-2">
-        <button className="gradient-button">Claim Now</button>
-        <button className="outlined-button">Add to Favorites</button>
+          <RewardActions qr_string={qr_string}/>
       </div>
     </div>
     </main>

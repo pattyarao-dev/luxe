@@ -270,6 +270,7 @@
     "prelude-ls": "^1.2.1",
     "prop-types": "^15.8.1",
     "punycode": "^2.3.1",
+    "qrcode": "^1.5.3",
     "queue-microtask": "^1.2.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -363,6 +364,7 @@
     "@types/bcrypt": "^5.0.2",
     "@types/jsonwebtoken": "^9.0.5",
     "@types/node": "20.11.16",
+    "@types/qrcode": "^1.5.5",
     "@types/react": "18.2.52"
   },
   "scripts": {
