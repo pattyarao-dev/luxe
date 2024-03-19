@@ -365,7 +365,8 @@
     "@types/jsonwebtoken": "^9.0.5",
     "@types/node": "20.11.16",
     "@types/qrcode": "^1.5.5",
-    "@types/react": "18.2.52"
+    "@types/react": "18.2.52",
+    "html5-qrcode": "^2.3.8"
   },
   "scripts": {
     "dev": "next dev",
