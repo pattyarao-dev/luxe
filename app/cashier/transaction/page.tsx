@@ -1,53 +1,66 @@
 'use client'
-import React, { useEffect } from 'react';
-
+import React, { useEffect, useState } from 'react';
+import RewardVerificationForm from '@/components/reusable/rewardVerificationForm';
 const QRScanner: React.FC = () => {
-  useEffect(() => {
-    // Import HTML5-QRCode library script
-    const script = document.createElement('script');
-    script.src = 'https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.4/html5-qrcode.min.js';
-    script.async = true;
-    document.body.appendChild(script);
+    let scanner: any; // Declare scanner variable in the scope of the component
+    const [qrcontent, setQrContent] = useState<string>('')
+    const [clientId, setClientId] = useState<string>('');
+    const [rewardId, setRewardId] = useState<string>('');
 
-    script.onload = () => {
-      // Initialize QR scanner
-      const scanner = new (window as any).Html5QrcodeScanner('reader', {
-        qrbox: {
-          width: 500,
-          height: 500,
-        },
-        fps: 20,
-      });
+    useEffect(() => {
+        // Import HTML5-QRCode library script
+        const script = document.createElement('script');
+        script.src = 'https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.4/html5-qrcode.min.js';
+        script.async = true;
+        document.body.appendChild(script);
 
-      scanner.render(success, error);
+        script.onload = () => {
+            // Initialize QR scanner
+            scanner = new (window as any).Html5QrcodeScanner('reader', {
+                qrbox: {
+                    width: 500,
+                    height: 500,
+                },
+                fps: 20,
+            });
+
+            scanner.render(success, error);
+        };
+
+        return () => {
+            // Cleanup function
+            if (scanner) {
+                scanner.clear(); // Clear scanner if it exists
+            }
+            document.body.removeChild(script);
+        };
+    }, []);
+
+    const success = (result: string) => {
+        setQrContent(result)
+        const [clientIdString, rewardIdString] = result.split('-');
+        setClientId(clientIdString)
+        setRewardId(rewardIdString)
+        if (scanner) {
+            scanner.clear(); // Stop scanning
+        }
+        // Additional logic if needed
     };
 
-    return () => {
-      // Cleanup function
-      document.body.removeChild(script);
+    const error = (err: any) => {
+        // console.error(err);
+        // Additional error handling if needed
     };
-  }, []);
 
-  const success = (result: string) => {
-    document.getElementById('result')!.innerHTML = `
-      <h2>Success!</h2>
-      <p><a href="${result}">${result}</a></p>
-    `;
-    // Additional logic if needed
-  };
-
-  const error = (err: any) => {
-    console.error(err);
-    // Additional error handling if needed
-  };
-
-  return (
-    <main>
-      <div id="reader"></div>
-      <div id="result"></div>
-    </main>
-  );
+    return (
+        <>
+            <h1>TEST</h1>
+            <div id="reader"></div>
+            {qrcontent && (
+                <RewardVerificationForm clientid={clientId} rewardid={rewardId} />
+            )}
+        </>
+    );
 };
 
 export default QRScanner;
-
