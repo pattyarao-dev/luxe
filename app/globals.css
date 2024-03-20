@@ -16,7 +16,7 @@
   }
 
   .gradient-button {
-    @apply bg-gradient-to-br from-purple to-midnight-blue px-2 py-3 rounded-xl text-white 
+    @apply bg-gradient-to-br from-purple to-midnight-blue px-3 py-2 rounded-xl text-white 
   }
 
   .outlined-button {

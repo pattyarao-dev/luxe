@@ -23,7 +23,7 @@ import { ClientBrandProfile } from '@/components/pages/clientbrandprofile/client
 //   }
 // }
 
-export default async function BrandProfile({params}: {params: BrandTypes}) {
+export default async function BrandProfile({params}: {params: {id: string}}) {
   // const brand = await getBrand(params._id)
   // console.log(brand)
   return (
@@ -31,7 +31,7 @@ export default async function BrandProfile({params}: {params: BrandTypes}) {
       {/* {brand && (
         <p>{brand.brand_name}</p>
       )} */}
-      <ClientBrandProfile brandId={params._id}/>
+      <ClientBrandProfile brandId={params.id}/>
     </main>
   )
 }
