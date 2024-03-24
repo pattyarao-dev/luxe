@@ -33,6 +33,15 @@ export default function UserManagementComp() {
     }
 
     const [usersData, setUsersData] = useState<User[]>([]);
+    const [addUserData, setAddUserData] = useState({
+        first_name: '',
+        last_name: '',
+        username: '',
+        email: '',
+        password: '',
+        user_type: '',
+        assigned_brand: id,
+    })
 
     useEffect(() => {
         async function fetchUsersData() {
@@ -59,6 +68,48 @@ export default function UserManagementComp() {
     }
 
     console.log(usersData)
+
+    const handleChange = (e: any) => {
+        const { name, value } = e.target;
+        setAddUserData(prev => ({ ...prev, [name]: value }));
+        console.log(addUserData)
+    }
+
+    function handleAddUser() {
+        // Prepare data for the POST request
+        const postData = {
+            first_name: addUserData.first_name,
+            last_name: addUserData.last_name,
+            username: addUserData.username,
+            email: addUserData.email,
+            password: addUserData.password,
+            user_type: addUserData.user_type,
+            assigned_brand: addUserData.assigned_brand,
+        };
+
+        console.log(postData)
+    
+        // Send POST request to add the brand
+        fetch(`/api/user`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(postData),
+        })
+        .then(response => {
+            if (response.ok) {
+                // Brand added successfully, close the modal or perform any other actions
+                closeModal();
+            } else {
+                // Handle errors if any
+                console.error('Failed to add user:', response.statusText);
+            }
+        })
+        .catch(error => {
+            console.error('Error while adding user:', error);
+        });
+    }
     
     return (
             <div className="w-full flex flex-col justify-center items-center gap-8 p-20">
@@ -119,20 +170,55 @@ export default function UserManagementComp() {
                                         </div>
 
                                         <div className='mt-6 flex flex-row justify-center items-center text-center gap-1'>
-                                            <input type="text" className='w-48 input-style' placeholder='First name'/>
-                                            <input type="text" className='w-48 input-style' placeholder='Last name'/>
+                                            <input 
+                                                type="text" 
+                                                className='w-48 input-style' 
+                                                placeholder='First name'
+                                                name='first_name'
+                                                value={addUserData.first_name}
+                                                onChange={handleChange}
+                                            />
+                                            <input 
+                                                type="text" 
+                                                className='w-48 input-style' 
+                                                placeholder='Last name'
+                                                name='last_name'
+                                                value={addUserData.last_name}
+                                                onChange={handleChange}
+                                            />
                                         </div>
 
                                         <div className='mt-4 justify-center items-center text-center'>
-                                            <input type="text" className='w-96 input-style' placeholder='Username'/>
+                                            <input 
+                                                type="text" 
+                                                className='w-96 input-style' 
+                                                placeholder='Username'
+                                                name='username'
+                                                value={addUserData.username}
+                                                onChange={handleChange}
+                                            />
                                         </div>
 
                                         <div className='mt-4 justify-center items-center text-center'>
-                                            <input type="text" className='w-96 input-style' placeholder='Email'/>
+                                            <input 
+                                                type="text" 
+                                                className='w-96 input-style' 
+                                                placeholder='Email'
+                                                name='email'
+                                                value={addUserData.email}
+                                                onChange={handleChange}
+                                            />
                                         </div>
 
                                         <div className='mt-4 justify-center items-center text-center'>
-                                            <input type="text" className='w-96 input-style' placeholder='Password'/>
+                                            <input 
+                                                type="text" 
+                                                className='w-96 input-style' 
+                                                placeholder='Password'
+                                                name='password'
+                                                value={addUserData.password}
+                                                onChange={handleChange}
+                                            />
                                         </div>
 
                                         <div className='mt-4 justify-center items-center text-center'>
@@ -156,13 +242,17 @@ export default function UserManagementComp() {
                                                 >
                                                     <Menu.Items className="right-0 mt-2 w-full origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none">
                                                         <div className="px-1 py-1 ">
-                                                            {["Client", "Admin All", "Admin", "Cashier"].map((item, index) => (
+                                                            {["ADMIN", "CASHIER"].map((item, index) => (
                                                                 <Menu.Item key={index}>
                                                                     {({ active }) => (
                                                                     <button
                                                                         className={`${
                                                                         active ? 'bg-violet-500 text-white' : 'text-gray-900'
                                                                         } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                                                                        name='user_type'
+                                                                        onClick={() => {
+                                                                            setAddUserData(prev => ({ ...prev, user_type: item}))
+                                                                        }}
                                                                     >
                                                                         <strong className='px-1'>{item}</strong>
                                                                     </button>
@@ -180,7 +270,7 @@ export default function UserManagementComp() {
                                                 type='button'
                                                 className='w-96 px-5 py-2 gradient-button'
                                                 //className='w-80 inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2'
-                                                onClick={closeModal}
+                                                onClick={handleAddUser}
                                             >
                                                 Save and Proceed
                                             </button>
