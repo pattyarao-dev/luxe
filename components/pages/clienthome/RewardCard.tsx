@@ -34,14 +34,16 @@ export const RewardCard: React.FC<RewardCardProps> = ({id, reward_name, brand_na
     }
   };
 
+  const reward_id = String(id)
+
   return (
     <>
     <div className="reward-card">
-                <div className="w-[25%] h-[90px] rounded-md flex justify-center bg-gray-main">
-                <Image src="/cuate.png" width={80} height={80} alt="reward image" className="p-2"></Image>
+              <div className="w-[25%] h-[90px] rounded-md flex justify-center bg-gray-main">
+              <Image src="/cuate.png" width={80} height={80} alt="reward image" className="p-2"></Image>
               </div>
               <div className="w-[60%] flex flex-col gap-4">
-                <Link href={`/reward/${id}`}>
+                <Link href={`/reward/${reward_id}`}>
                   <div>
                     <h1 className="text-dark-purple text-md font-bold">{reward_name}</h1>
                     <p className="text-xs">{brand_name}</p>

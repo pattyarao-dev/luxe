@@ -3,6 +3,7 @@ import { ObjectId } from 'mongoose'
 import React from 'react'
 import Brand from '@/app/(models)/Brand'
 import { ClientBrandProfile } from '@/components/pages/clientbrandprofile/clientBrandProfile'
+import { getTokenContent } from '@/app/(services)/frontend/get_token'
 
 // async function getBrand(id: ObjectId){
 //   try {
@@ -26,12 +27,14 @@ import { ClientBrandProfile } from '@/components/pages/clientbrandprofile/client
 export default async function BrandProfile({params}: {params: {id: string}}) {
   // const brand = await getBrand(params._id)
   // console.log(brand)
+  const user = getTokenContent()
+  const {_id, user_type} = user
   return (
     <main>
       {/* {brand && (
         <p>{brand.brand_name}</p>
       )} */}
-      <ClientBrandProfile brandId={params.id}/>
+      <ClientBrandProfile brandId={params.id} userId={user._id}/>
     </main>
   )
 }
