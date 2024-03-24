@@ -9,7 +9,7 @@ export default function MerchantHeader() {
         <div className="w-full flex flex-row justify-between p-3 text-white">
           <p className="text-3xl uppercase font-bold">Luxe.</p>
           <div className='flex flex-row justify-center gap-5'>
-            <button className='px-2'>Analytics</button>
+            <Link href={`/analytics`} className='px-2 flex items-center'>Analytics</Link>
             <Link href={`/brands`} className='px-2 flex items-center'>My Brands</Link>
             <button className='px-2'>Employees</button>
             <button className='px-2'>Schedule Notifications</button>

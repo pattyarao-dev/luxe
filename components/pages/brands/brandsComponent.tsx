@@ -3,6 +3,7 @@ import React, { Fragment, useState, useEffect, useRef } from 'react'
 import {Menu, Dialog, Transition} from '@headlessui/react'
 import Link from 'next/link'
 import Image from 'next/image'
+import { FaTags } from 'react-icons/fa'
 
 interface Brand {
     _id: string;
@@ -19,6 +20,7 @@ export default function BrandComp({id, userType} : BrandCompProps) {
     let [isOpen, setIsOpen] = useState(false);
     const [checkedItems, setCheckedItems] = useState<string[]>([]);
     const [brands, setBrands] = useState<Brand[]>([]);
+    const [tags, setTags] = useState<string[]>([]);
 
     useEffect(() => {
         async function fetchBrands() {
@@ -39,8 +41,26 @@ export default function BrandComp({id, userType} : BrandCompProps) {
             }
         }
 
+        async function fetchTags() {
+            try {
+                const response = await fetch(`/api/tags`);
+                if (response.ok) {
+                    const data = await response.json();
+                    // Assuming 'Objecttags' property exists and is an array
+                    setTags(data.tags);
+                } else {
+                    console.error('Failed to fetch tags:', response.statusText);
+                }
+            } catch (error) {
+                console.error('Error while fetching tags:', error);
+            }
+        }
+
         fetchBrands();
+        fetchTags();
     }, [id, userType]);
+
+    console.log(tags)
 
     function closeModal() {
         setIsOpen(false)
@@ -50,12 +70,61 @@ export default function BrandComp({id, userType} : BrandCompProps) {
         setIsOpen(true)
     }
 
-    function handleCheckboxChange(event: React.ChangeEvent<HTMLInputElement>, item: string) {
-        if (event.target.checked) {
-            setCheckedItems(prevState => [...prevState, item]);
-        } else {
-            setCheckedItems(prevState => prevState.filter(checkedItem => checkedItem !== item));
-        }
+    function handleCheckboxChange(item: string) {
+        setCheckedItems(prevState => {
+            if (prevState.includes(item)) {
+                console.log(`Unchecked:  ${item}`);
+                return prevState.filter(checkedItem => checkedItem !== item);
+            } else {
+                console.log(`Checked:   ${item}`)
+                return [...prevState, item];
+            }
+        });
+    }
+
+    console.log(checkedItems)
+
+    const [brandData, setBrandData] = useState({
+        brand_name: '',
+        brand_desc: '',
+    })
+
+    const handleChange = (e: any) => {
+        const { name, value } = e.target;
+        setBrandData(prev => ({ ...prev, [name]: value }));
+        console.log(brandData)
+    }
+
+    function handleAddBrand() {
+        // Prepare data for the POST request
+        const postData = {
+            brand_name: brandData.brand_name,
+            brand_desc: brandData.brand_desc,
+            brand_tags: checkedItems,
+        };
+
+        console.log(postData)
+    
+        // Send POST request to add the brand
+        fetch(`/api/brand?id=${id}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(postData),
+        })
+        .then(response => {
+            if (response.ok) {
+                // Brand added successfully, close the modal or perform any other actions
+                closeModal();
+            } else {
+                // Handle errors if any
+                console.error('Failed to add brand:', response.statusText);
+            }
+        })
+        .catch(error => {
+            console.error('Error while adding brand:', error);
+        });
     }
 
     return (
@@ -117,17 +186,31 @@ export default function BrandComp({id, userType} : BrandCompProps) {
                                     </div>
 
                                     <div className='mt-6 justify-center items-center text-center'>
-                                        <input type="text" className='w-80 outlined-button' placeholder='Brand name'/>
+                                        <input 
+                                            type="text" 
+                                            className='w-80 outlined-button' 
+                                            name='brand_name'
+                                            placeholder='Brand name'
+                                            value={brandData.brand_name}
+                                            onChange={handleChange}
+                                        />
                                     </div>
 
                                     <div className='mt-5 justify-center items-center text-center'>
-                                        <input type="text" className='w-80 outlined-button' placeholder='Brand description'/>
+                                        <input 
+                                            type="text" 
+                                            className='w-80 outlined-button' 
+                                            name='brand_desc'
+                                            placeholder='Brand description'
+                                            value={brandData.brand_desc}
+                                            onChange={handleChange}
+                                        />
                                     </div>
 
                                     <div className='mt-5 justify-center items-center text-center'>
                                         <Menu as="div" className="w-80 relative inline-block text-left">
                                             <div>
-                                                <Menu.Button className="outlined-button inline-flex w-full justify-between rounded-md p-2 hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75">
+                                                <Menu.Button className="input-style inline-flex flex items-center w-full justify-between rounded-md p-2 hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75">
                                                     Select brand tags
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="mr-1 ml-2 h-6 w-5 text-violet-200 hover:text-violet-100">
                                                         <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
@@ -144,42 +227,44 @@ export default function BrandComp({id, userType} : BrandCompProps) {
                                                 leaveTo="transform opacity-0 scale-95"
                                             >
                                                 <Menu.Items className="right-0 mt-2 w-full origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none">
-                                                    <div className="px-1 py-1 ">
-                                                        {["Brand Tag 1", "Brand Tag 2"].map((item, index) => (
+                                                    {tags.length > 0 && (
+                                                    <div className="overflow-auto px-1 py-1 w-full h-40">
+                                                        {tags.map((item, index) => (
                                                             <Menu.Item key={index}>
                                                                 {({ active }) => (
-                                                                <button
-                                                                    disabled
+                                                                <div
                                                                     className={`${
                                                                     active ? 'bg-violet-500 text-white' : 'text-gray-900'
-                                                                    } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                                                                    } overflow-auto group flex w-full items-center rounded-md px-2 py-2 text-sm`}
                                                                 >
                                                                     <input 
                                                                         type="checkbox" 
                                                                         value={item}
                                                                         checked={checkedItems.includes(item)}
-                                                                        onChange={(event) => handleCheckboxChange(event, item)}
-                                                                        className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                                                                        onChange={() => handleCheckboxChange(item)}
+                                                                        onClick={(event) => event.stopPropagation()}
+                                                                        className="input-style w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
                                                                     />
                                                                     <strong className='px-1'>{item}</strong>
-                                                                </button>
+                                                                </div>
                                                                 )}
                                                             </Menu.Item>
                                                         ))}
                                                     </div>
+                                                    )}
                                                 </Menu.Items>
                                             </Transition>
                                         </Menu>
                                     </div>
 
-                                    <div className='mt-6 p-1 text-center'>
+                                    <div className='mt-5 mb-1 text-center'>
                                         <button
                                             type='button'
-                                            className='w-80 gradient-button'
+                                            className='w-80 px-5 py-2 gradient-button'
                                             //className='w-80 inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2'
-                                            onClick={closeModal}
+                                            onClick={handleAddBrand}
                                         >
-                                            Add Brand
+                                            Save and Proceed
                                         </button>
                                     </div>
                                 </Dialog.Panel>

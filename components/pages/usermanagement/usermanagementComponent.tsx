@@ -119,26 +119,26 @@ export default function UserManagementComp() {
                                         </div>
 
                                         <div className='mt-6 flex flex-row justify-center items-center text-center gap-1'>
-                                            <input type="text" className='w-48 outlined-button' placeholder='First name'/>
-                                            <input type="text" className='w-48 outlined-button' placeholder='Last name'/>
+                                            <input type="text" className='w-48 input-style' placeholder='First name'/>
+                                            <input type="text" className='w-48 input-style' placeholder='Last name'/>
                                         </div>
 
                                         <div className='mt-4 justify-center items-center text-center'>
-                                            <input type="text" className='w-96 outlined-button' placeholder='Username'/>
+                                            <input type="text" className='w-96 input-style' placeholder='Username'/>
                                         </div>
 
                                         <div className='mt-4 justify-center items-center text-center'>
-                                            <input type="text" className='w-96 outlined-button' placeholder='Email'/>
+                                            <input type="text" className='w-96 input-style' placeholder='Email'/>
                                         </div>
 
                                         <div className='mt-4 justify-center items-center text-center'>
-                                            <input type="text" className='w-96 outlined-button' placeholder='Password'/>
+                                            <input type="text" className='w-96 input-style' placeholder='Password'/>
                                         </div>
 
                                         <div className='mt-4 justify-center items-center text-center'>
                                             <Menu as="div" className="w-96 relative inline-block text-left">
                                                 <div>
-                                                    <Menu.Button className="outlined-button inline-flex w-full justify-between rounded-md p-2 hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75">
+                                                    <Menu.Button className="input-style inline-flex flex items-center w-full justify-between rounded-md p-2 hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75">
                                                         Select User Type:
                                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="mr-1 ml-2 h-6 w-5 text-violet-200 hover:text-violet-100">
                                                             <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
@@ -175,14 +175,14 @@ export default function UserManagementComp() {
                                             </Menu>
                                         </div>
 
-                                        <div className='mt-6 p-1 text-center'>
+                                        <div className='mt-5 text-center'>
                                             <button
                                                 type='button'
-                                                className='w-80 gradient-button'
+                                                className='w-96 px-5 py-2 gradient-button'
                                                 //className='w-80 inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2'
                                                 onClick={closeModal}
                                             >
-                                                Add User
+                                                Save and Proceed
                                             </button>
                                         </div>
                                     </Dialog.Panel>
