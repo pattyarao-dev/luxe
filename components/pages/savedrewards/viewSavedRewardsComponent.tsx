@@ -19,7 +19,7 @@ export const UserSavedRewards = ({userId}: {userId: ObjectId}) => {
         const data = await response.json();
         setSavedRewards(data.saved_rewards);
       } catch (error) {
-        console.error('Error fetching subscriptions:', error);
+        console.error('Error fetching favorites:', error);
       }
     };
 

@@ -3,11 +3,14 @@
 import React, {useState, useEffect} from 'react'
 import { useSearchParams } from 'next/navigation'
 import { BrandTypes } from '@/app/types/brandTypes'
+import { RewardTypes } from '@/app/types/rewardTypes'
 import { ObjectId } from 'mongoose'
+import { RewardCard } from '../clienthome/RewardCard'
 
 export const ClientBrandProfile = ({brandId}: {brandId: string}) => {
 
     const [brand, setBrand] = useState<BrandTypes>()
+    const [rewards, setRewards] = useState<RewardTypes[]>()
     useEffect(() => {
         async function getBrand(){
             try {
@@ -15,6 +18,10 @@ export const ClientBrandProfile = ({brandId}: {brandId: string}) => {
                 const data = await res.json()
                 console.log(data)
                 setBrand(data.data)
+
+                const rewardRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/merchantrewards?id=${brandId}`)
+                 const rewardsData = await rewardRes.json();
+                setRewards(rewardsData.data);
             } catch (error){
                 console.error("error fetching brand")
             }
@@ -34,10 +41,23 @@ export const ClientBrandProfile = ({brandId}: {brandId: string}) => {
             </div>
         </div>
         {brand && (
-        <div className="w-full p-4 flex flex-col items-center justify-center gap-4">
-            <p className='text-2xl font-bold'>{brand.brand_name}</p>
-            <p>Subscribers: {brand.total_fcount}</p>
-            <button className="gradient-button">Subscribe</button>
+        <div className="w-full flex flex-col items-center justify-center">
+            <div className="w-full p-4 flex flex-col items-center justify-center gap-4">
+                <p className='text-2xl font-bold'>{brand.brand_name}</p>
+                <p>Subscribers: {brand.total_fcount}</p>
+                <button className="gradient-button">Subscribe</button>
+            </div>
+            <div className="w-full p-4 flex flex-col gap-4">
+                <hr className="w-full border border-dark-purple"/>
+                 <div className="w-full flex flex-col gap-4">
+                    {rewards && rewards.map((reward, index) => (
+                    <div key={index} className="w-full p-2 bg-white border border-gray-main rounded-md">
+                        <p className="text-lg font-bold text-dark-pink">{reward.reward_name}</p>
+                        <p>{reward.reward_desc}</p>
+                    </div>
+                ))}
+                 </div>
+            </div>
         </div>
         )}
         
