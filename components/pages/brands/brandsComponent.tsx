@@ -17,6 +17,8 @@ interface BrandCompProps {
 }
 
 export default function BrandComp({id, userType} : BrandCompProps) {
+    console.log(id)
+    console.log(userType)
     let [isOpen, setIsOpen] = useState(false);
     const [checkedItems, setCheckedItems] = useState<string[]>([]);
     const [brands, setBrands] = useState<Brand[]>([]);
@@ -133,7 +135,7 @@ export default function BrandComp({id, userType} : BrandCompProps) {
             <div className="w-full flex flex-wrap justify-center gap-6">
                 {brands.map((brand, index) => (
                     <div key={index} className="w-96 rounded overflow-hidden shadow-lg">
-                        <Link href={`/brandprofile?id=${brand._id}`} passHref>
+                        <Link href={`/brandprofile?id=${brand._id}&userType=${userType}`} passHref>
                             <Image className="w-full" width={500} height={500} src="/lv.png" alt="Sunset in the mountains"></Image>
                             <div className="px-6 py-4">
                                 <div className="font-bold text-xl mb-2">{brand.brand_name}</div>
@@ -143,9 +145,12 @@ export default function BrandComp({id, userType} : BrandCompProps) {
                     </div>
                 ))}
             </div>
-            <div className='py-2'>
-                <button onClick={openModal} className='w-fit px-5 py-2 gradient-button'>Add a Brand</button>
-            </div>
+            {userType === 'ADMIN_ALL' && (
+                <div className='py-2'>
+                    <button onClick={openModal} className='w-fit px-5 py-2 gradient-button'>Add a Brand</button>
+                </div> 
+            )}
+            
 
             <Transition appear show={isOpen} as={Fragment}>
                 <Dialog as="div" className="relative z-10" onClose={closeModal}>

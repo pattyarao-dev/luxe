@@ -8,7 +8,9 @@ import {Menu, Dialog, Transition} from '@headlessui/react'
 export default function BrandProfileComp() {
     const searchParams = useSearchParams();
     const id = searchParams.get('id');
+    const usertype = searchParams.get('userType')
     console.log(id)
+    console.log(usertype)
 
     let [isOpen, setIsOpen] = useState(false);
     function closeModal() {
@@ -60,7 +62,7 @@ export default function BrandProfileComp() {
                                     View Rewards
                                 </Link>
                                 <Link 
-                                    href={`/usermanagement?id=${data._id}`} 
+                                    href={`/usermanagement?id=${data._id}&userType=${usertype}`} 
                                     className='px-5 outlined-button flex items-center text-center' 
                                     passHref
                                 >
