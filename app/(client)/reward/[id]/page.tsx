@@ -64,7 +64,7 @@ export default async function Reward({ params }: { params: RewardTypes }) {
                         <div>
                             <p className="text-justify">{reward.reward_desc}</p>
                         </div>
-                        <div className="w-full p-2 bg-dark-pink rounded-md text-white drop-shadow-md flex justify-between items-center">
+                        <div className="w-full p-2 border border-dark-pink bg-white rounded-md text-dark-purple drop-shadow-md flex justify-between items-center">
                             <div className="flex items-center gap-2">
                                 <h1 className="text-xl uppercase font-semibold">
                                     Claim before
@@ -80,7 +80,7 @@ export default async function Reward({ params }: { params: RewardTypes }) {
                     </div>
                 </div>
             )}
-            <div className="w-full px-6 flex flex-col gap-2">
+            <div className="w-full h-[38vh] p-4 flex flex-col gap-2">
                 <RewardActions qr_string={qr_string} />
             </div>
         </main>

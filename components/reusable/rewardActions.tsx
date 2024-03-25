@@ -52,10 +52,10 @@ const RewardActions: React.FC<RewardActionsProps> = ({ qr_string }) => {
         //       <img src={src} alt="QR Code" />}</section>
         //  </div>
 
-        <div className={`bg-yellow-500 rounded-md`}>
+        <div className={`w-full bg-gray-main rounded-md`}>
             <div
                 className={`w-full flex justify-between p-4 transition-all duration-300 ease-in-out rounded-t-md font-bold uppercase ${
-                    showQR ? "bg-accent-100 text-white" : ""
+                    showQR ? "text-white" : "text-yellow-400"
                 }`}
                 onClick={handleClaimNowClick}
             >
