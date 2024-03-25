@@ -35,6 +35,7 @@ function valueConditionHelper(value_conditions: valueCondition[], value_input: n
     for (let i = 0; i < value_conditions.length; i++) {
         let condition = value_conditions[i];
         let inputValue = value_input[i];
+        console.log(inputValue, condition.operator, condition.value)
         switch (condition.operator) {
             case '<=':
                 if (!(inputValue <= condition.value)) return false;
@@ -87,13 +88,13 @@ export function transactionEngine(
     else if (claim_type.includes('CUSTOM')){
         
         if(min_items !== null){
-            if (sales_data.sales_count <= min_items!){
+            if (sales_data.sales_count < min_items!){
                 return false;
             }
         }
 
         if(min_spent !== null){
-            if (sales_data.sales_total <= min_spent!){
+            if (sales_data.sales_total < min_spent!){
                 return false;
             }
         }
