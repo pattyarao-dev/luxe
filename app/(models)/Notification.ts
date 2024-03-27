@@ -14,6 +14,7 @@ const Schema = mongoose.Schema
 
 const NotificationSchema  = new Schema({
     sender: {type:mongoose.Schema.Types.ObjectId, ref:'Brand'}, 
+    sender_name: { type: String, required: true }, 
     receiver: [{type:mongoose.Schema.Types.ObjectId, ref:'User'}], 
     message: { type: String, required: true }, 
     reward: {type:mongoose.Schema.Types.ObjectId, ref:'Reward'}, 

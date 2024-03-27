@@ -3,110 +3,111 @@
 @tailwind utilities;
 
 @layer components {
-  .gradient-background{
-    @apply bg-gradient-to-b from-gray-main to-white
-  }
+    .gradient-background {
+        @apply bg-gradient-to-b from-gray-main to-white;
+    }
 
-  .gradient-background-dark {
-    @apply bg-gradient-to-b from-midnight-blue to-dark-purple
-  }
+    .gradient-background-dark {
+        @apply bg-gradient-to-b from-midnight-blue to-dark-purple;
+    }
 
-  .input-style {
-    @apply w-full p-2 bg-white rounded-md border-2 border-dark-purple text-xs
-  }
+    .input-style {
+        @apply w-full p-2 bg-white rounded-md border-2 border-dark-purple text-xs;
+    }
 
-  .gradient-button {
-    @apply bg-gradient-to-br from-purple to-midnight-blue px-2 py-3 rounded-xl text-white 
-  }
+    .gradient-button {
+        @apply bg-gradient-to-br from-purple to-midnight-blue px-3 py-2 rounded-xl text-white;
+    }
 
-  .outlined-button {
-    @apply bg-white border-2 border-dark-pink px-2 py-3  rounded-xl text-midnight-blue font-bold
-  }
+    .outlined-button {
+        @apply bg-white border-2 border-dark-pink px-2 py-3  rounded-xl text-midnight-blue font-bold;
+    }
 
-  .solid-button {
-    @apply bg-purple px-2 py-3 rounded-xl text-white text-sm uppercase
-  }
+    .solid-button {
+        @apply bg-purple px-2 py-3 rounded-xl text-white text-sm uppercase;
+    }
 
-  .profile-header {
-    @apply bg-dark-pink w-full h-36
-  }
+    .profile-header {
+        @apply bg-dark-pink w-full h-36;
+    }
 
-  .image-section {
-    @apply absolute top-36 w-full flex justify-center
-  }
+    .image-section {
+        @apply absolute top-36 w-full flex justify-center;
+    }
 
-  .information {
-    @apply flex flex-col gap-2 p-2
-  }
+    .information {
+        @apply flex flex-col gap-2 p-2;
+    }
 
-  .profile-title {
-    @apply font-bold
-  }
+    .profile-title {
+        @apply font-bold;
+    }
 
-  .profile-data {
-    @apply text-sm text-gray-main border-b pb-2 border-dark-pink
-  }
+    .profile-data {
+        @apply text-sm text-gray-main border-b pb-2 border-dark-pink;
+    }
 
-  .reward-card {
-    @apply w-full h-32 bg-white p-4 flex items-center gap-3 rounded-lg border drop-shadow-md
-  }
+    .reward-card {
+        @apply w-full h-52 bg-white flex flex-col items-center gap-3 rounded-lg border drop-shadow-md;
+    }
 
-  .branch-card {
-    @apply w-fit h-20 bg-white border border-dark-purple p-4 flex items-center gap-3 rounded-lg drop-shadow-dark-purple
-  }
-
+    .branch-card {
+        @apply w-fit h-20 bg-white border border-dark-purple p-4 flex items-center gap-3 rounded-lg drop-shadow-dark-purple;
+    }
 }
 
 @layer utilities {
+    .drop-shadow-midnight-blue {
+        @apply drop-shadow-[0_4px_4px_rgba(3,6,55,0.90)];
+    }
 
-  .drop-shadow-midnight-blue {
-    @apply drop-shadow-[0_4px_4px_rgba(3,6,55,0.90)]
-  }
+    .drop-shadow-dark-purple {
+        @apply drop-shadow-[0_4px_4px_rgba(60,7,83,0.90)];
+    }
 
-  .drop-shadow-dark-purple {
-    @apply drop-shadow-[0_4px_4px_rgba(60,7,83,0.90)]
-  }
+    .drop-shadow-purple {
+        @apply drop-shadow-[0_4px_4px_rgba(114,4,85,0.90)];
+    }
 
-  .drop-shadow-purple {
-    @apply drop-shadow-[0_4px_4px_rgba(114,4,85,0.90)]
-  }
+    .drop-shadow-dark-pink {
+        @apply drop-shadow-[0_4px_4px_rgba(145,10,103,0.90)];
+    }
 
-  .drop-shadow-dark-pink {
-    @apply drop-shadow-[0_4px_4px_rgba(145,10,103,0.90)]
-  }
+    .drop-shadow-gray {
+        @apply drop-shadow-[0_4px_4px_rgba(171,171,171,0.90)];
+    }
 
-  .drop-shadow-gray {
-    @apply drop-shadow-[0_4px_4px_rgba(171,171,171,0.90)]
-  }
+    .gradient-text {
+        @apply bg-clip-text text-transparent bg-gradient-to-r from-dark-purple to-purple;
+    }
 
-  .gradient-text{
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-dark-purple to-purple
-  }
+    .primary-background {
+        @apply bg-gradient-to-br from-white to-slate-300;
+    }
 }
 
-
 .side-menu-overlay {
-  animation: fadeInOverlay 0.3s forwards;
+    animation: fadeInOverlay 0.3s forwards;
 }
 
 .side-menu {
-  animation: slideInMenu 0.3s forwards;
+    animation: slideInMenu 0.3s forwards;
 }
 
 @keyframes slideInMenu {
-  from {
-    transform: translateX(-100%);
-  }
-  to {
-    transform: translateX(0);
-  }
+    from {
+        transform: translateX(-100%);
+    }
+    to {
+        transform: translateX(0);
+    }
 }
 
 @keyframes fadeInOverlay {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
