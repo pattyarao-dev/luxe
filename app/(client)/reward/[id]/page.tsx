@@ -8,6 +8,7 @@ import { getTokenContent } from "@/app/(services)/frontend/get_token"
 import RewardActions from "@/components/reusable/rewardActions"
 import { FaArrowLeft } from "react-icons/fa6"
 import { FaCalendar } from "react-icons/fa"
+import { ClientRewardPage } from "@/components/pages/clientrewardpage/clientRewardPage"
 
 // async function getReward(id: number) {
 //   const res = await fetch(`http://localhost:4000/rewards/${id}`);
@@ -17,6 +18,7 @@ import { FaCalendar } from "react-icons/fa"
 async function getReward(id: ObjectId) {
     try {
         const reward = await Rewards.findById(id).exec()
+        console.log(reward)
         return reward
     } catch (error) {
         console.error("Error fetching rewards", error)
@@ -24,16 +26,27 @@ async function getReward(id: ObjectId) {
     }
 }
 
-export default async function Reward({ params }: { params: RewardTypes }) {
+export default async function Reward({ params }: { params: { id: ObjectId } }) {
     const token_content = getTokenContent()
     const qr_content = { client_id: token_content._id, reward_id: params.id }
     const qr_string = `${qr_content.client_id}-${qr_content.reward_id}`
     const reward = await getReward(params.id)
     return (
         <main className="w-full h-full flex flex-col gap-10">
-            {reward && (
+            {reward ? (
                 <div className="w-full flex flex-col">
-                    <div className="w-full">
+                    <ClientRewardPage reward={reward} />
+                    <RewardActions qr_string={qr_string} />
+                </div>
+            ) : (
+                <p>Failed to fetch reward</p>
+            )}
+        </main>
+    )
+}
+
+{
+    /* <div className="w-full">
                         <Image
                             src="/reward-stockimage.jpg"
                             width={300}
@@ -70,19 +83,12 @@ export default async function Reward({ params }: { params: RewardTypes }) {
                                     Claim before
                                 </h1>
                             </div>
-                            {/* <p className="text-dark-pink font-bold">{reward.start} to {reward.end}</p> */}
-                            <p>
-                                {new Date(reward.expiry)
-                                    .toLocaleString()
-                                    .slice(0, 10)}
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            )}
-            <div className="w-full h-[38vh] p-4 flex flex-col gap-2">
-                <RewardActions qr_string={qr_string} />
-            </div>
-        </main>
-    )
+                            {/* <p className="text-dark-pink font-bold">{reward.start} to {reward.end}</p> */
 }
+//         <p>
+//             {new Date(reward.expiry)
+//                 .toLocaleString()
+//                 .slice(0, 10)}
+//         </p>
+//     </div>
+// </div> */}

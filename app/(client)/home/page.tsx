@@ -56,25 +56,9 @@ export default async function Home() {
                 <h1 className="w-full text-2xl font-semibold">
                     Browse Rewards
                 </h1>
-                <div className="w-full flex flex-col gap-4">
+                <div className="w-full h-[72vh] flex flex-col gap-3 overflow-y-auto">
                     {rewards.map((reward) => (
-                        <div key={reward.id} className="w-full">
-                            {/* <div className="reward-card">
-                <div className="w-[25%] h-[90px] rounded-md flex justify-center bg-gray-main">
-                <Image src="/cuate.png" width={80} height={80} alt="reward image" className="p-2"></Image>
-              </div>
-              <div className="w-[60%] flex flex-col gap-4">
-                <Link href={`/reward/${reward.id}`}>
-                  <div>
-                    <h1 className="font-bold">{reward.reward_name}</h1>
-                    <p className="text-xs">{reward.brand_name}</p>
-                  </div>
-                </Link>
-              </div>
-                <div className="w-[10%] flex justify-center">
-                  <StarIcon/>
-                </div>
-              </div> */}
+                        <div key={reward._id} className="w-full h-full">
                             <RewardCard
                                 id={reward.id}
                                 reward_name={reward.reward_name}

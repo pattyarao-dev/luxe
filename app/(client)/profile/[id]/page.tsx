@@ -3,13 +3,28 @@ import Image from "next/image"
 import { useState } from "react"
 import ProfileDetails from "@/components/pages/profile/profileDetailsComponent"
 import IconComp from "@/components/pages/profile/iconComponent"
+import User from "@/app/(models)/User"
+import { ObjectId } from "mongoose"
 
-export default function Profile({ params }: { params: { slug: string } }) {
+async function getUserProfile(id: ObjectId) {
+    try {
+        const user = await User.findById(id).exec()
+        console.log(user)
+        return user
+    } catch (error) {
+        console.error("error fetching profile", error)
+    }
+}
+
+export default async function Profile({
+    params
+}: {
+    params: { id: ObjectId }
+}) {
+    const user = await getUserProfile(params.id)
     return (
         <main className="w-full min-h-screen">
-            <section className="profile-header"></section>
-            <IconComp />
-            <ProfileDetails />
+            {user && <ProfileDetails user={user} />}
         </main>
     )
 }
