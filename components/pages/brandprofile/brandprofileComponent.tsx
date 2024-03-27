@@ -52,7 +52,7 @@ export default function BrandProfileComp() {
             <div className="w-full flex flex-row justify-center gap-8 px-20 py-20">
                 <div className='w-full'>
                     <div className='w-full flex flex-row justify-between'>
-                            <h1 className="text-4xl font-bold">{data.brand_name}</h1>
+                            <h1 className="text-4xl flex items-center font-bold">{data.brand_name}</h1>
                             <div className='flex gap-2'>
                                 <Link 
                                     href={`/viewrewards?id=${data._id}`} 
@@ -74,7 +74,7 @@ export default function BrandProfileComp() {
                         <p className='w-fit'>{data.brand_desc}</p>
                     </div>
                     <div className='w-full py-4 flex flex-row justify-between'>
-                        <h1 className="text-3xl font-bold">Branches</h1>
+                        <h1 className="text-3xl flex items-center font-bold">Branches</h1>
                         <button className='px-5 outlined-button' onClick={openModal}>Add a Branch</button>
                         <Transition appear show={isOpen} as={Fragment}>
                             <Dialog as="div" className="relative z-10" onClose={closeModal}>
@@ -140,9 +140,13 @@ export default function BrandProfileComp() {
                         </Transition>
                     </div>
                     <div className='flex flex-col gap-3'>
-                        {data.branches.map((branch: { branch_name: string }, index: number) => (
-                        <BranchCard key={index} branch_name={branch.branch_name} />
-                    ))}
+                        {data.branches.length > 0 ? (
+                            data.branches.map((branch: { branch_name: string }, index: number) => (
+                                <BranchCard key={index} branch_name={branch.branch_name} />
+                            ))
+                        ) : (
+                            <h1 className='flex justify-center px-10 py-32 font-semibold'>There are no branches for this yet</h1>
+                        )}
                     </div>
                     
                 </div>

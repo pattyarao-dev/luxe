@@ -177,8 +177,11 @@ export default function BrandComp({id, userType} : BrandCompProps) {
                                 leaveFrom="opacity-100 scale-100"
                                 leaveTo="opacity-0 scale-95"
                             >
-                                <Dialog.Panel className='w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-10 text-left align-middle shadow-xl transition-all'>
-                                    <Dialog.Title
+                                <Dialog.Panel className='flex flex-col justify-between w-full max-w-md h-[60vh] transform overflow-hidden rounded-2xl bg-white p-10 text-left align-middle shadow-xl transition-all'>
+                                    
+
+                                    <div>
+                                        <Dialog.Title
                                         as="h1"
                                         className='text-3xl font-bold leading-6 text-gray-900'
                                     >
@@ -189,8 +192,7 @@ export default function BrandComp({id, userType} : BrandCompProps) {
                                             Fill out the form below to add a new brand:
                                         </p>
                                     </div>
-
-                                    <div className='mt-6 justify-center items-center text-center'>
+                                        <div className='mt-6 justify-center items-center text-center'>
                                         <input 
                                             type="text" 
                                             className='w-80 outlined-button' 
@@ -231,7 +233,7 @@ export default function BrandComp({id, userType} : BrandCompProps) {
                                                 leaveFrom="transform opacity-100 scale-100"
                                                 leaveTo="transform opacity-0 scale-95"
                                             >
-                                                <Menu.Items className="right-0 mt-2 w-full origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none">
+                                                <Menu.Items className="absolute right-0 mt-2 w-full origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none">
                                                     {tags.length > 0 && (
                                                     <div className="overflow-auto px-1 py-1 w-full h-40">
                                                         {tags.map((item, index) => (
@@ -261,6 +263,8 @@ export default function BrandComp({id, userType} : BrandCompProps) {
                                             </Transition>
                                         </Menu>
                                     </div>
+                                    </div>
+                                    
 
                                     <div className='mt-5 mb-1 text-center'>
                                         <button

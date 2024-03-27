@@ -83,9 +83,9 @@ export default function UserManagementComp() {
         }
     }, [id]);
 
-    if (!usersData || usersData.length === 0) {
-        return <div>Loading...</div>;
-    }
+    // if (!usersData || usersData.length === 0) {
+    //     return <div>Loading...</div>;
+    // }
 
     console.log(brandData)
     console.log(usersData)
@@ -137,21 +137,26 @@ export default function UserManagementComp() {
     
     return (
             <div className="w-full flex flex-col justify-center items-center gap-8 p-20">
-                <h1 className="w-full px-10 text-4xl font-bold text-center">Brand 1</h1>
+                {brandData && (
+                    <h1 className="w-full px-10 text-4xl font-bold text-center">{brandData.data.brand_name}</h1>
+                )}
                 <div className='w-1/3 flex flex-row gap-4'>
                     <button className='outlined-button w-full flex items-center justify-between tracking-wider active:border-white duration-300 active:text-white'>sort:branch</button>
                     <button className='outlined-button w-full flex items-center justify-between tracking-wider active:border-white duration-300 active:text-white'>sort:type</button>
                 </div>
                 <div className='w-full px-64'>
-                {usersData.map((user) => (
-                    <UserCard
-                        key={user._id}
-                        first_name={user.first_name}
-                        last_name={user.last_name}
-                        user_type={user.user_type}
-                    />
-                ))}
-
+                    {usersData.length > 0 ? (
+                        usersData.map((user) => (
+                            <UserCard
+                                key={user._id}
+                                first_name={user.first_name}
+                                last_name={user.last_name}
+                                user_type={user.user_type}
+                            />
+                        ))
+                    ) : (
+                        <h1 className='flex justify-center p-20 font-semibold'>There are no active users for this brand</h1>
+                    )}
                 </div>
                 <button className='px-20 outlined-button' onClick={openModal}>ADD USER</button>
 
