@@ -154,7 +154,7 @@ const RewardVerificationForm: React.FC<QRContentProps> = ({
                     {/* Add more reward details here as needed */}
                 </div>
             )}
-            {reward && reward.min_spent !== 0 && reward.min_items !== 0 && (
+            {reward && (reward.min_spent !== 0 || reward.min_items !== 0) && (
                 <div>
                     <form onSubmit={submit}>
                         {purchases.map((purchase, index) => {
