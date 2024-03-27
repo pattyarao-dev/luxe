@@ -1,12 +1,12 @@
 import { ObjectId } from "mongoose"
 
 interface FreebiesTypes {
-  name: string
-  qty: number
+    name: string
+    qty: number
 }
 
 export interface RewardTypes {
-    id: ObjectId
+    _id: ObjectId
     reward_name: string
     reward_desc: string
     brand_name: string
@@ -22,11 +22,10 @@ export interface RewardTypes {
     status: boolean
     createdAt: Date
     expiry: Date
-    is__expired: boolean
+    is_expired: boolean
     reward_tags: string[]
     claim_buckets: ObjectId
     claim_count: number
     sales_total: number
     sales_count: number
-
-  }
+}
