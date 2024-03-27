@@ -48,7 +48,7 @@ export default async function Home() {
     }
 
     return (
-        <main className="w-full">
+        <main className="w-full min-h-screen primary-background">
             <div>
                 <SearchBar />
             </div>

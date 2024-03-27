@@ -13,7 +13,7 @@ export default function Subscriptions({ params }: { params: { id: string } }) {
     console.log(params.id)
     console.log(user._id)
     return (
-        <main className="w-full min-h-screen">
+        <main className="w-full min-h-screen primary-background">
             <div className="w-full h-fit px-4 py-8 flex flex-col justify-center gap-4">
                 <h1 className="text-dark-purple text-2xl font-bold">
                     My Subscriptions
