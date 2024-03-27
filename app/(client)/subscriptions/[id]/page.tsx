@@ -10,8 +10,8 @@ export default function Subscriptions({ params }: { params: { id: string } }) {
     const user = getTokenContent()
     const { _id, user_type } = user
 
-    console.log(params.id)
-    console.log(user._id)
+    // console.log(params.id)
+    // console.log(user._id)
     return (
         <main className="w-full min-h-screen primary-background">
             <div className="w-full h-fit px-4 py-8 flex flex-col justify-center gap-4">

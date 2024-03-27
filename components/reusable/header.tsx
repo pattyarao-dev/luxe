@@ -47,7 +47,7 @@ export default function Header({ params }: { params: { slug: string } }) {
                     <Link href="/home">
                         <p className="text-4xl uppercase font-bold">Luxe.</p>
                     </Link>
-                    <Link href="/notifications">
+                    <Link href={`/notifications/${params.slug}`}>
                         <IoIosNotifications className="text-2xl" />
                     </Link>
                 </div>
