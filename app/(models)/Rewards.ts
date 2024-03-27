@@ -12,6 +12,7 @@ const Schema = mongoose.Schema
 const RewardDateSchema = new Schema({
     reward_name: { type: String, required: true },
     reward_desc: { type: String, required: true },
+    conditions_desc: [String],
     brand_id: { type: Schema.Types.ObjectId, ref: "Brand" },
     brand_name: { type: String, required: true },
     allowed_branches: [String],
@@ -45,9 +46,8 @@ const RewardDateSchema = new Schema({
             value: { type: Number }
         }
     ],
-    min_spent: { type: Number, default: null },
-    min_items: { type: Number, default: null },
-
+    min_spent: { type: Number, default: 0 },
+    min_items: { type: Number, default: 0 },
     status: { type: Boolean, default: true },
     createdAt: { type: Date, default: Date.now },
     expiry: { type: Date },

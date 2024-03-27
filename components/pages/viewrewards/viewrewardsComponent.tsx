@@ -93,7 +93,7 @@ export default function ViewRewardsComp() {
                                     {new Date(reward.expiry).toLocaleDateString()}
                                 </td>
                                 <td className="px-6 py-4 text-center">
-                                    {reward.cap}
+                                    {reward.cap}%
                                 </td>
                                 <td className="px-6 py-4 text-center">
                                     <span className="bg-yellow-100 text-yellow-800 font-medium px-5 py-1.5 rounded-full">{reward.status ? "Ongoing" : "Expired"}</span>

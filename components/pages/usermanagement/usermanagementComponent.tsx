@@ -20,9 +20,12 @@ interface APIResponse {
 export default function UserManagementComp() {
     const searchParams = useSearchParams();
     const id = searchParams.get('id');
+    const usertype = searchParams.get('userType')
     console.log(id)
+    console.log(usertype)
 
     let [isOpen, setIsOpen] = useState(false);
+    let [selectedUserType, setSelectedUserType] = useState('');
 
     function closeModal() {
         setIsOpen(false)
@@ -32,7 +35,18 @@ export default function UserManagementComp() {
         setIsOpen(true)
     }
 
+    const [brandData, setBrandData] = useState<any>();
     const [usersData, setUsersData] = useState<User[]>([]);
+    const [addUserData, setAddUserData] = useState({
+        first_name: '',
+        last_name: '',
+        username: '',
+        email: '',
+        password: '',
+        user_type: '',
+        assigned_brand: id,
+        assigned_branch: '',
+    })
 
     useEffect(() => {
         async function fetchUsersData() {
@@ -49,8 +63,23 @@ export default function UserManagementComp() {
             }
         }
 
+        async function fetchBrandData() {
+            try {
+                const response = await fetch(`/api/allbrands/selected/?id=${id}`);
+                if (response.ok) {
+                    const data = await response.json();
+                    setBrandData(data);
+                } else {
+                    console.error('Failed to fetch brand data:', response.statusText);
+                }
+            } catch (error) {
+                console.error('Error while fetching brand data:', error);
+            }
+        }
+
         if (id){
             fetchUsersData(); 
+            fetchBrandData();
         }
     }, [id]);
 
@@ -58,7 +87,53 @@ export default function UserManagementComp() {
         return <div>Loading...</div>;
     }
 
+    console.log(brandData)
     console.log(usersData)
+
+    const handleChange = (e: any) => {
+        const { name, value } = e.target;
+        setAddUserData(prev => ({ ...prev, [name]: value }));
+        console.log(addUserData)
+    }
+
+    function handleAddUser() {
+        // Prepare data for the POST request
+        const postData = {
+            first_name: addUserData.first_name,
+            last_name: addUserData.last_name,
+            username: addUserData.username,
+            email: addUserData.email,
+            password: addUserData.password,
+            user_type: addUserData.user_type,
+            assigned_brand: addUserData.assigned_brand,
+            assigned_branch: addUserData.assigned_branch,
+        };
+
+        console.log(postData)
+    
+        // Send POST request to add the brand
+        fetch(`/api/user`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(postData),
+        })
+        .then(response => {
+            if (response.ok) {
+                // Brand added successfully, close the modal or perform any other actions
+                closeModal();
+            } else {
+                // Handle errors if any
+                console.error('Failed to add user:', response.statusText);
+            }
+        })
+        .catch(error => {
+            console.error('Error while adding user:', error);
+        });
+    }
+
+    const { data } = brandData || {};
     
     return (
             <div className="w-full flex flex-col justify-center items-center gap-8 p-20">
@@ -119,26 +194,61 @@ export default function UserManagementComp() {
                                         </div>
 
                                         <div className='mt-6 flex flex-row justify-center items-center text-center gap-1'>
-                                            <input type="text" className='w-48 outlined-button' placeholder='First name'/>
-                                            <input type="text" className='w-48 outlined-button' placeholder='Last name'/>
+                                            <input 
+                                                type="text" 
+                                                className='w-48 input-style' 
+                                                placeholder='First name'
+                                                name='first_name'
+                                                value={addUserData.first_name}
+                                                onChange={handleChange}
+                                            />
+                                            <input 
+                                                type="text" 
+                                                className='w-48 input-style' 
+                                                placeholder='Last name'
+                                                name='last_name'
+                                                value={addUserData.last_name}
+                                                onChange={handleChange}
+                                            />
                                         </div>
 
                                         <div className='mt-4 justify-center items-center text-center'>
-                                            <input type="text" className='w-96 outlined-button' placeholder='Username'/>
+                                            <input 
+                                                type="text" 
+                                                className='w-96 input-style' 
+                                                placeholder='Username'
+                                                name='username'
+                                                value={addUserData.username}
+                                                onChange={handleChange}
+                                            />
                                         </div>
 
                                         <div className='mt-4 justify-center items-center text-center'>
-                                            <input type="text" className='w-96 outlined-button' placeholder='Email'/>
+                                            <input 
+                                                type="text" 
+                                                className='w-96 input-style' 
+                                                placeholder='Email'
+                                                name='email'
+                                                value={addUserData.email}
+                                                onChange={handleChange}
+                                            />
                                         </div>
 
                                         <div className='mt-4 justify-center items-center text-center'>
-                                            <input type="text" className='w-96 outlined-button' placeholder='Password'/>
+                                            <input 
+                                                type="text" 
+                                                className='w-96 input-style' 
+                                                placeholder='Password'
+                                                name='password'
+                                                value={addUserData.password}
+                                                onChange={handleChange}
+                                            />
                                         </div>
 
                                         <div className='mt-4 justify-center items-center text-center'>
                                             <Menu as="div" className="w-96 relative inline-block text-left">
                                                 <div>
-                                                    <Menu.Button className="outlined-button inline-flex w-full justify-between rounded-md p-2 hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75">
+                                                    <Menu.Button className="input-style inline-flex flex items-center w-full justify-between rounded-md p-2 hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75">
                                                         Select User Type:
                                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="mr-1 ml-2 h-6 w-5 text-violet-200 hover:text-violet-100">
                                                             <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
@@ -156,13 +266,18 @@ export default function UserManagementComp() {
                                                 >
                                                     <Menu.Items className="right-0 mt-2 w-full origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none">
                                                         <div className="px-1 py-1 ">
-                                                            {["Client", "Admin All", "Admin", "Cashier"].map((item, index) => (
+                                                            {["ADMIN", "CASHIER"].map((item, index) => (
                                                                 <Menu.Item key={index}>
                                                                     {({ active }) => (
                                                                     <button
                                                                         className={`${
                                                                         active ? 'bg-violet-500 text-white' : 'text-gray-900'
                                                                         } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                                                                        name='user_type'
+                                                                        onClick={() => {
+                                                                            setSelectedUserType(item)
+                                                                            setAddUserData(prev => ({ ...prev, user_type: item}))
+                                                                        }}
                                                                     >
                                                                         <strong className='px-1'>{item}</strong>
                                                                     </button>
@@ -175,14 +290,61 @@ export default function UserManagementComp() {
                                             </Menu>
                                         </div>
 
-                                        <div className='mt-6 p-1 text-center'>
+                                        {selectedUserType === 'CASHIER' && (
+                                            <div className='mt-4 justify-center items-center text-center'>
+                                                <Menu as="div" className="w-96 relative inline-block text-left">
+                                                    <div>
+                                                        <Menu.Button className="input-style inline-flex flex items-center w-full justify-between rounded-md p-2 hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75">
+                                                            Select Assigned Branch:
+                                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="mr-1 ml-2 h-6 w-5 text-violet-200 hover:text-violet-100">
+                                                                <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                                                            </svg>
+                                                        </Menu.Button>
+                                                    </div>
+                                                    <Transition
+                                                        as={Fragment}
+                                                        enter='transition ease-out duration-100'
+                                                        enterFrom="transform opacity-0 scale-95"
+                                                        enterTo="transform opacity-100 scale-100"
+                                                        leave="transition ease-in duration-75"
+                                                        leaveFrom="transform opacity-100 scale-100"
+                                                        leaveTo="transform opacity-0 scale-95"
+                                                    >
+                                                        <Menu.Items className="right-0 mt-2 w-full origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none">
+                                                            <div className="px-1 py-1 ">
+                                                                {data.branches.map((branch: { branch_name: string }, index: number) => (
+                                                                    <Menu.Item key={index}>
+                                                                        {({ active }) => (
+                                                                        <button
+                                                                            className={`${
+                                                                            active ? 'bg-violet-500 text-white' : 'text-gray-900'
+                                                                            } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                                                                            name='assigned_branch'
+                                                                            onClick={() => {
+                                                                                setAddUserData(prev => ({ ...prev, assigned_branch: branch.branch_name}))
+                                                                            }}
+                                                                        >
+                                                                            <strong className='px-1'>{branch.branch_name}</strong>
+                                                                        </button>
+                                                                        )}
+                                                                    </Menu.Item>
+                                                                ))}
+                                                            </div>
+                                                        </Menu.Items>
+                                                    </Transition>
+                                                </Menu>
+                                            </div>
+                                        )}
+                                        
+
+                                        <div className='mt-5 text-center'>
                                             <button
                                                 type='button'
-                                                className='w-80 gradient-button'
+                                                className='w-96 px-5 py-2 gradient-button'
                                                 //className='w-80 inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2'
-                                                onClick={closeModal}
+                                                onClick={handleAddUser}
                                             >
-                                                Add User
+                                                Save and Proceed
                                             </button>
                                         </div>
                                     </Dialog.Panel>

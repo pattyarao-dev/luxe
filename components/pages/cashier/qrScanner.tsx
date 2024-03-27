@@ -1,12 +1,18 @@
 'use client'
 import React, { useEffect, useState } from 'react';
 import RewardVerificationForm from '@/components/reusable/rewardVerificationForm';
-const QRScanner: React.FC = () => {
+
+interface TokenContent {
+    _id: string;
+    user_type: string;
+}
+
+const QRScanner: React.FC<TokenContent>= ({_id, user_type}) => {
     let scanner: any; // Declare scanner variable in the scope of the component
     const [qrcontent, setQrContent] = useState<string>('')
     const [clientId, setClientId] = useState<string>('');
     const [rewardId, setRewardId] = useState<string>('');
-``
+
     useEffect(() => {
         // Import HTML5-QRCode library script
         const script = document.createElement('script');
@@ -54,10 +60,10 @@ const QRScanner: React.FC = () => {
 
     return (
         <>
-            <h1>TEST</h1>
+            <h1>QR CODE SCAN</h1>
             <div id="reader"></div>
             {qrcontent && (
-                <RewardVerificationForm clientid={clientId} rewardid={rewardId} />
+                <RewardVerificationForm clientid={clientId} rewardid={rewardId} cashierid={_id}/>
             )}
         </>
     );

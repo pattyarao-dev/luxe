@@ -6,10 +6,16 @@ import Claim_Bucket from "@/app/(models)/Claim_Bucket";
 import { salesCounter } from "@/app/(services)/sales_counter";
 import { transactionEngine } from "@/app/(services)/transaction_engine";
 import { checkIfClaimedRewardByID } from "@/app/(services)/claimed_reward_checker";
+import Claim_Transaction from "@/app/(models)/Claim_Transaction";
 
 interface SalesInfo {
     sales_total: number, 
-    sales_count: number
+    sales_count: number,
+}
+
+interface Claim_Transaction{
+    claimed_by: string, 
+    reward: string, 
 }
 
 interface ClaimTransactions{
@@ -85,7 +91,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
 
 
         let calculatedSales : SalesInfo = salesCounter(data.purchases)
-
+        console.log("cal sales", calculatedSales)
         if (transactionEngine(calculatedSales, 
             reward_data.claim_type, 
             reward_data.min_spent, 
@@ -129,6 +135,13 @@ export async function POST(req: NextRequest, res: NextResponse) {
                         sales_total: bucket_data.bucket_sales_total,
                         sales_count: bucket_data.bucket_sales_count
                          })
+
+                    let transaction_info : Claim_Transaction = {
+                        claimed_by: data.client_id, 
+                        reward: reward_id
+                    }
+
+                    await Claim_Transaction.create(transaction_info)
                 }
                 else {
         
@@ -158,6 +171,13 @@ export async function POST(req: NextRequest, res: NextResponse) {
                                 } 
                             }
                          )
+                    
+                    let transaction_info : Claim_Transaction = {
+                            claimed_by: data.client_id, 
+                            reward: reward_id
+                    }
+    
+                    await Claim_Transaction.create(transaction_info)
                 }
         }
         else {
