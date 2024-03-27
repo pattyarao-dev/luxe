@@ -40,6 +40,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
         const input_data = {
           ...data,
           receiver: formatted_array_of_client_ids, 
+          sender_name: brand_data.brand_name,
           sender: brand_id,
           is_scheduled: is_scheduled_val
         }

@@ -18,7 +18,7 @@ const RewardDateSchema = new Schema({
     allowed_branches: [String],
     cap: { type: Number, required: true },
     reward_type: { type: String, enum: ['DISCOUNT', 'FREEBIE'], required: true },
-    discount: { type: Number },
+    discount: { type: Number, default: null },
     freebies: [{
         name: { type: String},
         qty: { type: Number}

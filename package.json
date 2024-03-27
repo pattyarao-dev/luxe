@@ -319,6 +319,7 @@
     "strip-bom": "^3.0.0",
     "strip-json-comments": "^3.1.1",
     "styled-jsx": "^5.1.1",
+    "stylelint": "^16.3.1",
     "sucrase": "^3.35.0",
     "supports-color": "^7.2.0",
     "supports-preserve-symlinks-flag": "^1.0.0",
@@ -364,6 +365,7 @@
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
+    "@types/chart.js": "^2.9.41",
     "@types/jsonwebtoken": "^9.0.5",
     "@types/node": "20.11.16",
     "@types/qrcode": "^1.5.5",
