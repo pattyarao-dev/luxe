@@ -20,10 +20,7 @@ export default async function Favorites({
                 </h1>
                 <hr className="w-full border border-dark-pink" />
             </div>
-            <div className="">
-                <SearchBar />
-            </div>
-            <div className="w-full p-4 flex flex-col gap-6">
+            <div className="w-full p-4 flex flex-col gap-6 overflow-y-auto">
                 <UserSavedRewards userId={params.id} />
             </div>
         </main>
