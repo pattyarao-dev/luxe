@@ -55,11 +55,11 @@ export const RewardCard: React.FC<RewardCardProps> = ({
                         className="w-full object-cover object-top rounded-t-md"
                     ></Image>
                 </div>
-                <div className="w-full h-1/4 p-4 flex items-center justify-between">
-                    <div className="flex flex-col gap-4">
+                <div className="w-full p-4 flex items-center justify-between">
+                    <div className="flex flex-col">
                         <Link href={`/reward/${reward_id}`}>
                             <div>
-                                <h1 className="text-dark-purple text-md font-bold text-lg">
+                                <h1 className="text-dark-purple text-sm font-bold">
                                     {reward_name}
                                 </h1>
                                 <p className="text-xs">{brand_name}</p>

@@ -7,6 +7,8 @@ import Claim_Bucket from "@/app/(models)/Claim_Bucket"
 
 interface ChartParameters {
     user_type: string
+    brand: string
+    branch: string
     start_date: string
     end_date: string
 }
@@ -44,7 +46,15 @@ export async function POST(req: NextRequest) {
             let brand_ids = user_data.brands
 
             // GET Rewards from Brand IDs
-            const brands = await Brand.find({ _id: { $in: brand_ids } })
+            let brands = await Brand.find({ _id: { $in: brand_ids } })
+
+            // APPLY BRAND FILTER IF EXISTS
+            if (data.brand !== "") {
+                console.log("here")
+                brands = brands.filter(
+                    (brand: any) => brand._id.toString() === data.brand
+                )
+            }
 
             output = await Promise.all(
                 brands.map(async (brand) => {
@@ -129,7 +139,11 @@ export async function POST(req: NextRequest) {
                 })
             )
 
-            return Response.json(output)
+            const labels = output.map((item) => item.brand_name)
+            const discountClaims = output.map((item) => item.discount_claims)
+            const freebiesClaims = output.map((item) => item.freebies_claims)
+
+            return Response.json({ labels, discountClaims, freebiesClaims })
         }
         // IF user_type == 'ADMIN' Get number of claims per Branch
         else if (data.user_type === "ADMIN") {
@@ -151,7 +165,15 @@ export async function POST(req: NextRequest) {
             })
 
             // Get All Rewards of the Brand
-            const rewards = await Rewards.find({ brand_id: brandid })
+            let rewards = await Rewards.find({ brand_id: brandid })
+
+            // APPLY BRANCH FILTER IF EXISTS
+            if (data.branch !== "") {
+                console.log("here")
+                rewards = rewards.filter((reward: any) =>
+                    reward.allowed_branches.includes(data.branch)
+                )
+            }
 
             // For each branch, check if each reward is allowed to be redeemed in that reward
             output = await Promise.all(
@@ -224,7 +246,15 @@ export async function POST(req: NextRequest) {
                 })
             )
 
-            return Response.json(output)
+            const labels = output.map((item) => item.branch_name)
+            const discountClaims = output.map((item) => item.discount_claims)
+            const freebiesClaims = output.map((item) => item.freebies_claims)
+
+            return Response.json({
+                labels,
+                discountClaims,
+                freebiesClaims
+            })
         }
 
         // let brand_data = await Brand.findById(brand_id);

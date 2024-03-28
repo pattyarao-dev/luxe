@@ -47,7 +47,7 @@ export default function Header({ params }: { params: { slug: string } }) {
                     <Link href="/home">
                         <p className="text-4xl uppercase font-bold">Luxe.</p>
                     </Link>
-                    <Link href="/notifications">
+                    <Link href={`/notifications/${params.slug}`}>
                         <IoIosNotifications className="text-2xl" />
                     </Link>
                 </div>
@@ -71,7 +71,10 @@ export default function Header({ params }: { params: { slug: string } }) {
                         </section>
                         <section className="w-full p-6 flex flex-col gap-10">
                             {menuItems.map((item, index) => (
-                                <Link href={`/${item.url}/${params.slug}`}>
+                                <Link
+                                    href={`/${item.url}/${params.slug}`}
+                                    key={index}
+                                >
                                     <p
                                         onClick={() => setShowSideMenu(false)}
                                         className="w-full p-2 uppercase font-bold border-b border-dark-purple"

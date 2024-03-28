@@ -48,7 +48,7 @@
     }
 
     .reward-card {
-        @apply w-full h-52 bg-white flex flex-col items-center gap-3 rounded-lg border drop-shadow-md;
+        @apply w-full h-[270px] bg-white flex flex-col items-center rounded-lg border drop-shadow-md;
     }
 
     .branch-card {
