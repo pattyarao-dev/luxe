@@ -71,7 +71,10 @@ export default function Header({ params }: { params: { slug: string } }) {
                         </section>
                         <section className="w-full p-6 flex flex-col gap-10">
                             {menuItems.map((item, index) => (
-                                <Link href={`/${item.url}/${params.slug}`}>
+                                <Link
+                                    href={`/${item.url}/${params.slug}`}
+                                    key={index}
+                                >
                                     <p
                                         onClick={() => setShowSideMenu(false)}
                                         className="w-full p-2 uppercase font-bold border-b border-dark-purple"

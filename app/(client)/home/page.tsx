@@ -7,6 +7,7 @@ import { getTokenContent } from "../../(services)/frontend/get_token"
 import { StarIcon } from "@/components/reusable/staricon"
 import { ObjectId } from "mongoose"
 import { RewardCard } from "@/components/pages/clienthome/RewardCard"
+import { ClientHomepage } from "@/components/pages/clienthome/ClientHomepage"
 
 // async function getRewards() {
 //   const res = await fetch(`http://localhost:4000/rewards`);
@@ -49,26 +50,26 @@ export default async function Home() {
 
     return (
         <main className="w-full min-h-screen primary-background">
-            <div>
-                <SearchBar />
-            </div>
-            <div className="w-full p-4 flex flex-col gap-4">
+            <div className="w-full p-4 flex flex-col gap-3">
+                {/* <SearchBar /> */}
                 <h1 className="w-full text-2xl font-semibold">
                     Browse Rewards
                 </h1>
-                <div className="w-full h-[72vh] flex flex-col gap-3 overflow-y-auto">
-                    {rewards.map((reward) => (
-                        <div key={reward._id} className="w-full h-full">
-                            <RewardCard
-                                id={reward.id}
-                                reward_name={reward.reward_name}
-                                brand_name={reward.brand_name}
-                                userId={user._id}
-                            />
-                        </div>
-                    ))}
-                </div>
             </div>
+
+            <div className="w-full h-[75vh] p-4 flex flex-col gap-3 overflow-y-auto">
+                {rewards.map((reward) => (
+                    <div key={reward._id} className="w-full h-full">
+                        <RewardCard
+                            id={reward.id}
+                            reward_name={reward.reward_name}
+                            brand_name={reward.brand_name}
+                            userId={user._id}
+                        />
+                    </div>
+                ))}
+            </div>
+            {/* <ClientHomepage rewards={rewards} user={user} /> */}
         </main>
     )
 }
