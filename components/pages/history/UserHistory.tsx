@@ -29,7 +29,7 @@ export const UserHistory = ({user}: {user: ObjectId}) => {
   return (
     <div className="w-full h-[70vh] overflow-y-auto flex flex-col gap-4">
         
-            {claimedRewards.map((reward) => (
+         {claimedRewards.map((reward) => (
          <RewardCard
                             id={reward._id}
                             reward_name={reward.reward_name}
