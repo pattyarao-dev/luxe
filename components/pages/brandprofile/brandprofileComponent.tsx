@@ -48,6 +48,8 @@ export default function BrandProfileComp() {
 
     const { data } = brandData;
 
+    console.log(data.branches)
+
     return (
             <div className="w-full flex flex-row justify-center gap-8 px-20 py-20">
                 <div className='w-full'>

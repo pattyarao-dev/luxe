@@ -5,11 +5,11 @@ import { getTokenContent } from '../(services)/frontend/get_token'
 
 export default function MerchNotifications() {
     let x = getTokenContent();
-    const {_id} = x;
+    const {_id, user_type} = x;
     return (
         <main className="w-full min-h-screen flex flex-col">
             <MerchantHeader/>
-            <MerchNotificationsComp id={_id}/>
+            <MerchNotificationsComp id={_id} userType={user_type}/>
         </main>
     )
   }
