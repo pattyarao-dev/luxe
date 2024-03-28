@@ -14,11 +14,6 @@ interface ChartParameters {
 }
 
 interface Output {
-    label: string
-    value: number //default 0
-}
-
-interface WeeklySales {
     [key: string]: number
 }
 
@@ -29,7 +24,7 @@ export async function POST(req: NextRequest) {
     try {
         // IF user_type == 'ADMIN_ALL' Get number of claims per Brand
         if (data.user_type === "ADMIN_ALL") {
-            let output: WeeklySales
+            let output: Output
 
             // GET Brands Associated
             let user_data = await User.findById(userid)
@@ -99,16 +94,47 @@ export async function POST(req: NextRequest) {
                         }
                     )
                 output = DateGrouper(DateFilterFormattedconsolidatedSalesDates)
-                return Response.json(output)
+
+                // Sort By Date
+                const sortedKeys = Object.keys(output).sort((a, b) => {
+                    const weekNumA = parseInt(a.split("Week")[1])
+                    const weekNumB = parseInt(b.split("Week")[1])
+                    return weekNumA - weekNumB
+                })
+
+                const sortedData: { [key: string]: number } = {}
+                sortedKeys.forEach((key) => {
+                    sortedData[key] = output[key]
+                })
+
+                const labels = Object.keys(sortedData)
+                const claims = Object.values(sortedData)
+
+                return Response.json({ labels, claims })
             } else {
                 output = DateGrouper(formattedconsolidatedSalesDates)
-                return Response.json(output)
+
+                const sortedKeys = Object.keys(output).sort((a, b) => {
+                    const weekNumA = parseInt(a.split("Week")[1])
+                    const weekNumB = parseInt(b.split("Week")[1])
+                    return weekNumA - weekNumB
+                })
+
+                const sortedData: { [key: string]: number } = {}
+                sortedKeys.forEach((key) => {
+                    sortedData[key] = output[key]
+                })
+
+                const labels = Object.keys(sortedData)
+                const claims = Object.values(sortedData)
+
+                return Response.json({ labels, claims })
             }
         }
         // IF user_type == 'ADMIN' Get number of claims per Branch
         else if (data.user_type === "ADMIN") {
             // Set Output Object
-            let output: WeeklySales
+            let output: Output
 
             // Get User Data
             let user_data = await User.findById(userid)
@@ -178,10 +204,40 @@ export async function POST(req: NextRequest) {
                         }
                     )
                 output = DateGrouper(DateFilterFormattedconsolidatedSalesDates)
-                return Response.json(output)
+                // Sort By Date
+                const sortedKeys = Object.keys(output).sort((a, b) => {
+                    const weekNumA = parseInt(a.split("Week")[1])
+                    const weekNumB = parseInt(b.split("Week")[1])
+                    return weekNumA - weekNumB
+                })
+
+                const sortedData: { [key: string]: number } = {}
+                sortedKeys.forEach((key) => {
+                    sortedData[key] = output[key]
+                })
+
+                const labels = Object.keys(sortedData)
+                const claims = Object.values(sortedData)
+
+                return Response.json({ labels, claims })
             } else {
                 output = DateGrouper(formattedconsolidatedSalesDates)
-                return Response.json(output)
+                // Sort By Date
+                const sortedKeys = Object.keys(output).sort((a, b) => {
+                    const weekNumA = parseInt(a.split("Week")[1])
+                    const weekNumB = parseInt(b.split("Week")[1])
+                    return weekNumA - weekNumB
+                })
+
+                const sortedData: { [key: string]: number } = {}
+                sortedKeys.forEach((key) => {
+                    sortedData[key] = output[key]
+                })
+
+                const labels = Object.keys(sortedData)
+                const claims = Object.values(sortedData)
+
+                return Response.json({ labels, claims })
             }
         }
     } catch (err: any) {

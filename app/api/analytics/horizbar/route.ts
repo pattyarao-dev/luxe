@@ -24,6 +24,11 @@ interface HorizBarAdmin {
     claims: number //default 0
 }
 
+interface ResponseObject {
+    labels: string[]
+    data: number[]
+}
+
 // GET
 export async function POST(req: NextRequest) {
     const userid = req.nextUrl.searchParams.get("id") as string
@@ -114,7 +119,18 @@ export async function POST(req: NextRequest) {
                 })
             )
 
-            return Response.json(output)
+            // Sort By Descending Order
+            const sortedBrandsData = output.sort((a, b) => b.claims - a.claims)
+
+            // Format as Horizontal Bar (Chart.js) format
+            const labels: string[] = sortedBrandsData.map(
+                (brand) => brand.brand_name
+            )
+            const claims: number[] = sortedBrandsData.map(
+                (brand) => brand.claims
+            )
+
+            return Response.json({ labels, claims })
         }
         // IF user_type == 'ADMIN' Get number of claims per Branch
         else if (data.user_type === "ADMIN") {
@@ -223,11 +239,19 @@ export async function POST(req: NextRequest) {
                 })
             )
 
-            return Response.json(output)
-        }
+            // Sort By Descending Order
+            const sortedBrandsData = output.sort((a, b) => b.claims - a.claims)
 
-        // let brand_data = await Brand.findById(brand_id);
-        // let branches = brand_data.branches
+            // Format as Horizontal Bar (Chart.js) format
+            const labels: string[] = sortedBrandsData.map(
+                (brand) => brand.branch_name
+            )
+            const claims: number[] = sortedBrandsData.map(
+                (brand) => brand.claims
+            )
+
+            return Response.json({ labels, claims })
+        }
     } catch (err: any) {
         // Explicitly specify the type of err as any or Error
         console.error("Error while fetching rewards:", err)

@@ -139,7 +139,11 @@ export async function POST(req: NextRequest) {
                 })
             )
 
-            return Response.json(output)
+            const labels = output.map((item) => item.brand_name)
+            const discountClaims = output.map((item) => item.discount_claims)
+            const freebiesClaims = output.map((item) => item.freebies_claims)
+
+            return Response.json({ labels, discountClaims, freebiesClaims })
         }
         // IF user_type == 'ADMIN' Get number of claims per Branch
         else if (data.user_type === "ADMIN") {
@@ -242,7 +246,15 @@ export async function POST(req: NextRequest) {
                 })
             )
 
-            return Response.json(output)
+            const labels = output.map((item) => item.branch_name)
+            const discountClaims = output.map((item) => item.discount_claims)
+            const freebiesClaims = output.map((item) => item.freebies_claims)
+
+            return Response.json({
+                labels,
+                discountClaims,
+                freebiesClaims
+            })
         }
 
         // let brand_data = await Brand.findById(brand_id);

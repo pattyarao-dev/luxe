@@ -50,12 +50,12 @@ export default function AnalyticsComp() {
                             labels: ["A", "B", "C", "D"],
                             datasets: [
                                 {
-                                    label: "Revenue",
+                                    label: "DISCOUNT",
                                     data: [200, 300, 400, 500],
                                     backgroundColor: "purple"
                                 },
                                 {
-                                    label: "Loss",
+                                    label: "FREEBIES",
                                     data: [60, 70, 90, 100]
                                 }
                             ]
