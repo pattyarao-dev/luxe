@@ -10,7 +10,7 @@ export const ReportPage = () => {
     const [selectedReportName, setSelectedReportName] = useState<string>("")
 
   return (
-  <main className="flex flex-col gap-6">
+  <main className="flex flex-col gap-6 p-2">
         <section className="w-full flex flex-col">
             <h1 className="w-full p-4 font-black text-2xl uppercase text-purple">Report Generation</h1>
             <div className="w-full p-4 flex gap-4 items-center">

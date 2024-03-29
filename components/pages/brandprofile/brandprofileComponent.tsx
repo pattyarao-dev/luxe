@@ -42,6 +42,47 @@ export default function BrandProfileComp() {
         }
     }, [id]);
 
+    const [branchData, setBranchData] = useState({
+        branch_name: '',
+        // longt: 0,
+        // lat: 0,
+    })
+
+    const handleChange = (e: any) => {
+        const { name, value } = e.target
+        setBranchData((prev) => ({ ...prev, [name]: value }))
+        console.log(branchData)
+    }
+
+    function handleAddBranch() {
+        const postData = {
+            branch_name: branchData.branch_name,
+            longt: 0,
+            lat: 0,
+        }
+        console.log(postData)
+
+        fetch(`/api/branch?id=${id}`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(postData)
+        })
+            .then((response) => {
+                if (response.ok) {
+                    // Brand added successfully, close the modal or perform any other actions
+                    closeModal()
+                } else {
+                    // Handle errors if any
+                    console.error("Failed to add brand:", response.statusText)
+                }
+            })
+            .catch((error) => {
+                console.error("Error while adding brand:", error)
+            })
+    }
+
     if (!brandData) {
         return <div>Loading...</div>;
     }
@@ -117,19 +158,44 @@ export default function BrandProfileComp() {
                                                 </div>
 
                                                 <div className='mt-6 justify-center items-center text-center'>
-                                                    <input type="text" className='w-full input-style' placeholder='Branch name'/>
+                                                    <input 
+                                                        type="text" 
+                                                        className='w-full input-style' 
+                                                        placeholder='Branch name'
+                                                        name='branch_name'
+                                                        value={branchData.branch_name}
+                                                        onChange={handleChange}
+                                                    />
                                                 </div>
 
-                                                <div className='mt-5 justify-center items-center text-center'>
-                                                    <input type="text" className='w-full input-style' placeholder='Branch location'/>
+                                                {/* <div className='mt-4 justify-center items-center text-center'>
+                                                    <input 
+                                                        type="number" 
+                                                        className='w-full input-style' 
+                                                        placeholder={branchData.longt === 0 ? "Longitude" : ""}
+                                                        name='longt'
+                                                        value={branchData.longt === 0 ? "" : branchData.longt}
+                                                        onChange={handleChange}
+                                                    />
                                                 </div>
+
+                                                <div className='mt-4 justify-center items-center text-center'>
+                                                    <input 
+                                                        type="number" 
+                                                        className='w-full input-style'
+                                                        placeholder={branchData.lat === 0 ? "Latitude" : ""}
+                                                        name='lat'
+                                                        value={branchData.lat === 0 ? "" : branchData.lat}
+                                                        onChange={handleChange}
+                                                    />
+                                                </div> */}
 
                                                 <div className='mt-6 p-1 text-center'>
                                                     <button
                                                         type='button'
                                                         className='w-full gradient-button'
                                                         //className='w-80 inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2'
-                                                        onClick={closeModal}
+                                                        onClick={handleAddBranch}
                                                     >
                                                         Save and Proceed
                                                     </button>

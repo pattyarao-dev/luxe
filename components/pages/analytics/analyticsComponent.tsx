@@ -79,7 +79,7 @@ const AnalyticsComp: React.FC<TokenContent> = ({ _id, user_type }) => {
     }
 
     return (
-        <div className="w-full flex flex-col justify-center items-center gap-3 p-10">
+        <div className="w-full flex flex-col justify-center items-center gap-8 p-20">
             <h1 className="w-full px-10 text-4xl font-bold text-center">
                 Rewards Dashboard
             </h1>
@@ -137,9 +137,9 @@ const AnalyticsComp: React.FC<TokenContent> = ({ _id, user_type }) => {
                 )}
             </div>
 
-            <div className="w-1/2 grid grid-cols-3 gap-5">
-                <div className="h-full rounded-md border-solid border-2">
-                    <h1>Total Claims</h1>
+            <div className="w-3/4 grid grid-cols-3 gap-5">
+                <div className="h-full rounded-xl border-solid border-2 p-2">
+                    <h1 className="font-semibold">Total Claims</h1>
                     <ClaimsChart
                         _id={_id}
                         user_type={user_type}
@@ -149,8 +149,8 @@ const AnalyticsComp: React.FC<TokenContent> = ({ _id, user_type }) => {
                         end_date={endDate}
                     />
                 </div>
-                <div className="h-full rounded-md border-solid border-2">
-                    <h1>Total Claims by Reward Type</h1>
+                <div className="h-full rounded-xl border-solid border-2 p-2">
+                    <h1 className="font-semibold">Total Claims by Reward Type</h1>
                     <StackedBarChart
                         _id={_id}
                         user_type={user_type}
@@ -160,8 +160,8 @@ const AnalyticsComp: React.FC<TokenContent> = ({ _id, user_type }) => {
                         end_date={endDate}
                     />
                 </div>
-                <div className="h-full rounded-md border-solid border-2">
-                    <h1>Total Claims by Brand</h1>
+                <div className="h-full rounded-xl border-solid border-2 p-2">
+                    <h1 className="font-semibold">Total Claims by Brand</h1>
                     <HorizBarChart
                         _id={_id}
                         user_type={user_type}
@@ -171,8 +171,8 @@ const AnalyticsComp: React.FC<TokenContent> = ({ _id, user_type }) => {
                         end_date={endDate}
                     />
                 </div>
-                <div className="h-full rounded-md border-solid border-2">
-                    <h1>Generated Sales</h1>
+                <div className="h-full rounded-xl border-solid border-2 p-2">
+                    <h1 className="font-semibold">Generated Sales</h1>
                     <SalesChart
                         _id={_id}
                         user_type={user_type}
@@ -182,8 +182,8 @@ const AnalyticsComp: React.FC<TokenContent> = ({ _id, user_type }) => {
                         end_date={endDate}
                     />
                 </div>
-                <div className="h-full col-span-2 rounded-md border-solid border-2">
-                    <h1>Number of Claims Over Time</h1>
+                <div className="h-full col-span-2 rounded-xl border-solid border-2 p-2">
+                    <h1 className="font-semibold">Number of Claims Over Time</h1>
                     <LineChart
                         _id={_id}
                         user_type={user_type}
