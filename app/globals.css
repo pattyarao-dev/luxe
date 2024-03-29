@@ -111,3 +111,47 @@
         opacity: 1;
     }
 }
+
+#section {
+    padding: 50px 30px;
+    border-radius: 0.25em;
+}
+
+#reader {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px !important;
+    border: 1.5px solid #b2b2b2 !important;
+    border-radius: 8px;
+}
+
+#reader img[alt="Info icon"] {
+    display: none;
+    border: 1px solid black;
+}
+
+#reader img[alt="Camera based scan"] {
+    width: 100% !important;
+    height: 100px !important;
+}
+
+#reader button {
+    padding: 10px 20px;
+    border: 1px solid #b2b2b2;
+    outline: none;
+    border-radius: 0.25em;
+    font-size: 15px;
+    cursor: pointer;
+    margin-top: 15px;
+    margin-bottom: 10px;
+    background-color: #910a67;
+    color: white;
+    transition: 0.3s background-color;
+}
+
+#reader button:hover {
+    background-color: #910a67;
+}
