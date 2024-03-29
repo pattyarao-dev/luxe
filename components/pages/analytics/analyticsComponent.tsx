@@ -83,10 +83,10 @@ const AnalyticsComp: React.FC<TokenContent> = ({ _id, user_type }) => {
             <h1 className="w-full px-10 text-4xl font-bold text-center">
                 Rewards Dashboard
             </h1>
-            <div className="w-1/3 flex flex-row gap-4">
+            <div className="w-3/7 flex flex-row gap-4">
                 <input
                     type="date"
-                    className="border border-gray-300 rounded-md p-2 focus:outline-none focus:border-blue-500"
+                    className="w-full border border-gray-300 outlined-button rounded-md p-2 focus:outline-none focus:border-blue-500"
                     placeholder="Start Date"
                     value={startDate}
                     onChange={(e) => {
@@ -97,7 +97,7 @@ const AnalyticsComp: React.FC<TokenContent> = ({ _id, user_type }) => {
 
                 <input
                     type="date"
-                    className="border border-gray-300 rounded-md p-2 focus:outline-none focus:border-blue-500"
+                    className="w-full border border-gray-300 outlined-button rounded-md p-2 focus:outline-none focus:border-blue-500"
                     placeholder="End Date"
                     value={endDate}
                     onChange={(e) => {
@@ -108,7 +108,7 @@ const AnalyticsComp: React.FC<TokenContent> = ({ _id, user_type }) => {
 
                 {user_type === "ADMIN_ALL" && (
                     <select
-                        className="border border-gray-300 rounded-md p-2 focus:outline-none focus:border-blue-500"
+                        className="border border-gray-300 outlined-button rounded-md p-2 focus:outline-none focus:border-blue-500"
                         value={brand}
                         onChange={handleBrandChange}
                     >
@@ -138,8 +138,8 @@ const AnalyticsComp: React.FC<TokenContent> = ({ _id, user_type }) => {
             </div>
 
             <div className="w-3/4 grid grid-cols-3 gap-5">
-                <div className="h-full rounded-xl border-solid border-2 p-2">
-                    <h1 className="font-semibold">Total Claims</h1>
+                <div className="h-full rounded-xl border-solid border-2 p-5 bg-white drop-shadow-md">
+                    <h1 className="text-3xl font-semibold">Total Claims</h1>
                     <ClaimsChart
                         _id={_id}
                         user_type={user_type}
@@ -149,30 +149,36 @@ const AnalyticsComp: React.FC<TokenContent> = ({ _id, user_type }) => {
                         end_date={endDate}
                     />
                 </div>
-                <div className="h-full rounded-xl border-solid border-2 p-2">
-                    <h1 className="font-semibold">Total Claims by Reward Type</h1>
-                    <StackedBarChart
-                        _id={_id}
-                        user_type={user_type}
-                        brand={brand}
-                        branch={branch}
-                        start_date={startDate}
-                        end_date={endDate}
-                    />
+                <div className="h-full rounded-xl border-solid border-2 p-5 bg-white drop-shadow-md">
+                    <h1 className="text-xl font-semibold">Total Claims by Reward Type</h1>
+                    <div className="p-4">
+                        <StackedBarChart
+                            _id={_id}
+                            user_type={user_type}
+                            brand={brand}
+                            branch={branch}
+                            start_date={startDate}
+                            end_date={endDate}
+                        />
+                    </div>
+                    
                 </div>
-                <div className="h-full rounded-xl border-solid border-2 p-2">
-                    <h1 className="font-semibold">Total Claims by Brand</h1>
-                    <HorizBarChart
-                        _id={_id}
-                        user_type={user_type}
-                        brand={brand}
-                        branch={branch}
-                        start_date={startDate}
-                        end_date={endDate}
-                    />
+                <div className="h-full rounded-xl border-solid border-2 p-5 bg-white drop-shadow-md">
+                    <h1 className="text-xl font-semibold">Total Claims by Brand</h1>
+                    <div className="p-4">
+                        <HorizBarChart
+                            _id={_id}
+                            user_type={user_type}
+                            brand={brand}
+                            branch={branch}
+                            start_date={startDate}
+                            end_date={endDate}
+                        />
+                    </div>
+                    
                 </div>
-                <div className="h-full rounded-xl border-solid border-2 p-2">
-                    <h1 className="font-semibold">Generated Sales</h1>
+                <div className="h-full rounded-xl border-solid border-2 p-5 bg-white drop-shadow-md">
+                    <h1 className="text-3xl font-semibold">Generated Sales</h1>
                     <SalesChart
                         _id={_id}
                         user_type={user_type}
@@ -182,16 +188,19 @@ const AnalyticsComp: React.FC<TokenContent> = ({ _id, user_type }) => {
                         end_date={endDate}
                     />
                 </div>
-                <div className="h-full col-span-2 rounded-xl border-solid border-2 p-2">
-                    <h1 className="font-semibold">Number of Claims Over Time</h1>
-                    <LineChart
-                        _id={_id}
-                        user_type={user_type}
-                        brand={brand}
-                        branch={branch}
-                        start_date={startDate}
-                        end_date={endDate}
-                    />
+                <div className="h-full col-span-2 rounded-xl border-solid border-2 p-5 bg-white drop-shadow-md">
+                    <h1 className="text-xl font-semibold">Number of Claims Over Time</h1>
+                    <div className="p-4">
+                        <LineChart
+                            _id={_id}
+                            user_type={user_type}
+                            brand={brand}
+                            branch={branch}
+                            start_date={startDate}
+                            end_date={endDate}
+                        />
+                    </div>
+                    
                 </div>
             </div>
         </div>
