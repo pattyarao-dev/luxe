@@ -218,7 +218,7 @@ export default function BrandProfileComp() {
                     </div>
                     
                 </div>
-                <div className='w-full rounded-md items-center border-solid border-2 px-10 py-4 gradient-background'>
+                <div className='w-full rounded-md items-center border-solid border-2 px-10 py-4 bg-white drop-shadow-md'>
                     <h1 className='text-center pt-6 text-3xl font-medium'>Subscriber Count</h1>
                     <h2 className='text-center text-4xl font-bold'>{data.total_fcount}</h2>
                 </div>
