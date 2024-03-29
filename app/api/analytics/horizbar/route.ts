@@ -48,7 +48,6 @@ export async function POST(req: NextRequest) {
 
             // APPLY BRAND FILTER IF EXISTS
             if (data.brand !== "") {
-                console.log("here")
                 brands = brands.filter(
                     (brand: any) => brand._id.toString() === data.brand
                 )
@@ -79,7 +78,7 @@ export async function POST(req: NextRequest) {
 
                                 // IF start_date and end_date is empty
                                 if (
-                                    data.start_date === "" &&
+                                    data.start_date === "" ||
                                     data.end_date === ""
                                 ) {
                                     count += bucket_content.bucket_claim_count
@@ -156,7 +155,6 @@ export async function POST(req: NextRequest) {
 
             // APPLY BRANCH FILTER IF EXISTS
             if (data.branch !== "") {
-                console.log("here")
                 rewards = rewards.filter((reward: any) =>
                     reward.allowed_branches.includes(data.branch)
                 )
@@ -171,10 +169,6 @@ export async function POST(req: NextRequest) {
                             let count: number = 0
 
                             // Check if the branch (i) matches with the allowed branches in reward (j)
-
-                            console.log(
-                                reward.allowed_branches.includes(branch)
-                            )
 
                             if (reward.allowed_branches.includes(branch)) {
                                 for (let bucketid of reward.claim_buckets) {
@@ -191,7 +185,7 @@ export async function POST(req: NextRequest) {
 
                                     // IF start_date and end_date is empty
                                     if (
-                                        data.start_date === "" &&
+                                        data.start_date === "" ||
                                         data.end_date === ""
                                     ) {
                                         count +=
@@ -229,9 +223,6 @@ export async function POST(req: NextRequest) {
                         Promise.resolve(0)
                     )
 
-                    console.log(branch)
-                    console.log(claim_value)
-
                     return {
                         branch_name: branch,
                         claims: claim_value // or whatever default value you want for claims
@@ -240,7 +231,14 @@ export async function POST(req: NextRequest) {
             )
 
             // Sort By Descending Order
-            const sortedBrandsData = output.sort((a, b) => b.claims - a.claims)
+            let sortedBrandsData = output.sort((a, b) => b.claims - a.claims)
+
+            // Filter out other branches
+            if (data.branch !== "") {
+                sortedBrandsData = sortedBrandsData.filter(
+                    (branch: any) => branch.branch_name === data.branch
+                )
+            }
 
             // Format as Horizontal Bar (Chart.js) format
             const labels: string[] = sortedBrandsData.map(

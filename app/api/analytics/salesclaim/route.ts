@@ -38,17 +38,23 @@ export async function POST(req: NextRequest) {
 
             // APPLY BRAND FILTER IF EXISTS
             if (data.brand !== "") {
-                console.log("here")
                 brands = brands.filter(
                     (brand: any) => brand._id.toString() === data.brand
                 )
             }
 
-            // GET Rewards from Brand IDs
-            const rewards = await Rewards.find({ brand_id: { $in: brand_ids } })
+            let filtered_brand_ids: any = brands.map((brand: any) => {
+                return brand._id
+            })
 
-            if (data.start_date === "" && data.end_date === "") {
-                console.log(rewards)
+            const rewards = await Rewards.find({
+                brand_id: { $in: filtered_brand_ids }
+            })
+
+            // GET Rewards from Brand IDs
+
+            if (data.start_date === "" || data.end_date === "") {
+                console.log("ayooo")
                 output = rewards.reduce(
                     (acc: Output, reward) => {
                         acc.claims += reward.claim_count
@@ -104,7 +110,6 @@ export async function POST(req: NextRequest) {
                         )
                     })
 
-                console.log(DateFilterFormattedconsolidatedSalesDates)
                 output = DateFilterFormattedconsolidatedSalesDates.reduce(
                     (acc: Output, data) => {
                         acc.claims += 1
@@ -139,14 +144,14 @@ export async function POST(req: NextRequest) {
 
             // APPLY BRANCH FILTER IF EXISTS
             if (data.branch !== "") {
-                console.log("here")
                 rewards = rewards.filter((reward: any) =>
                     reward.allowed_branches.includes(data.branch)
                 )
             }
 
-            if (data.start_date === "" && data.end_date === "") {
-                console.log(rewards)
+            console.log("WAWAWA", rewards)
+
+            if (data.start_date === "" || data.end_date === "") {
                 output = rewards.reduce(
                     (acc: Output, reward) => {
                         acc.claims += reward.claim_count
@@ -202,7 +207,6 @@ export async function POST(req: NextRequest) {
                         )
                     })
 
-                console.log(DateFilterFormattedconsolidatedSalesDates)
                 output = DateFilterFormattedconsolidatedSalesDates.reduce(
                     (acc: Output, data) => {
                         acc.claims += 1

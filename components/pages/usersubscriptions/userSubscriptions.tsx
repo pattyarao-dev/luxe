@@ -62,7 +62,7 @@ export const UserSubscriptions = ({ userId }: { userId: string }) => {
                     key={index}
                     className="w-full bg-white border rounded-lg drop-shadow-md"
                 >
-                    <div className="w-full h-[300px] flex flex-col items-center justify-between">
+                    <div className="w-full h-[300px] flex flex-col items-center justify-start gap-2">
                         <div className="w-full h-1/2">
                             <Image
                                 src="/lv.png"
@@ -72,8 +72,11 @@ export const UserSubscriptions = ({ userId }: { userId: string }) => {
                                 className="w-full h-full object-cover object-top rounded-t-md"
                             />
                         </div>
-                        <div className="w-full h-1/2 p-4 flex flex-col gap-4 justify-center">
-                            <Link href={`/brandprofile/${brand._id}`}>
+                        <div className="w-full p-4 flex flex-col gap-4 justify-center">
+                            <Link
+                                href={`/brandprofile/${brand._id}`}
+                                className="w-full flex flex-col gap-6"
+                            >
                                 <div className="w-full flex justify-start gap-2 overflow-x-auto">
                                     {brand.brand_tags.map((tag) => (
                                         <p className="w-fit px-2 py-[2px] bg-gray-main text-neutral-100 font-semibold uppercase rounded-full text-xs">
@@ -81,28 +84,26 @@ export const UserSubscriptions = ({ userId }: { userId: string }) => {
                                         </p>
                                     ))}
                                 </div>
-                                <div className="w-full mt-2">
-                                    <p className="text-lg text-dark-pink font-bold">
-                                        {brand.brand_name}
-                                    </p>
-                                    <p className="text-gray-main">
-                                        {brand.total_fcount} followers
-                                    </p>
+                                <div className="w-full flex justify-between items-center">
+                                    <div className="w-full ">
+                                        <p className="text-lg text-dark-pink font-bold">
+                                            {brand.brand_name}
+                                        </p>
+
+                                        <p className="text-gray-main">
+                                            {brand.total_fcount} followers
+                                        </p>
+                                    </div>
+                                    <button
+                                        onClick={() =>
+                                            handleSubscription(brand._id)
+                                        }
+                                        className="w-fit px-3 py-1 border border-dark-pink rounded-lg text-xs"
+                                    >
+                                        Unsubscribe
+                                    </button>
                                 </div>
                             </Link>
-                            <div className="w-full flex gap-4 text-sm">
-                                <button className="px-3 py-0.5 bg-gradient-to-br from-purple to-midnight-blue text-white rounded-lg">
-                                    Notify Me
-                                </button>
-                                <button
-                                    onClick={() =>
-                                        handleSubscription(brand._id)
-                                    }
-                                    className="px-3 py-0.5 border border-dark-pink rounded-lg"
-                                >
-                                    Unsubscribe
-                                </button>
-                            </div>
                         </div>
                     </div>
                 </div>
