@@ -181,6 +181,8 @@ export default function MerchNotificationsComp({id, userType} : MerchNotificatio
             .catch((error) => {
                 console.error("Error while adding brand:", error)
             })
+        
+        window.location.reload()
     }
 
     function getBrandID(brandid: string) {
@@ -207,9 +209,9 @@ export default function MerchNotificationsComp({id, userType} : MerchNotificatio
         setDateTime(event.target.value);
     };
 
-    if (!notifications || notifications.length === 0) {
-        return <div>Loading...</div>;
-    }
+    // if (!notifications || notifications.length === 0) {
+    //     return <div>Loading...</div>;
+    // }
 
     console.log(notifications)
     console.log(brands)
@@ -438,28 +440,39 @@ export default function MerchNotificationsComp({id, userType} : MerchNotificatio
                     </tr>
                 </thead>
                 <tbody>
-                    {notifications.map(notification => (
-                        <tr key={notification._id} className="odd:bg-white even:bg-gray-50 border-b">
-                            <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                                {notification.message}
-                            </th>
-                            <td className="px-6 py-4 text-center">
-                                {notification.sender.brand_name}
-                            </td>
-                            <td className="px-6 py-4 text-center">
-                                {notification.reward.reward_name}
-                            </td>
-                            <td className="px-6 py-4 text-center">
-                                <span className="bg-yellow-100 text-yellow-800 font-medium px-5 py-1.5 rounded-full">Ongoing</span>
-                            </td>
-                            <td className="px-6 py-4 text-center">
-                                {new Date(notification.created_at).toLocaleDateString()}
-                            </td>
-                            <td className="px-6 py-4 text-center">
-                                {notification.clicks}
+                    {notifications.length > 0 ? (
+                        notifications.map(notification => (
+                            <tr key={notification._id} className="odd:bg-white even:bg-gray-50 border-b">
+                                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                                    {notification.message}
+                                </th>
+                                <td className="px-6 py-4 text-center">
+                                    {notification.sender.brand_name}
+                                </td>
+                                <td className="px-6 py-4 text-center">
+                                    {notification.reward.reward_name}
+                                </td>
+                                <td className="px-6 py-4 text-center">
+                                    <span className="bg-yellow-100 text-yellow-800 font-medium px-5 py-1.5 rounded-full">Ongoing</span>
+                                </td>
+                                <td className="px-6 py-4 text-center">
+                                    {new Date(notification.created_at).toLocaleDateString()}
+                                </td>
+                                <td className="px-6 py-4 text-center">
+                                    {notification.clicks}
+                                </td>
+                            </tr>
+                        ))
+                    ) : (
+                        <tr>
+                            <td
+                                colSpan={6}
+                                className="py-16 text-center text-xl font-semibold"
+                            >
+                                No notifications yet
                             </td>
                         </tr>
-                    ))}
+                    )}
                 </tbody>
             </table>
         </div>

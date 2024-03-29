@@ -83,7 +83,7 @@ const SalesChart: React.FC<ChartParams> = ({
 
     return (
         <>
-            <h1 className="text-2xl">{chartData?.sales}</h1>
+            <h1 className="text-5xl font-bold">{chartData?.sales}</h1>
         </>
     )
 }

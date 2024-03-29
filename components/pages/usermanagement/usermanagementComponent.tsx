@@ -26,6 +26,8 @@ export default function UserManagementComp() {
 
     let [isOpen, setIsOpen] = useState(false);
     let [selectedUserType, setSelectedUserType] = useState('');
+    const [pickedUserType, setPickedUserType] = useState<string | null>(null)
+    const [pickedBranch, setPickedBranch] = useState<string | null>(null)
 
     function closeModal() {
         setIsOpen(false)
@@ -131,6 +133,8 @@ export default function UserManagementComp() {
         .catch(error => {
             console.error('Error while adding user:', error);
         });
+
+        window.location.reload()
     }
 
     const { data } = brandData || {};
@@ -241,7 +245,7 @@ export default function UserManagementComp() {
 
                                         <div className='mt-4 justify-center items-center text-center'>
                                             <input 
-                                                type="text" 
+                                                type="password" 
                                                 className='w-full input-style' 
                                                 placeholder='Password'
                                                 name='password'
@@ -254,7 +258,7 @@ export default function UserManagementComp() {
                                             <Menu as="div" className="w-full relative inline-block text-left">
                                                 <div>
                                                     <Menu.Button className="input-style inline-flex flex items-center w-full justify-between rounded-md p-2 hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75">
-                                                        Select User Type:
+                                                        {pickedUserType ? pickedUserType : "Select User Type:"}
                                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="mr-1 ml-2 h-6 w-5 text-violet-200 hover:text-violet-100">
                                                             <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
                                                         </svg>
@@ -282,6 +286,7 @@ export default function UserManagementComp() {
                                                                         onClick={() => {
                                                                             setSelectedUserType(item)
                                                                             setAddUserData(prev => ({ ...prev, user_type: item}))
+                                                                            setPickedUserType(item)
                                                                         }}
                                                                     >
                                                                         <strong className='px-1'>{item}</strong>
@@ -300,7 +305,7 @@ export default function UserManagementComp() {
                                                 <Menu as="div" className="w-full relative inline-block text-left">
                                                     <div>
                                                         <Menu.Button className="input-style inline-flex flex items-center w-full justify-between rounded-md p-2 hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75">
-                                                            Select Assigned Branch:
+                                                            {pickedBranch ? pickedBranch : "Select Assigned Branch:"}
                                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="mr-1 ml-2 h-6 w-5 text-violet-200 hover:text-violet-100">
                                                                 <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
                                                             </svg>
@@ -327,6 +332,7 @@ export default function UserManagementComp() {
                                                                             name='assigned_branch'
                                                                             onClick={() => {
                                                                                 setAddUserData(prev => ({ ...prev, assigned_branch: branch.branch_name}))
+                                                                                setPickedBranch(branch.branch_name)
                                                                             }}
                                                                         >
                                                                             <strong className='px-1'>{branch.branch_name}</strong>

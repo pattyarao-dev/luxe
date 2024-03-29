@@ -83,7 +83,7 @@ const ClaimsChart: React.FC<ChartParams> = ({
 
     return (
         <>
-            <h1 className="text-2xl">{chartData?.claims}</h1>
+            <h1 className="text-5xl font-bold">{chartData?.claims}</h1>
         </>
     )
 }

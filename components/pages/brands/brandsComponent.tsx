@@ -127,6 +127,8 @@ export default function BrandComp({id, userType} : BrandCompProps) {
         .catch(error => {
             console.error('Error while adding brand:', error);
         });
+
+        window.location.reload()
     }
 
     return (

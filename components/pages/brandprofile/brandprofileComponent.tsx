@@ -81,6 +81,8 @@ export default function BrandProfileComp() {
             .catch((error) => {
                 console.error("Error while adding brand:", error)
             })
+        
+        window.location.reload()
     }
 
     if (!brandData) {

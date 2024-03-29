@@ -13,6 +13,7 @@ interface Reward {
     cap: number
     status: boolean
     brand_name: string
+    claim_count: number
 }
 
 interface APIResponse {
@@ -74,6 +75,9 @@ export default function ViewRewardsComp() {
 
     let [selectedRewardType, setSelectedRewardType] = useState("")
     const [pickedRewardType, setPickedRewardType] = useState<string | null>(
+        null
+    )
+    const [pickedClaimType, setPickedClaimType] = useState<string | null>(
         null
     )
 
@@ -229,6 +233,8 @@ export default function ViewRewardsComp() {
             .catch((error) => {
                 console.error("Error while adding brand:", error)
             })
+        
+        window.location.reload()
     }
 
     console.log(brandData)
@@ -400,6 +406,19 @@ export default function ViewRewardsComp() {
         setRewardsData(sortedRewards); // Update state with sorted data
     }
 
+    const formatClaimType = (type : string) => {
+        switch (type) {
+            case "PURCHASE_VALUE":
+                return "Purchase Value";
+            case "ITEM_QTY":
+                return "Item Quantity";
+            case "CUSTOM":
+                return "Custom";
+            default:
+                return type;
+        }
+    }
+
     return (
         <div className="w-full flex flex-col justify-center items-center gap-7 p-20">
             {brandData && (
@@ -467,7 +486,7 @@ export default function ViewRewardsComp() {
                                                             </p>
                                                         </div>
                                                     </div>
-                                                    <div className="w-full mt-2 justify-center items-center text-center">
+                                                    <div className="w-full mt-2 flex flex-row gap-2 justify-center items-center text-center">
                                                         <input
                                                             type="text"
                                                             className="w-full input-style"
@@ -503,9 +522,25 @@ export default function ViewRewardsComp() {
                                                         >
                                                             <div>
                                                                 <Menu.Button className="input-style inline-flex flex items-center w-full justify-between rounded-md p-2 hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75">
-                                                                    Select
-                                                                    Assigned
-                                                                    Branch:
+                                                                    <div>
+                                                                        {checkedItems.length === 0 ? (
+                                                                            "Select Assigned Branch:"
+                                                                        ) : (
+                                                                            <>
+                                                                                {checkedItems.length === 1 ? (
+                                                                                    <>
+                                                                                        <span>{checkedItems[0]}</span>
+                                                                                    </>
+                                                                                ) : (
+                                                                                    <>
+                                                                                        <span>{checkedItems.slice(0, -1).join(", ")}</span>
+                                                                                        <span>, and {checkedItems.slice(-1)}</span>
+                                                                                    </>
+                                                                                )}
+                                                                            </>
+                                                                        )}
+                                                                    </div>
+                                                                    
                                                                     <svg
                                                                         xmlns="http://www.w3.org/2000/svg"
                                                                         fill="none"
@@ -533,23 +568,9 @@ export default function ViewRewardsComp() {
                                                             >
                                                                 <Menu.Items className="absolute z-40 right-0 mt-2 w-full origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none">
                                                                     <div className="px-1 py-1 overflow-auto h-24">
-                                                                        {data &&
-                                                                            data.branches &&
-                                                                            data.branches.map(
-                                                                                (
-                                                                                    branch: {
-                                                                                        branch_name: string
-                                                                                    },
-                                                                                    index: number
-                                                                                ) => (
-                                                                                    <Menu.Item
-                                                                                        key={
-                                                                                            index
-                                                                                        }
-                                                                                    >
-                                                                                        {({
-                                                                                            active
-                                                                                        }) => (
+                                                                        {data && data.branches && data.branches.map((branch: {branch_name: string}, index: number) => (
+                                                                                    <Menu.Item key={index}>
+                                                                                        {({active}) => (
                                                                                             <div
                                                                                                 className={`${
                                                                                                     active
@@ -559,29 +580,15 @@ export default function ViewRewardsComp() {
                                                                                             >
                                                                                                 <input
                                                                                                     type="checkbox"
-                                                                                                    value={
-                                                                                                        branch.branch_name
-                                                                                                    }
-                                                                                                    checked={checkedItems.includes(
-                                                                                                        branch.branch_name
-                                                                                                    )}
+                                                                                                    value={branch.branch_name}
+                                                                                                    checked={checkedItems.includes(branch.branch_name)}
                                                                                                     onChange={() =>
-                                                                                                        handleCheckboxChange(
-                                                                                                            branch.branch_name
-                                                                                                        )
+                                                                                                        handleCheckboxChange(branch.branch_name)
                                                                                                     }
-                                                                                                    onClick={(
-                                                                                                        event
-                                                                                                    ) =>
-                                                                                                        event.stopPropagation()
-                                                                                                    }
+                                                                                                    onClick={(event) => event.stopPropagation()}
                                                                                                     className="input-style w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
                                                                                                 />
-                                                                                                <strong className="px-1">
-                                                                                                    {
-                                                                                                        branch.branch_name
-                                                                                                    }
-                                                                                                </strong>
+                                                                                                <strong className="px-1">{branch.branch_name}</strong>
                                                                                             </div>
                                                                                         )}
                                                                                     </Menu.Item>
@@ -712,10 +719,10 @@ export default function ViewRewardsComp() {
                                                             <input
                                                                 type="number"
                                                                 className="w-full input-style"
-                                                                placeholder="Discount"
+                                                                placeholder={addRewardData.discount === 0 ? "Value Percentage" : ""}
                                                                 name="discount"
                                                                 value={
-                                                                    addRewardData.discount
+                                                                    addRewardData.discount === 0 ? "" : addRewardData.discount
                                                                 }
                                                                 onChange={
                                                                     handleChange
@@ -752,9 +759,9 @@ export default function ViewRewardsComp() {
                                                                             <input
                                                                                 name="quantity"
                                                                                 className="w-full input-style"
-                                                                                placeholder="Quantity"
+                                                                                placeholder={input.quantity === 0 ? "Quantity" : ""}
                                                                                 value={
-                                                                                    input.quantity
+                                                                                    input.quantity === 0 ? "" : input.quantity
                                                                                 }
                                                                                 onChange={(
                                                                                     event
@@ -802,8 +809,7 @@ export default function ViewRewardsComp() {
                                                         >
                                                             <div>
                                                                 <Menu.Button className="input-style inline-flex flex items-center w-full justify-between rounded-md p-2 hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75">
-                                                                    Select Claim
-                                                                    Type:
+                                                                    {pickedClaimType ? pickedClaimType : "Select Claim Type:"}
                                                                     <svg
                                                                         xmlns="http://www.w3.org/2000/svg"
                                                                         fill="none"
@@ -868,11 +874,12 @@ export default function ViewRewardsComp() {
                                                                                                             item
                                                                                                     })
                                                                                                 )
+                                                                                                setPickedClaimType(formatClaimType(item))
                                                                                             }}
                                                                                         >
                                                                                             <strong className="px-1">
                                                                                                 {
-                                                                                                    item
+                                                                                                    formatClaimType(item)
                                                                                                 }
                                                                                             </strong>
                                                                                         </button>
@@ -960,24 +967,18 @@ export default function ViewRewardsComp() {
                                                     <div className="w-full mt-5 justify-center items-center text-center">
                                                         <div className="mt-2">
                                                             <p className="flex justify-center text-sm text-gray-500">
-                                                                Boolean
-                                                                Conditions
+                                                                Yes or No Conditions
                                                             </p>
                                                         </div>
-                                                        {booleanFields.map(
-                                                            (input, index) => {
+                                                        {booleanFields.map((input, index) => {
                                                                 return (
                                                                     <div
-                                                                        key={
-                                                                            index
-                                                                        }
+                                                                        key={index}
                                                                         className="w-full flex flex-row mt-2 gap-2"
                                                                     >
                                                                         <button
                                                                             onClick={() =>
-                                                                                handleRemoveBoolean(
-                                                                                    index
-                                                                                )
+                                                                                handleRemoveBoolean(index)
                                                                             }
                                                                         >
                                                                             <CgRemove />
@@ -986,62 +987,32 @@ export default function ViewRewardsComp() {
                                                                             name="question_description"
                                                                             className="w-full input-style"
                                                                             placeholder="Question"
-                                                                            value={
-                                                                                input.question_description
-                                                                            }
-                                                                            onChange={(
-                                                                                e
-                                                                            ) => {
-                                                                                const newValue =
-                                                                                    e
-                                                                                        .target
-                                                                                        .value
+                                                                            value={input.question_description}
+                                                                            onChange={(e) => {
+                                                                                const newValue = e.target.value
                                                                                 setBooleanFields(
-                                                                                    (
-                                                                                        prevFields
-                                                                                    ) =>
-                                                                                        prevFields.map(
-                                                                                            (
-                                                                                                field,
-                                                                                                idx
-                                                                                            ) =>
-                                                                                                idx ===
-                                                                                                index
-                                                                                                    ? {
-                                                                                                          ...field,
-                                                                                                          question_description:
-                                                                                                              newValue
-                                                                                                      }
-                                                                                                    : field
-                                                                                        )
+                                                                                    (prevFields) => prevFields.map(
+                                                                                        (field, idx) => idx === index ? {...field, question_description: newValue} : field
+                                                                                    )
                                                                                 )
                                                                             }}
                                                                         />
-                                                                        <div className="flex justify-center items-center">
+                                                                        <div className="flex justify-center items-center gap-2">
+                                                                            
                                                                             {/* where switch button will be */}
                                                                             <Switch
-                                                                                checked={
-                                                                                    input.value
-                                                                                }
-                                                                                onChange={(
-                                                                                    setEnabled
-                                                                                ) =>
-                                                                                    handleSwitchChange(
-                                                                                        index,
-                                                                                        setEnabled
-                                                                                    )
+                                                                                checked={input.value}
+                                                                                onChange={(setEnabled) =>
+                                                                                    handleSwitchChange(index, setEnabled)
                                                                                 }
                                                                                 className={`${
                                                                                     input.value
-                                                                                        ? "bg-teal-900"
-                                                                                        : "bg-teal-700"
+                                                                                        ? "bg-green-900"
+                                                                                        : "bg-red-700"
                                                                                 }
                                                                                 relative inline-flex h-[29px] w-[53px] shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2  focus-visible:ring-white/75`}
                                                                             >
-                                                                                <span className="sr-only">
-                                                                                    Use
-                                                                                    setting
-                                                                                </span>
+                                                                                <span className="sr-only">Use setting</span>
                                                                                 <span
                                                                                     aria-hidden="true"
                                                                                     className={`${
@@ -1052,6 +1023,7 @@ export default function ViewRewardsComp() {
                                                                                     pointer-events-none inline-block h-[25px] w-[25px] transform rounded-full bg-white shadow-lg ring-0 transition duration-200 ease-in-out`}
                                                                                 />
                                                                             </Switch>
+                                                                            <h1 className="text-sm">{input.value ? "Yes" : "No"}</h1> 
                                                                         </div>
                                                                         <button
                                                                             onClick={() =>
@@ -1107,6 +1079,7 @@ export default function ViewRewardsComp() {
                                                                                 )
                                                                             }
                                                                         />
+                                                                        <h1 className="w-1/3 text-xs flex items-center">Value is</h1>
                                                                         <div>
                                                                             <Menu
                                                                                 as="div"
@@ -1116,7 +1089,7 @@ export default function ViewRewardsComp() {
                                                                                     <Menu.Button className="input-style inline-flex flex items-center w-full justify-between rounded-md p-2 hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75">
                                                                                         {input.operator
                                                                                             ? input.operator
-                                                                                            : "Select Operator:"}
+                                                                                            : "Operator:"}
                                                                                         <svg
                                                                                             xmlns="http://www.w3.org/2000/svg"
                                                                                             fill="none"
@@ -1293,8 +1266,24 @@ export default function ViewRewardsComp() {
                                                         >
                                                             <div>
                                                                 <Menu.Button className="input-style inline-flex flex items-center w-full justify-between rounded-md p-2 hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75">
-                                                                    Select
-                                                                    reward tags
+                                                                    <div>
+                                                                        {rewardCheckedItems.length === 0 ? (
+                                                                            "Select Reward Tags:"
+                                                                        ) : (
+                                                                            <>
+                                                                                {rewardCheckedItems.length === 1 ? (
+                                                                                    <>
+                                                                                        <span>{rewardCheckedItems[0]}</span>
+                                                                                    </>
+                                                                                ) : (
+                                                                                    <>
+                                                                                        <span>{rewardCheckedItems.slice(0, -1).join(", ")}</span>
+                                                                                        <span>, and {rewardCheckedItems.slice(-1)}</span>
+                                                                                    </>
+                                                                                )}
+                                                                            </>
+                                                                        )}
+                                                                    </div>
                                                                     <svg
                                                                         xmlns="http://www.w3.org/2000/svg"
                                                                         fill="none"
@@ -1470,6 +1459,9 @@ export default function ViewRewardsComp() {
                             Expiry Date
                         </th>
                         <th scope="col" className="px-6 py-3 text-center">
+                            Claims
+                        </th>
+                        <th scope="col" className="px-6 py-3 text-center">
                             Capacity
                         </th>
                         <th scope="col" className="px-6 py-3 text-center">
@@ -1496,7 +1488,10 @@ export default function ViewRewardsComp() {
                                     ).toLocaleDateString()}
                                 </td>
                                 <td className="px-6 py-4 text-center">
-                                    {reward.cap}
+                                    {reward.claim_count}
+                                </td>
+                                <td className="px-6 py-4 text-center">
+                                    {reward.cap === 0 ? 'No Limit' : reward.cap}
                                 </td>
                                 <td className="px-6 py-4 text-center">
                                     <span className="bg-yellow-100 text-yellow-800 font-medium px-5 py-1.5 rounded-full">

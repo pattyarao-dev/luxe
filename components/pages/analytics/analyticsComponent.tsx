@@ -139,15 +139,17 @@ const AnalyticsComp: React.FC<TokenContent> = ({ _id, user_type }) => {
 
             <div className="w-3/4 grid grid-cols-3 gap-5">
                 <div className="h-full rounded-xl border-solid border-2 p-5 bg-white drop-shadow-md">
-                    <h1 className="text-3xl font-semibold">Total Claims</h1>
-                    <ClaimsChart
-                        _id={_id}
-                        user_type={user_type}
-                        brand={brand}
-                        branch={branch}
-                        start_date={startDate}
-                        end_date={endDate}
-                    />
+                    <h1 className="text-xl font-semibold">Total Claims</h1>
+                    <div className="flex h-4/5 justify-center items-center">
+                        <ClaimsChart
+                            _id={_id}
+                            user_type={user_type}
+                            brand={brand}
+                            branch={branch}
+                            start_date={startDate}
+                            end_date={endDate}
+                        />
+                    </div>
                 </div>
                 <div className="h-full rounded-xl border-solid border-2 p-5 bg-white drop-shadow-md">
                     <h1 className="text-xl font-semibold">Total Claims by Reward Type</h1>
@@ -178,15 +180,18 @@ const AnalyticsComp: React.FC<TokenContent> = ({ _id, user_type }) => {
                     
                 </div>
                 <div className="h-full rounded-xl border-solid border-2 p-5 bg-white drop-shadow-md">
-                    <h1 className="text-3xl font-semibold">Generated Sales</h1>
-                    <SalesChart
-                        _id={_id}
-                        user_type={user_type}
-                        brand={brand}
-                        branch={branch}
-                        start_date={startDate}
-                        end_date={endDate}
-                    />
+                    <h1 className="text-xl font-semibold">Generated Sales</h1>
+                    <div className="flex h-4/5 justify-center items-center">
+                        <SalesChart
+                            _id={_id}
+                            user_type={user_type}
+                            brand={brand}
+                            branch={branch}
+                            start_date={startDate}
+                            end_date={endDate}
+                        />
+                    </div>
+                    
                 </div>
                 <div className="h-full col-span-2 rounded-xl border-solid border-2 p-5 bg-white drop-shadow-md">
                     <h1 className="text-xl font-semibold">Number of Claims Over Time</h1>
