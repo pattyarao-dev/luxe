@@ -1,7 +1,9 @@
 import React from "react"
 import Image from "next/image"
 import { FaArrowLeft } from "react-icons/fa"
+import { IoIosCheckmark } from "react-icons/io"
 import { RewardTypes } from "@/app/types/rewardTypes"
+
 import Link from "next/link"
 
 export const ClientRewardPage = ({ reward }: { reward: RewardTypes }) => {
@@ -64,10 +66,40 @@ export const ClientRewardPage = ({ reward }: { reward: RewardTypes }) => {
                         </Link>
                     </div>
 
-                    <div>
+                    <div className="w-full flex flex-col gap-8">
                         <p className="text-justify italic">
                             {reward.reward_desc}
                         </p>
+                        <div className="w-full p-4 bg-neutral-100 flex flex-col gap-8 rounded-md drop-shadow-md">
+                            <div className="w-full flex flex-col gap-1">
+                                <p className="text-yellow-600 font-bold">
+                                    This reward is available in the following
+                                    branches:
+                                </p>
+                                {reward.allowed_branches.map(
+                                    (branch, index) => (
+                                        <div className="ml-4 w-full flex gap-1 items-center">
+                                            <IoIosCheckmark />
+                                            <p key={index}>{branch}</p>
+                                        </div>
+                                    )
+                                )}
+                            </div>
+
+                            <div>
+                                <p className="text-yellow-600 font-bold">
+                                    Redemption conditions:
+                                </p>
+                                {reward.conditions_desc.map(
+                                    (condition, index) => (
+                                        <div className="ml-4 w-full flex gap-1 items-center">
+                                            <IoIosCheckmark />
+                                            <p key={index}>{condition}</p>
+                                        </div>
+                                    )
+                                )}
+                            </div>
+                        </div>
                     </div>
                     <div className="mt-6 w-full">
                         <h1 className="text-lg uppercase font-semibold">

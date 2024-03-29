@@ -28,4 +28,5 @@ export interface RewardTypes {
     claim_count: number
     sales_total: number
     sales_count: number
+    conditions_desc: string[]
 }
