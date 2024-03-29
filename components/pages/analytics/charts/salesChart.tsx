@@ -32,12 +32,11 @@ interface ChartParams {
 }
 
 interface ChartData {
-    labels: string[]
-    discountClaims: number[]
-    freebiesClaims: number[]
+    claims: number
+    sales: number
 }
 
-const StackedBarChart: React.FC<ChartParams> = ({
+const SalesChart: React.FC<ChartParams> = ({
     _id,
     user_type,
     brand,
@@ -51,7 +50,7 @@ const StackedBarChart: React.FC<ChartParams> = ({
         const fetchData = async () => {
             try {
                 const response = await fetch(
-                    `api/analytics/stackedbar?id=${_id}`,
+                    `api/analytics/salesclaim?id=${_id}`,
                     {
                         method: "POST",
                         headers: {
@@ -84,37 +83,9 @@ const StackedBarChart: React.FC<ChartParams> = ({
 
     return (
         <>
-            {chartData && (
-                <Bar
-                    data={{
-                        labels: chartData.labels,
-                        datasets: [
-                            {
-                                label: "DISCOUNT",
-                                data: chartData.discountClaims,
-                                backgroundColor: "purple"
-                            },
-                            {
-                                label: "FREEBIES",
-                                data: chartData.freebiesClaims,
-                                backgroundColor: "orange"
-                            }
-                        ]
-                    }}
-                    options={{
-                        scales: {
-                            x: {
-                                stacked: true
-                            },
-                            y: {
-                                stacked: true
-                            }
-                        }
-                    }}
-                />
-            )}
+            <h1>{chartData?.sales}</h1>
         </>
     )
 }
 
-export default StackedBarChart
+export default SalesChart

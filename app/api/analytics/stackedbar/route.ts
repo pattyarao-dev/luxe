@@ -82,7 +82,7 @@ export async function POST(req: NextRequest) {
 
                             // Aggregate claims based on filters (DATE FILTERS)
                             if (
-                                data.start_date === "" &&
+                                data.start_date === "" ||
                                 data.end_date === ""
                             ) {
                                 // IF start_date and end_date are empty
@@ -196,7 +196,7 @@ export async function POST(req: NextRequest) {
 
                                 // Aggregate claims based on filters (DATE FILTERS)
                                 if (
-                                    data.start_date === "" &&
+                                    data.start_date === "" ||
                                     data.end_date === ""
                                 ) {
                                     // IF start_date and end_date are empty
@@ -245,6 +245,14 @@ export async function POST(req: NextRequest) {
                     }
                 })
             )
+
+            console.log(output)
+
+            if (data.branch !== "") {
+                output = output.filter(
+                    (branch: any) => branch.branch_name === data.branch
+                )
+            }
 
             const labels = output.map((item) => item.branch_name)
             const discountClaims = output.map((item) => item.discount_claims)
