@@ -6,17 +6,24 @@ import { BrandTypes } from "@/app/types/brandTypes"
 import { RewardTypes } from "@/app/types/rewardTypes"
 import { ObjectId } from "mongoose"
 import { RewardCard } from "../clienthome/RewardCard"
+import Link from "next/link"
 
 export const ClientBrandProfile = ({
     brandId,
-    userId
+    userId,
+    isFollowing
 }: {
     brandId: string
     userId: string
+    isFollowing: boolean
 }) => {
     const [brand, setBrand] = useState<BrandTypes>()
     const [rewards, setRewards] = useState<RewardTypes[]>()
-    const [isSubscribed, setSubscribe] = useState<boolean>(false)
+
+    const sections = ["Rewards", "About"]
+    const [selectedSection, setSelectedSection] = useState<string>("Rewards")
+
+    const [isSubscribed, setSubscribe] = useState<boolean>(isFollowing)
     useEffect(() => {
         async function getBrand() {
             try {
@@ -63,7 +70,7 @@ export const ClientBrandProfile = ({
             }
 
             const data = await response.json()
-            setSubscribe(true)
+            setSubscribe(!isFollowing)
             // Assuming the response contains the updated list of subscriptions
         } catch (error) {
             console.error("Error encountered.", error)
@@ -71,62 +78,97 @@ export const ClientBrandProfile = ({
     }
 
     return (
-        <main className="w-full min-h-screen flex flex-col gap-16">
-            <div className="w-full h-32 bg-dark-purple flex justify-center">
-                <div className="absolute w-[150px] drop-shadow-sm top-32">
-                    <img
-                        src="/cuate.png"
-                        alt=""
-                        className="w-full p-4 object-cover rounded-full bg-white"
-                    />
-                </div>
-            </div>
+        <main className="w-full min-h-screen flex flex-col gap-16 primary-background">
             {brand && (
-                <div className="w-full flex flex-col items-center justify-center">
-                    <div className="w-full p-4 flex flex-col items-center justify-center gap-4">
-                        <p className="text-2xl font-bold">{brand.brand_name}</p>
-
-                        <p>Subscribers: {brand.total_fcount}</p>
-                        {isSubscribed === false ? (
-                            <button
-                                onClick={() =>
-                                    handleSubscription(brandId, userId)
-                                }
-                                className="gradient-button"
-                            >
-                                Subscribe
-                            </button>
-                        ) : (
-                            <button
-                                onClick={() =>
-                                    handleSubscription(brandId, userId)
-                                }
-                                className="gradient-button"
-                            >
-                                Subscribed!
-                            </button>
-                        )}
-                        <p className="w-full text-justify text-xs">
-                            {brand.brand_desc}
-                        </p>
+                <div className="w-full h-full">
+                    <div className="w-full flex flex-col gap-6">
+                        <div className="w-full h-32">
+                            <img
+                                src="/lv.png"
+                                alt=""
+                                className="w-full h-full object-cover brightness-50"
+                            />
+                        </div>
+                        <div className="w-full p-4 flex flex-col gap-6">
+                            <div className="w-full flex flex-col gap-1">
+                                <p className="text-2xl font-bold">
+                                    {brand.brand_name}
+                                </p>
+                                <p>{brand.total_fcount} subscribers</p>
+                            </div>
+                            <div className="w-full">
+                                {isSubscribed === false ? (
+                                    <button
+                                        onClick={() =>
+                                            handleSubscription(brandId, userId)
+                                        }
+                                        className="w-full bg-gradient-to-br from-purple to-dark-pink text-white py-2 rounded-md font-semibold uppercase text-sm"
+                                    >
+                                        Subscribe
+                                    </button>
+                                ) : (
+                                    <button
+                                        onClick={() =>
+                                            handleSubscription(brandId, userId)
+                                        }
+                                        className="w-full bg-midnight-blue text-white py-2 rounded-md font-semibold uppercase text-sm"
+                                    >
+                                        Subscribed
+                                    </button>
+                                )}
+                            </div>
+                        </div>
                     </div>
-                    <div className="w-full p-4 flex flex-col gap-4">
-                        <hr className="w-full border border-dark-purple" />
-                        <div className="w-full flex flex-col gap-4">
-                            {rewards &&
+                    <div className="w-full p-4">
+                        <div className="w-full flex flex-col gap-2">
+                            <div className="w-full flex gap-6">
+                                {sections.map((section, index) => (
+                                    <button
+                                        key={index}
+                                        className={`font-bold uppercase ${
+                                            selectedSection === section
+                                                ? "text-dark-pink"
+                                                : "text-black"
+                                        }`}
+                                        onClick={() =>
+                                            setSelectedSection(section)
+                                        }
+                                    >
+                                        {section}
+                                    </button>
+                                ))}
+                            </div>
+                            <hr className="w-full border-[0.5px] border-neutral-200" />
+                        </div>
+                    </div>
+
+                    {selectedSection === "Rewards" ? (
+                        <div className="w-full h-[50vh] px-4 py-2 overflow-y-auto flex flex-col gap-4">
+                            {rewards ? (
                                 rewards.map((reward, index) => (
                                     <div
                                         key={index}
-                                        className="w-full p-2 bg-white border border-gray-main rounded-md"
+                                        className="w-full p-4 bg-white flex flex-col gap-2 rounded-md drop-shadow-md"
                                     >
-                                        <p className="text-lg font-bold text-dark-pink">
-                                            {reward.reward_name}
+                                        <Link href={`/reward/${reward._id}`}>
+                                            <p className="text-lg font-bold text-dark-pink">
+                                                {reward.reward_name}
+                                            </p>
+                                        </Link>
+                                        <p className="text-sm">
+                                            {reward.reward_desc}
                                         </p>
-                                        <p>{reward.reward_desc}</p>
                                     </div>
-                                ))}
+                                ))
+                            ) : (
+                                <p>Loading rewards</p>
+                            )}
                         </div>
-                    </div>
+                    ) : (
+                        <p className="w-full h-[50vh] px-4 py-2 overflow-y-auto flex flex-col gap-4 text-justify">
+                            {brand.brand_desc}
+                        </p>
+                    )}
                 </div>
             )}
         </main>
