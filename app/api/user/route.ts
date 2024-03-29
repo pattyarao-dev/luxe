@@ -30,7 +30,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
 
 export async function GET(req: NextRequest) {
   try {
-    const _id = req.body;
+    const _id = req.nextUrl.searchParams.get('id') as string
     console.log()
     const user = await User.findOne({ _id: _id });
     return Response.json({ user })

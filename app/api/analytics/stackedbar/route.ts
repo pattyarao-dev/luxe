@@ -82,7 +82,7 @@ export async function POST(req: NextRequest) {
 
                             // Aggregate claims based on filters (DATE FILTERS)
                             if (
-                                data.start_date === "" &&
+                                data.start_date === "" ||
                                 data.end_date === ""
                             ) {
                                 // IF start_date and end_date are empty
@@ -139,7 +139,11 @@ export async function POST(req: NextRequest) {
                 })
             )
 
-            return Response.json(output)
+            const labels = output.map((item) => item.brand_name)
+            const discountClaims = output.map((item) => item.discount_claims)
+            const freebiesClaims = output.map((item) => item.freebies_claims)
+
+            return Response.json({ labels, discountClaims, freebiesClaims })
         }
         // IF user_type == 'ADMIN' Get number of claims per Branch
         else if (data.user_type === "ADMIN") {
@@ -192,7 +196,7 @@ export async function POST(req: NextRequest) {
 
                                 // Aggregate claims based on filters (DATE FILTERS)
                                 if (
-                                    data.start_date === "" &&
+                                    data.start_date === "" ||
                                     data.end_date === ""
                                 ) {
                                     // IF start_date and end_date are empty
@@ -242,7 +246,23 @@ export async function POST(req: NextRequest) {
                 })
             )
 
-            return Response.json(output)
+            console.log(output)
+
+            if (data.branch !== "") {
+                output = output.filter(
+                    (branch: any) => branch.branch_name === data.branch
+                )
+            }
+
+            const labels = output.map((item) => item.branch_name)
+            const discountClaims = output.map((item) => item.discount_claims)
+            const freebiesClaims = output.map((item) => item.freebies_claims)
+
+            return Response.json({
+                labels,
+                discountClaims,
+                freebiesClaims
+            })
         }
 
         // let brand_data = await Brand.findById(brand_id);

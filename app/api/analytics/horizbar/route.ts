@@ -24,6 +24,11 @@ interface HorizBarAdmin {
     claims: number //default 0
 }
 
+interface ResponseObject {
+    labels: string[]
+    data: number[]
+}
+
 // GET
 export async function POST(req: NextRequest) {
     const userid = req.nextUrl.searchParams.get("id") as string
@@ -43,7 +48,6 @@ export async function POST(req: NextRequest) {
 
             // APPLY BRAND FILTER IF EXISTS
             if (data.brand !== "") {
-                console.log("here")
                 brands = brands.filter(
                     (brand: any) => brand._id.toString() === data.brand
                 )
@@ -74,7 +78,7 @@ export async function POST(req: NextRequest) {
 
                                 // IF start_date and end_date is empty
                                 if (
-                                    data.start_date === "" &&
+                                    data.start_date === "" ||
                                     data.end_date === ""
                                 ) {
                                     count += bucket_content.bucket_claim_count
@@ -114,7 +118,18 @@ export async function POST(req: NextRequest) {
                 })
             )
 
-            return Response.json(output)
+            // Sort By Descending Order
+            const sortedBrandsData = output.sort((a, b) => b.claims - a.claims)
+
+            // Format as Horizontal Bar (Chart.js) format
+            const labels: string[] = sortedBrandsData.map(
+                (brand) => brand.brand_name
+            )
+            const claims: number[] = sortedBrandsData.map(
+                (brand) => brand.claims
+            )
+
+            return Response.json({ labels, claims })
         }
         // IF user_type == 'ADMIN' Get number of claims per Branch
         else if (data.user_type === "ADMIN") {
@@ -140,7 +155,6 @@ export async function POST(req: NextRequest) {
 
             // APPLY BRANCH FILTER IF EXISTS
             if (data.branch !== "") {
-                console.log("here")
                 rewards = rewards.filter((reward: any) =>
                     reward.allowed_branches.includes(data.branch)
                 )
@@ -155,10 +169,6 @@ export async function POST(req: NextRequest) {
                             let count: number = 0
 
                             // Check if the branch (i) matches with the allowed branches in reward (j)
-
-                            console.log(
-                                reward.allowed_branches.includes(branch)
-                            )
 
                             if (reward.allowed_branches.includes(branch)) {
                                 for (let bucketid of reward.claim_buckets) {
@@ -175,7 +185,7 @@ export async function POST(req: NextRequest) {
 
                                     // IF start_date and end_date is empty
                                     if (
-                                        data.start_date === "" &&
+                                        data.start_date === "" ||
                                         data.end_date === ""
                                     ) {
                                         count +=
@@ -213,9 +223,6 @@ export async function POST(req: NextRequest) {
                         Promise.resolve(0)
                     )
 
-                    console.log(branch)
-                    console.log(claim_value)
-
                     return {
                         branch_name: branch,
                         claims: claim_value // or whatever default value you want for claims
@@ -223,11 +230,26 @@ export async function POST(req: NextRequest) {
                 })
             )
 
-            return Response.json(output)
-        }
+            // Sort By Descending Order
+            let sortedBrandsData = output.sort((a, b) => b.claims - a.claims)
 
-        // let brand_data = await Brand.findById(brand_id);
-        // let branches = brand_data.branches
+            // Filter out other branches
+            if (data.branch !== "") {
+                sortedBrandsData = sortedBrandsData.filter(
+                    (branch: any) => branch.branch_name === data.branch
+                )
+            }
+
+            // Format as Horizontal Bar (Chart.js) format
+            const labels: string[] = sortedBrandsData.map(
+                (brand) => brand.branch_name
+            )
+            const claims: number[] = sortedBrandsData.map(
+                (brand) => brand.claims
+            )
+
+            return Response.json({ labels, claims })
+        }
     } catch (err: any) {
         // Explicitly specify the type of err as any or Error
         console.error("Error while fetching rewards:", err)

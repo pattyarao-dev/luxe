@@ -1,5 +1,5 @@
 "use client"
-import React, { useEffect, useState, Fragment } from "react"
+import React, { useEffect, useState, Fragment, useRef } from "react"
 import { useSearchParams } from "next/navigation"
 import { Menu, Dialog, Transition, Switch } from "@headlessui/react"
 import { CgRemove, CgAdd } from "react-icons/cg"
@@ -366,6 +366,14 @@ export default function ViewRewardsComp() {
         }
     }
 
+    const topRef = useRef<HTMLDivElement>(null);
+
+    function scrollToTop() {
+        if (topRef && topRef.current) {
+            topRef.current.scrollIntoView({ behavior: 'smooth' });
+        }
+    }
+
     return (
         <div className="w-full flex flex-col justify-center items-center gap-7 p-20">
             {brandData && (
@@ -411,25 +419,20 @@ export default function ViewRewardsComp() {
                                         leaveFrom="opacity-100 scale-100"
                                         leaveTo="opacity-0 scale-95"
                                     >
-                                        <Dialog.Panel className="w-[800px] h-[80vh] transform overflow-y-auto rounded-2xl bg-white p-10 text-left align-middle shadow-xl transition-all">
+                                        <Dialog.Panel className="w-[700px] h-[80vh] transform overflow-y-auto rounded-2xl bg-white p-10 text-left align-middle shadow-xl transition-all">
                                             <div className="w-full flex flex-col">
                                                 <section
                                                     id="section1"
-                                                    className="w-full h-screen pt-10 flex justify-start items-center flex-col gap-4"
-                                                    onClick={() =>
-                                                        scrollToSection(
-                                                            "section2"
-                                                        )
-                                                    }
+                                                    className="w-full h-screen flex justify-start items-center flex-col gap-4"
                                                 >
-                                                    <div className="w-full mb-10">
+                                                    <div className="w-full mb-5">
                                                         <Dialog.Title
                                                             as="h1"
-                                                            className="w-full text-3xl font-bold leading-6 text-gray-900"
+                                                            className="text-3xl font-bold leading-6 text-gray-900"
                                                         >
                                                             Add a Reward
                                                         </Dialog.Title>
-                                                        <div className="w-full">
+                                                        <div className="mt-2">
                                                             <p className="text-sm text-gray-500">
                                                                 Fill out the
                                                                 form below to
@@ -568,10 +571,10 @@ export default function ViewRewardsComp() {
                                                         <input
                                                             type="number"
                                                             className="w-full input-style"
-                                                            placeholder="Capacity"
+                                                            placeholder={addRewardData.cap === 0 ? "Capacity" : ""}
                                                             name="cap"
                                                             value={
-                                                                addRewardData.cap
+                                                                addRewardData.cap === 0 ? "" : addRewardData.cap
                                                             }
                                                             onChange={
                                                                 handleChange
@@ -857,14 +860,20 @@ export default function ViewRewardsComp() {
                                                         </Menu>
                                                     </div>
                                                     <div className="w-full mt-8">
-                                                        <button className="bg-dark-pink px-4 py-2 rounded-md text-white font-bold">
+                                                        <button 
+                                                            className="bg-dark-pink px-4 py-2 rounded-md text-white font-bold" 
+                                                            onClick={() =>
+                                                                scrollToSection(
+                                                                    "section2"
+                                                                )
+                                                        }>
                                                             Next
                                                         </button>
                                                     </div>
                                                 </section>
                                                 <section
                                                     id="section2"
-                                                    className="w-full h-screen flex flex-col items-center justify-start pt-16"
+                                                    className="w-full h-screen flex flex-col items-center justify-start pt-10"
                                                 >
                                                     {/* CONDITION DESCRIPTION */}
                                                     <div className="w-full justify-center items-center text-center">
@@ -1032,7 +1041,7 @@ export default function ViewRewardsComp() {
                                                     </div>
 
                                                     {/* VALUE CONDITIONS */}
-                                                    <div className="w-full justify-center items-center text-center">
+                                                    <div className="w-full mt-5 justify-center items-center text-center">
                                                         <div className="mt-2">
                                                             <p className="flex justify-center text-sm text-gray-500">
                                                                 Value Conditions
@@ -1045,7 +1054,7 @@ export default function ViewRewardsComp() {
                                                                         key={
                                                                             index
                                                                         }
-                                                                        className="flex flex-row mt-2 gap-2"
+                                                                        className="flex flex-row mt-2 gap-4"
                                                                     >
                                                                         <button
                                                                             onClick={() =>
@@ -1163,9 +1172,9 @@ export default function ViewRewardsComp() {
                                                                         <input
                                                                             name="num"
                                                                             className="w-full input-style"
-                                                                            placeholder="Rule"
+                                                                            placeholder={input.num === 0 ? "Rule Value" : ""}
                                                                             value={
-                                                                                input.num
+                                                                                input.num === 0 ? "" : input.num
                                                                             }
                                                                             onChange={(
                                                                                 event
@@ -1188,7 +1197,7 @@ export default function ViewRewardsComp() {
                                                             }
                                                         )}
                                                     </div>
-                                                    <div className="w-full mt-8">
+                                                    <div className="w-full flex gap-2 mt-8">
                                                         <button
                                                             className="bg-dark-pink px-4 py-2 rounded-md text-white font-bold"
                                                             onClick={() =>
@@ -1210,10 +1219,10 @@ export default function ViewRewardsComp() {
                                                         <input
                                                             type="number"
                                                             className="w-full input-style"
-                                                            placeholder="Minimum Spent"
+                                                            placeholder={addRewardData.min_spent === 0 ? "Minimum Spent" : ""}
                                                             name="min_spent"
                                                             value={
-                                                                addRewardData.min_spent
+                                                                addRewardData.min_spent === 0 ? "" : addRewardData.min_spent
                                                             }
                                                             onChange={
                                                                 handleChange
@@ -1225,10 +1234,10 @@ export default function ViewRewardsComp() {
                                                         <input
                                                             type="number"
                                                             className="w-full input-style"
-                                                            placeholder="Minimum Items"
+                                                            placeholder={addRewardData.min_items === 0 ? "Minimum Items" : ""}
                                                             name="min_items"
                                                             value={
-                                                                addRewardData.min_items
+                                                                addRewardData.min_items === 0 ? "" : addRewardData.min_items
                                                             }
                                                             onChange={
                                                                 handleChange
