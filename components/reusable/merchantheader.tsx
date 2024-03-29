@@ -11,8 +11,7 @@ export default function MerchantHeader() {
           <div className='flex flex-row justify-center gap-5'>
             <Link href={`/analytics`} className='px-2 flex items-center'>Analytics</Link>
             <Link href={`/brands`} className='px-2 flex items-center'>My Brands</Link>
-            <button className='px-2'>Employees</button>
-            <button className='px-2'>Schedule Notifications</button>
+            <Link href={`/reports`} className='px-2 flex items-center'>Reports</Link>
             <Link href={`/merchnotifications`} className='px-2 flex items-center'>My Notifications</Link>
           </div>
           <div></div>
