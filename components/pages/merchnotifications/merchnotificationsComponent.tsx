@@ -1,5 +1,5 @@
 "use client"
-import React, {useEffect, useState, Fragment} from 'react'
+import React, {useEffect, useState, Fragment, ChangeEvent} from 'react'
 import {Menu, Dialog, Transition} from '@headlessui/react'
 
 interface Notification {
@@ -63,6 +63,15 @@ export default function MerchNotificationsComp({id, userType} : MerchNotificatio
     const [dateTime, setDateTime] = useState<string>('');
     const [brandid, setBrandId] = useState<string>('');
     const [pickedReward, setPickedReward] = useState<string | null>(null)
+    const [pickedBrand, setPickedBrand] = useState<string | null>(null)
+    const [wantOpen, setWantOpen] = useState<boolean>(false)
+
+    const handleCheckboxChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setWantOpen(e.target.checked);
+        console.log(wantOpen)
+    };
+
+    console.log(wantOpen)
 
     useEffect(() => {
         async function fetchNotificationsData() {
@@ -138,10 +147,15 @@ export default function MerchNotificationsComp({id, userType} : MerchNotificatio
     console.log(dateTime)
 
     function handleAddNotification() {
+        let scheduled_post_date = ''; 
+        
+        if (dateTime) {
+            scheduled_post_date = new Date(dateTime).toISOString();
+        }
         const postData = {
             message: notificationPost.message,
             reward: notificationPost.reward,//where the _id would be,
-            scheduled_post_date: new Date(dateTime).toISOString(),
+            scheduled_post_date: scheduled_post_date,
         }
         console.log(postData)
         console.log(user && user.assigned_brand)
@@ -263,7 +277,7 @@ export default function MerchNotificationsComp({id, userType} : MerchNotificatio
                                                     <Menu as="div" className="w-full relative inline-block text-left">
                                                         <div>
                                                             <Menu.Button className="input-style inline-flex flex items-center w-full justify-between rounded-md p-2 hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75">
-                                                                Select a brand:
+                                                                {pickedBrand ? pickedBrand : "Select a brand:"}
                                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="mr-1 ml-2 h-6 w-5 text-violet-200 hover:text-violet-100">
                                                                     <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
                                                                 </svg>
@@ -291,6 +305,7 @@ export default function MerchNotificationsComp({id, userType} : MerchNotificatio
                                                                                         } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
                                                                                     onClick={() => {
                                                                                         handleClick(brand._id)
+                                                                                        setPickedBrand(brand.brand_name)
                                                                                     }}
                                                                                 >
                                                                                     <strong className="px-1">{brand.brand_name}</strong>
@@ -357,16 +372,27 @@ export default function MerchNotificationsComp({id, userType} : MerchNotificatio
                                                 </Menu>
                                             </div>
 
-                                            <div className='mt-5 justify-center items-center text-center'>
-                                                <input
-                                                    type="datetime-local"
-                                                    id="datetime"
-                                                    name="datetime"
-                                                    className='input-style'
-                                                    value={dateTime}
-                                                    onChange={handleDateTimeChange}
-                                                    required
+                                            <div className='mt-5 flex flex-row justify-center items-center text-center gap-3'>
+                                                <input 
+                                                    type="checkbox" 
+                                                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                                    onChange={handleCheckboxChange}
+                                                    checked={wantOpen}
                                                 />
+
+                                                {!wantOpen ? (
+                                                    <h1>Do you want to schedule this notification?</h1>
+                                                ) : (
+                                                    <input
+                                                        type="datetime-local"
+                                                        id="datetime"
+                                                        name="datetime"
+                                                        className='w-3/4 input-style'
+                                                        value={dateTime}
+                                                        onChange={handleDateTimeChange}
+                                                        required
+                                                    />
+                                                )}                                              
                                             </div>
 
                                             <div className='mt-12 p-1 text-center'>

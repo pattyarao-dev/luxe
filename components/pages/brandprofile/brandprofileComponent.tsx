@@ -117,21 +117,21 @@ export default function BrandProfileComp() {
                                                 </div>
 
                                                 <div className='mt-6 justify-center items-center text-center'>
-                                                    <input type="text" className='w-80 outlined-button' placeholder='Branch name'/>
+                                                    <input type="text" className='w-full input-style' placeholder='Branch name'/>
                                                 </div>
 
                                                 <div className='mt-5 justify-center items-center text-center'>
-                                                    <input type="text" className='w-80 outlined-button' placeholder='Branch location'/>
+                                                    <input type="text" className='w-full input-style' placeholder='Branch location'/>
                                                 </div>
 
                                                 <div className='mt-6 p-1 text-center'>
                                                     <button
                                                         type='button'
-                                                        className='w-80 gradient-button'
+                                                        className='w-full gradient-button'
                                                         //className='w-80 inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2'
                                                         onClick={closeModal}
                                                     >
-                                                        Add Branch
+                                                        Save and Proceed
                                                     </button>
                                                 </div>
                                             </Dialog.Panel>

@@ -425,7 +425,7 @@ export default function ViewRewardsComp() {
                                                     id="section1"
                                                     className="w-full h-screen flex justify-start items-center flex-col gap-4"
                                                 >
-                                                    <div className="w-full mb-5">
+                                                    <div className="w-full">
                                                         <Dialog.Title
                                                             as="h1"
                                                             className="text-3xl font-bold leading-6 text-gray-900"
@@ -441,7 +441,7 @@ export default function ViewRewardsComp() {
                                                             </p>
                                                         </div>
                                                     </div>
-                                                    <div className="w-full justify-center items-center text-center">
+                                                    <div className="w-full mt-2 justify-center items-center text-center">
                                                         <input
                                                             type="text"
                                                             className="w-full input-style"
@@ -859,7 +859,7 @@ export default function ViewRewardsComp() {
                                                             </Transition>
                                                         </Menu>
                                                     </div>
-                                                    <div className="w-full mt-8">
+                                                    <div className="w-full mt-5">
                                                         <button 
                                                             className="bg-dark-pink px-4 py-2 rounded-md text-white font-bold" 
                                                             onClick={() =>
@@ -877,7 +877,7 @@ export default function ViewRewardsComp() {
                                                 >
                                                     {/* CONDITION DESCRIPTION */}
                                                     <div className="w-full justify-center items-center text-center">
-                                                        <div className="mt-2">
+                                                        <div className="">
                                                             <p className="flex justify-center text-sm text-gray-500">
                                                                 Condition
                                                                 Description
@@ -1212,7 +1212,7 @@ export default function ViewRewardsComp() {
                                                 </section>
                                                 <section
                                                     id="section3"
-                                                    className="w-full h-screen flex flex-col justify-start items-center pt-16 gap-4"
+                                                    className="w-full h-screen flex flex-col justify-start items-center pt-12 gap-4"
                                                 >
                                                     {/* MINIMUM SPENT */}
                                                     <div className="w-full justify-center items-center text-center">

@@ -195,7 +195,7 @@ export default function BrandComp({id, userType} : BrandCompProps) {
                                         <div className='mt-6 justify-center items-center text-center'>
                                         <input 
                                             type="text" 
-                                            className='w-80 outlined-button' 
+                                            className='w-full input-style' 
                                             name='brand_name'
                                             placeholder='Brand name'
                                             value={brandData.brand_name}
@@ -206,7 +206,7 @@ export default function BrandComp({id, userType} : BrandCompProps) {
                                     <div className='mt-5 justify-center items-center text-center'>
                                         <input 
                                             type="text" 
-                                            className='w-80 outlined-button' 
+                                            className='w-full input-style' 
                                             name='brand_desc'
                                             placeholder='Brand description'
                                             value={brandData.brand_desc}
@@ -215,7 +215,7 @@ export default function BrandComp({id, userType} : BrandCompProps) {
                                     </div>
 
                                     <div className='mt-5 justify-center items-center text-center'>
-                                        <Menu as="div" className="w-80 relative inline-block text-left">
+                                        <Menu as="div" className="w-full relative inline-block text-left">
                                             <div>
                                                 <Menu.Button className="input-style inline-flex flex items-center w-full justify-between rounded-md p-2 hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75">
                                                     Select brand tags
@@ -233,9 +233,9 @@ export default function BrandComp({id, userType} : BrandCompProps) {
                                                 leaveFrom="transform opacity-100 scale-100"
                                                 leaveTo="transform opacity-0 scale-95"
                                             >
-                                                <Menu.Items className="absolute right-0 mt-2 w-full origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none">
+                                                <Menu.Items className="absolute z-40 right-0 mt-2 w-full origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none">
                                                     {tags.length > 0 && (
-                                                    <div className="overflow-auto px-1 py-1 w-full h-40">
+                                                    <div className="overflow-auto px-1 py-1 w-full h-28">
                                                         {tags.map((item, index) => (
                                                             <Menu.Item key={index}>
                                                                 {({ active }) => (
@@ -266,10 +266,10 @@ export default function BrandComp({id, userType} : BrandCompProps) {
                                     </div>
                                     
 
-                                    <div className='mt-5 mb-1 text-center'>
+                                    <div className='mt-12 text-center'>
                                         <button
                                             type='button'
-                                            className='w-80 px-5 py-2 gradient-button'
+                                            className='w-full px-5 py-2 gradient-button'
                                             //className='w-80 inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2'
                                             onClick={handleAddBrand}
                                         >

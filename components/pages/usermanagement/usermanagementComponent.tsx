@@ -198,10 +198,10 @@ export default function UserManagementComp() {
                                             </p>
                                         </div>
 
-                                        <div className='mt-6 flex flex-row justify-center items-center text-center gap-1'>
+                                        <div className='mt-6 flex flex-row justify-center items-center text-center gap-2'>
                                             <input 
                                                 type="text" 
-                                                className='w-48 input-style' 
+                                                className='w-full input-style' 
                                                 placeholder='First name'
                                                 name='first_name'
                                                 value={addUserData.first_name}
@@ -209,7 +209,7 @@ export default function UserManagementComp() {
                                             />
                                             <input 
                                                 type="text" 
-                                                className='w-48 input-style' 
+                                                className='w-full input-style' 
                                                 placeholder='Last name'
                                                 name='last_name'
                                                 value={addUserData.last_name}
@@ -220,7 +220,7 @@ export default function UserManagementComp() {
                                         <div className='mt-4 justify-center items-center text-center'>
                                             <input 
                                                 type="text" 
-                                                className='w-96 input-style' 
+                                                className='w-full input-style' 
                                                 placeholder='Username'
                                                 name='username'
                                                 value={addUserData.username}
@@ -231,7 +231,7 @@ export default function UserManagementComp() {
                                         <div className='mt-4 justify-center items-center text-center'>
                                             <input 
                                                 type="text" 
-                                                className='w-96 input-style' 
+                                                className='w-full input-style' 
                                                 placeholder='Email'
                                                 name='email'
                                                 value={addUserData.email}
@@ -242,7 +242,7 @@ export default function UserManagementComp() {
                                         <div className='mt-4 justify-center items-center text-center'>
                                             <input 
                                                 type="text" 
-                                                className='w-96 input-style' 
+                                                className='w-full input-style' 
                                                 placeholder='Password'
                                                 name='password'
                                                 value={addUserData.password}
@@ -251,7 +251,7 @@ export default function UserManagementComp() {
                                         </div>
 
                                         <div className='mt-4 justify-center items-center text-center'>
-                                            <Menu as="div" className="w-96 relative inline-block text-left">
+                                            <Menu as="div" className="w-full relative inline-block text-left">
                                                 <div>
                                                     <Menu.Button className="input-style inline-flex flex items-center w-full justify-between rounded-md p-2 hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75">
                                                         Select User Type:
@@ -269,7 +269,7 @@ export default function UserManagementComp() {
                                                     leaveFrom="transform opacity-100 scale-100"
                                                     leaveTo="transform opacity-0 scale-95"
                                                 >
-                                                    <Menu.Items className="right-0 mt-2 w-full origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none">
+                                                    <Menu.Items className="absolute z-40 right-0 mt-2 w-full origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none">
                                                         <div className="px-1 py-1 ">
                                                             {["ADMIN", "CASHIER"].map((item, index) => (
                                                                 <Menu.Item key={index}>
@@ -297,7 +297,7 @@ export default function UserManagementComp() {
 
                                         {selectedUserType === 'CASHIER' && (
                                             <div className='mt-4 justify-center items-center text-center'>
-                                                <Menu as="div" className="w-96 relative inline-block text-left">
+                                                <Menu as="div" className="w-full relative inline-block text-left">
                                                     <div>
                                                         <Menu.Button className="input-style inline-flex flex items-center w-full justify-between rounded-md p-2 hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75">
                                                             Select Assigned Branch:
@@ -315,7 +315,7 @@ export default function UserManagementComp() {
                                                         leaveFrom="transform opacity-100 scale-100"
                                                         leaveTo="transform opacity-0 scale-95"
                                                     >
-                                                        <Menu.Items className="right-0 mt-2 w-full origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none">
+                                                        <Menu.Items className="absolute z-40 right-0 mt-2 w-full origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none">
                                                             <div className="px-1 py-1 ">
                                                                 {data.branches.map((branch: { branch_name: string }, index: number) => (
                                                                     <Menu.Item key={index}>
@@ -342,10 +342,10 @@ export default function UserManagementComp() {
                                         )}
                                         
 
-                                        <div className='mt-5 text-center'>
+                                        <div className='mt-12 text-center'>
                                             <button
                                                 type='button'
-                                                className='w-96 px-5 py-2 gradient-button'
+                                                className='w-full px-5 py-2 gradient-button'
                                                 //className='w-80 inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2'
                                                 onClick={handleAddUser}
                                             >
