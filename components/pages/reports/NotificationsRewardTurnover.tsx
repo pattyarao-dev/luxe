@@ -6,17 +6,13 @@ interface RewardData {
     total_clicks: number;
 }
 
-interface MonthlyData {
-    month: string;
-    reward_data: RewardData[];
-}
-
 interface SampleReport {
     id: number;
     date_created: string;
     year: string;
+    quarter: number
     brand: string;
-    monthly_data: MonthlyData[];
+    reward_data: RewardData[];
 }
 
 export const NotificationsRewardTurnover = () => {
@@ -26,11 +22,9 @@ export const NotificationsRewardTurnover = () => {
         id: 1,
         date_created: "June 31, 2024",
         year: "2024",
+        quarter: 1,
         brand: "Louis Vuitton",
-        monthly_data: [
-            {
-                month: "Jan",
-                reward_data: [
+        reward_data: [
                     {
                         reward_name: "Monogram Service",
                         claims: 123,
@@ -47,48 +41,7 @@ export const NotificationsRewardTurnover = () => {
                         total_clicks: 800
                     },
                 ]
-            },
-            {
-                month: "Feb",
-                reward_data: [
-                    {
-                        reward_name: "Monogram Service",
-                        claims: 321,
-                        total_clicks: 400
-                    },
-                    {
-                        reward_name: "VIP Access",
-                        claims: 654,
-                        total_clicks: 700
-                    },
-                    {
-                        reward_name: "Travel Experience",
-                        claims: 987,
-                        total_clicks: 1000
-                    },
-                ]
-            },
-            {
-                month: "Mar",
-                reward_data: [
-                    {
-                        reward_name: "Monogram Service",
-                        claims: 234,
-                        total_clicks: 250
-                    },
-                    {
-                        reward_name: "VIP Access",
-                        claims: 567,
-                        total_clicks: 600
-                    },
-                    {
-                        reward_name: "Travel Experience",
-                        claims: 891,
-                        total_clicks: 1000
-                    },
-                ]
-            }
-        ]
+        
     }
 
     const calculateConversionRate = (rewardData: RewardData): number => {
@@ -99,34 +52,47 @@ export const NotificationsRewardTurnover = () => {
     return conversionRate; // Convert to string with 1 decimal place
 };
 
-const getTotalClaimsPerMonth = (monthlyData: MonthlyData[]): number => {
-    return monthlyData.reduce((total, month) => {
-        return total + month.reward_data.reduce((monthTotal, reward) => monthTotal + reward.claims, 0);
-    }, 0);
-};
+const calculateTotalClaims = (rewardData: RewardData[]): number => {
+    let totalClaims = 0;
 
-// Function to get the total clicks for all rewards in a given month
-const getTotalClicksPerMonth = (monthlyData: MonthlyData[]): number => {
-    return monthlyData.reduce((total, month) => {
-        return total + month.reward_data.reduce((monthTotal, reward) => monthTotal + reward.total_clicks, 0);
-    }, 0);
-};
+    rewardData.map((reward, index) => {
+        totalClaims += reward.claims
+    })
+    return totalClaims
+}
 
-const getAverageConversionRatePerMonth = (monthlyData: MonthlyData[]): number => {
-    const totalConversionRates = monthlyData.reduce((total, month) => {
-        const conversionRates = month.reward_data.map(reward => calculateConversionRate(reward));
-        const sum = conversionRates.reduce((acc, rate) => acc + rate, 0);
-        return total + (sum / conversionRates.length);
-    }, 0);
-    return totalConversionRates / monthlyData.length;
+const calculateTotalClicks = (rewardData: RewardData[]): number => {
+
+    let totalClicks = 0;
+
+    rewardData.map((reward, index) => {
+        totalClicks += reward.total_clicks
+    })
+    return totalClicks
+}
+
+const calculateAverageConversionRate = (rewardData: RewardData[]): number => {
+    let totalConversionRate = 0;
+
+    rewardData.forEach((reward) => {
+        const conversionRate = reward.claims / reward.total_clicks;
+        totalConversionRate += conversionRate;
+    });
+
+    if (rewardData.length === 0) {
+        return 0; // To avoid division by zero
+    }
+
+    const averageConversionRate = (totalConversionRate / rewardData.length) * 100;
+    return averageConversionRate;
 };
 
 
 
   return (
     <div className="w-full flex flex-col gap-10">
-        <table className="w-full flex flex-col justify-evenly border border-neutral-400">
-            <tr className="w-full p-4 flex flex-col border border-neutral-400">
+        <table className="w-full flex flex-col justify-evenly border border-neutral-400 text-sm">
+             <tr className="w-full p-4 flex flex-col border border-neutral-400">
                 <div className="w-full flex justify-between">
                     <p>{SAMPLE_REPORT.date_created}</p>
                     <p>Page 1</p>
@@ -137,8 +103,37 @@ const getAverageConversionRatePerMonth = (monthlyData: MonthlyData[]): number =>
                 {SAMPLE_REPORT.brand}
             </tr>
             <tr className="w-full p-2 flex justify-center border border-neutral-400">
-                {SAMPLE_REPORT.year}
+                {`${SAMPLE_REPORT.year} - Quarter ${SAMPLE_REPORT.quarter}`}
             </tr>
+            <tr className="w-full flex justify-evenly">
+                <th className="w-[100px] grow border border-neutral-400">Reward Name</th>
+                <th className="w-[100px] grow border border-neutral-400">Total Clicks</th>
+                <th className="w-[100px] grow border border-neutral-400">Total Sales</th>
+                <th className="w-[100px] grow border border-neutral-400">Conversion Rate</th>
+            </tr>
+            <div className="w-full flex flex-col">
+                {SAMPLE_REPORT.reward_data.map((reward, index) => (
+                    <tr className="w-full flex justify-evenly">
+                    <td className="w-[100px] grow border border-neutral-400">{reward.reward_name}</td>
+                    <td className="w-[100px] grow border border-neutral-400 text-end">{reward.claims}</td>
+                    <td className="w-[100px] grow border border-neutral-400 text-end">{reward.total_clicks}</td>
+                    <td className="w-[100px] grow border border-neutral-400 text-end">{`${calculateConversionRate(reward).toFixed(1).toString()}%`}</td>
+                    </tr>
+                ))}
+            </div>
+            <tr className="w-full flex justify-evenly">
+                <th className="w-[100px] grow border border-neutral-400">Total</th>
+                <th className="w-[100px] grow border border-neutral-400">{calculateTotalClaims(SAMPLE_REPORT.reward_data)}</th>
+                <th className="w-[100px] grow border border-neutral-400">{calculateTotalClicks(SAMPLE_REPORT.reward_data)}</th>
+                <th className="w-[100px] grow border border-neutral-400"></th>
+            </tr>
+            <tr className="w-full flex justify-evenly">
+                <th className="w-[100px] grow border border-neutral-400">Average Conversion Rate</th>
+                <th className="w-[100px] grow border border-neutral-400"></th>
+                <th className="w-[100px] grow border border-neutral-400"></th>
+                <th className="w-[100px] grow border border-neutral-400">{`${calculateAverageConversionRate(SAMPLE_REPORT.reward_data).toFixed(1).toString()}%`}</th>
+            </tr>
+            {/*
             <tr className="w-full flex justify-evenly">
                 <th className='grow border border-neutral-400'></th>
                 {SAMPLE_REPORT.monthly_data.map((month, index) => (
@@ -157,14 +152,14 @@ const getAverageConversionRatePerMonth = (monthlyData: MonthlyData[]): number =>
             </tr>
            <tr className="w-full flex justify-evenly">
 
-                {/* the first column maps the different brands available*/}
+               
                <div className="flex flex-col grow text-xs">
                 {REWARDS.map((reward) => (
                 <tr className='grow border border-neutral-400'>{reward}</tr>
                ))}
                </div>
 
-               {/* the succeeding columns map out the data for the specific brands under specific months*/}
+           
                  {SAMPLE_REPORT.monthly_data.map((month, index) => (
                    <tr>
                     {month.reward_data.map((reward, index) => (
@@ -196,7 +191,7 @@ const getAverageConversionRatePerMonth = (monthlyData: MonthlyData[]): number =>
                         <td className="w-1/3 text-center">{`${getAverageConversionRatePerMonth([month]).toFixed(1).toString()}%`}</td>
                    </tr>
                 ))}
-            </tr>
+            </tr> */}
             
         </table>
         <div className="w-full flex justify-center items-center gap-4">
