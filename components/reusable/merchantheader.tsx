@@ -8,7 +8,7 @@ export default function MerchantHeader() {
   const { push } = useRouter()
   const handleLogout = async () => {
     try {
-      const response = await fetch('http://localhost:3000/api/logout', {
+      const response = await fetch('api/logout', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
