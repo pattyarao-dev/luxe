@@ -1,26 +1,56 @@
 "use client"
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 
 interface UserCardProps {
+  id: string,
   first_name: string,
   last_name: string,
   user_type: string;
 }
 
-const UserCard: React.FC<UserCardProps> = ({ first_name, last_name, user_type }) => {
+
+const UserCard: React.FC<UserCardProps> = ({ id, first_name, last_name, user_type }) => {
+  const [assignedbranch, setAssignedBranch] = useState<any>()
+
+  useEffect(() => {
+    async function fetchUserData() {
+      try {
+          const response = await fetch(`/api/user?id=${id}`)
+          if (response.ok) {
+              const data = await response.json()
+              setAssignedBranch(data.user.assigned_branch)
+              console.log(data)
+          }
+      } catch (error) {
+          console.error('Error while fetching user:', error)
+      }
+    }
+    if (id){
+      fetchUserData(); 
+    }
+  }, [id])
+
+  console.log(assignedbranch)
+
 
   return (
     <div className="branch-card flex w-full justify-between mb-4">
         <div className='w-full flex flex-row items-center gap-2'>
-            <div className="w-[7%] h-[60px] rounded-md flex items-center justify-center bg-gray-main h-full">
+            <div className="w-[7%] h-[55px] rounded-md flex items-center justify-center bg-gray-main h-full">
                 <Image src="/cuate.png" width={80} height={80} alt="reward image" className='p-2'></Image>
             </div>
             <div className="w-[60%] flex flex-col">
                 <div>
-                    <h1 className="font-medium">{first_name} {last_name}</h1>
-                    <p className="text-sm">{user_type}</p>
+                    <h1 className="font-semibold">{first_name} {last_name}</h1>
+                    <p className="text-xs">{user_type}</p>
+                    
+                    {user_type === 'CASHIER' && (
+                      <div>
+                        <p className='text-xs'>{assignedbranch}</p>
+                      </div>
+                    )}
                 </div>
             </div>
         </div>
