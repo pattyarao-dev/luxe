@@ -11,7 +11,6 @@ export default function LoginComp() {
     // Function to handle form submission
     const handleSubmit = async () => {
         try {
-            console.log(process.env.NEXT_PUBLIC_API_URL! + "/auth")
             const response = await fetch(
                 process.env.NEXT_PUBLIC_API_URL! + "/auth",
                 {
@@ -26,7 +25,24 @@ export default function LoginComp() {
             // Handle response as needed
             const data = await response.json()
             console.log(data) // Log response data
-            push("/home")
+
+            if(!data.user_type){
+                push("/login")
+            }
+
+            if(data.user_type === "CLIENT"){
+                push("/home")
+            }
+            else if (data.user_type === "ADMIN" || data.user_type === "ADMIN_ALL"){
+                push("/analytics")
+            }
+            else if (data.user_type === "CASHIER"){
+                push("/cashier/verify")
+            }
+            else {
+                push("/login")
+            }
+            
         } catch (error) {
             console.error("Error submitting form:", error)
         }
