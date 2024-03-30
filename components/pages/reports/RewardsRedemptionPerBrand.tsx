@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 
 interface RewardData {
     reward_name: string;
@@ -20,108 +20,14 @@ interface SampleReport {
 }
 
 
-export const RewardsRedemptionPerBrand = () => {
+interface PropsContent {
+    id: string, 
+    user_type: string
+}
 
-    const BRANCHES = ["Quezon City", "Makati", "BGC"]
+export const RewardsRedemptionPerBrand: React.FC<PropsContent> = ({ id, user_type }) => {
 
-    const SAMPLE_REPORT: SampleReport = {
-        id: 1,
-        date_created: "June 31, 2024",
-        year: "2024",
-        brand: "Louis Vuitton",
-        branch_data: [
-            {
-                branch_name: "Quezon City",
-                reward_data: [
-                    {
-                        reward_name: "Reward 1",
-                        claims: 100,
-                        cap: 100
-                    },
-                    {
-                        reward_name: "Reward 2",
-                        claims: 100,
-                        cap: 100
-                    },
-                    {
-                        reward_name: "Reward 3",
-                        claims: 100,
-                        cap: 100
-                    },
-                    {
-                        reward_name: "Reward 4",
-                        claims: 100,
-                        cap: 100
-                    },
-                    {
-                        reward_name: "Reward 5",
-                        claims: 100,
-                        cap: 100
-                    },
-                ]
-            },
-            {
-                branch_name: "Makati",
-                reward_data: [
-                    {
-                        reward_name: "Reward 1",
-                        claims: 100,
-                        cap: 100
-                    },
-                    {
-                        reward_name: "Reward 2",
-                        claims: 100,
-                        cap: 100
-                    },
-                    {
-                        reward_name: "Reward 3",
-                        claims: 100,
-                        cap: 100
-                    },
-                    {
-                        reward_name: "Reward 4",
-                        claims: 100,
-                        cap: 100
-                    },
-                    {
-                        reward_name: "Reward 5",
-                        claims: 100,
-                        cap: 100
-                    },
-                ]
-            },
-            {
-                branch_name: "BGC",
-                reward_data: [
-                    {
-                        reward_name: "Reward 1",
-                        claims: 100,
-                        cap: 100
-                    },
-                    {
-                        reward_name: "Reward 2",
-                        claims: 100,
-                        cap: 100
-                    },
-                    {
-                        reward_name: "Reward 3",
-                        claims: 100,
-                        cap: 100
-                    },
-                    {
-                        reward_name: "Reward 4",
-                        claims: 100,
-                        cap: 100
-                    },
-                    {
-                        reward_name: "Reward 5",
-                        claims: 100,
-                        cap: 100
-                    },
-                ]
-            },
-        ]
-    }
+    const [data, setData] = useState<SampleReport | null>(null);
 
     const calculateTotalClaimsPerBranch = (branchData: BranchData): number => {
     return branchData.reward_data.reduce((total, reward) => total + reward.claims, 0);};
@@ -130,19 +36,36 @@ export const RewardsRedemptionPerBrand = () => {
     const calculateTotalCapsPerBranch = (branchData: BranchData): number => {
     return branchData.reward_data.reduce((total, reward) => total + reward.cap, 0);};
 
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await fetch(`api/report/rewardredemption?id=${id}&usertype=${user_type}`);
+                const jsonData = await response.json();
+                setData(jsonData);
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        };
+
+        fetchData();
+    }, [id, user_type]);
+
+    if (!data || !data.branch_data) {
+        return <div>Loading...</div>;
+    }
 
   return (
     <div className="w-full flex flex-col gap-10">
         <table className="w-full flex flex-col justify-evenly border border-neutral-400 text-sm">
             <tr className="w-full p-4 flex flex-col border border-neutral-400">
                 <div className="w-full flex justify-between">
-                    <p>{SAMPLE_REPORT.date_created}</p>
+                    <p>Generated On {data!.date_created}</p>
                     <p>Page 1</p>
                 </div>
                 <p className="w-full text-center">Rewards Redemption per Branch Analysis Report</p>
             </tr>
             <tr className="w-full p-2 flex justify-center border border-neutral-400">
-                {SAMPLE_REPORT.brand}
+                {data!.brand}
             </tr>
             <tr className="w-full flex justify-between">
                 <th className="w-[500px] border border-neutral-400">Branch Name</th>
@@ -151,7 +74,7 @@ export const RewardsRedemptionPerBrand = () => {
                 <th className="w-[100px] grow border border-neutral-400">Cap</th>
             </tr>
             <tr className="w-full flex flex-col">
-                {SAMPLE_REPORT.branch_data.map((branch, index) => (
+                {data!.branch_data.map((branch, index) => (
                     <div className="w-full flex flex-col">
                         <div className="flex">
                             <td className="w-[500px] border border-neutral-400">{branch.branch_name}</td>

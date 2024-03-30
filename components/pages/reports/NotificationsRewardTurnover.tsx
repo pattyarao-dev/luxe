@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 
 interface RewardData {
     reward_name: string;
@@ -10,39 +10,18 @@ interface SampleReport {
     id: number;
     date_created: string;
     year: string;
-    quarter: number
     brand: string;
     reward_data: RewardData[];
 }
 
-export const NotificationsRewardTurnover = () => {
+interface PropsContent {
+    id: string, 
+    user_type: string
+}
 
-    const REWARDS = ["Monogram Service", "VIP Access", "Travel Experience"]
-    const SAMPLE_REPORT : SampleReport = {
-        id: 1,
-        date_created: "June 31, 2024",
-        year: "2024",
-        quarter: 1,
-        brand: "Louis Vuitton",
-        reward_data: [
-                    {
-                        reward_name: "Monogram Service",
-                        claims: 123,
-                        total_clicks: 500
-                    },
-                    {
-                        reward_name: "VIP Access",
-                        claims: 456,
-                        total_clicks: 600
-                    },
-                    {
-                        reward_name: "Travel Experience",
-                        claims: 789,
-                        total_clicks: 800
-                    },
-                ]
-        
-    }
+export const NotificationsRewardTurnover: React.FC<PropsContent> = ({ id, user_type })  => {
+    const [data, setData] = useState<SampleReport | null>(null);
+
 
     const calculateConversionRate = (rewardData: RewardData): number => {
     if (rewardData.total_clicks === 0) {
@@ -75,8 +54,15 @@ const calculateAverageConversionRate = (rewardData: RewardData[]): number => {
     let totalConversionRate = 0;
 
     rewardData.forEach((reward) => {
-        const conversionRate = reward.claims / reward.total_clicks;
-        totalConversionRate += conversionRate;
+        if (reward.total_clicks === 0) {
+            totalConversionRate += 0;
+        }
+        else {
+            const conversionRate = reward.claims / reward.total_clicks;
+            totalConversionRate += conversionRate;
+        }
+        
+        
     });
 
     if (rewardData.length === 0) {
@@ -87,6 +73,23 @@ const calculateAverageConversionRate = (rewardData: RewardData[]): number => {
     return averageConversionRate;
 };
 
+useEffect(() => {
+    const fetchData = async () => {
+        try {
+            const response = await fetch(`api/report/notifturnover?id=${id}&usertype=${user_type}`);
+            const jsonData = await response.json();
+            setData(jsonData);
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
+    };
+
+    fetchData();
+}, [id, user_type]);
+
+if (!data || !data.reward_data) {
+    return <div>Loading...</div>;
+}
 
 
   return (
@@ -94,25 +97,25 @@ const calculateAverageConversionRate = (rewardData: RewardData[]): number => {
         <table className="w-full flex flex-col justify-evenly border border-neutral-400 text-sm">
              <tr className="w-full p-4 flex flex-col border border-neutral-400">
                 <div className="w-full flex justify-between">
-                    <p>{SAMPLE_REPORT.date_created}</p>
+                    <p>Generated On {data.date_created}</p>
                     <p>Page 1</p>
                 </div>
                 <p className="w-full text-center">Rewards Redemption per Branch Analysis Report</p>
             </tr>
             <tr className="w-full p-2 flex justify-center border border-neutral-400">
-                {SAMPLE_REPORT.brand}
+                {data.brand}
             </tr>
             <tr className="w-full p-2 flex justify-center border border-neutral-400">
-                {`${SAMPLE_REPORT.year} - Quarter ${SAMPLE_REPORT.quarter}`}
+                {`${data.year}`}
             </tr>
             <tr className="w-full flex justify-evenly">
                 <th className="w-[100px] grow border border-neutral-400">Reward Name</th>
-                <th className="w-[100px] grow border border-neutral-400">Total Clicks</th>
-                <th className="w-[100px] grow border border-neutral-400">Total Sales</th>
+                <th className="w-[100px] grow border border-neutral-400">Claims</th>
+                <th className="w-[100px] grow border border-neutral-400">Notification Clicks</th>
                 <th className="w-[100px] grow border border-neutral-400">Conversion Rate</th>
             </tr>
             <div className="w-full flex flex-col">
-                {SAMPLE_REPORT.reward_data.map((reward, index) => (
+                {data.reward_data.map((reward, index) => (
                     <tr className="w-full flex justify-evenly">
                     <td className="w-[100px] grow border border-neutral-400">{reward.reward_name}</td>
                     <td className="w-[100px] grow border border-neutral-400 text-end">{reward.claims}</td>
@@ -123,15 +126,15 @@ const calculateAverageConversionRate = (rewardData: RewardData[]): number => {
             </div>
             <tr className="w-full flex justify-evenly">
                 <th className="w-[100px] grow border border-neutral-400">Total</th>
-                <th className="w-[100px] grow border border-neutral-400">{calculateTotalClaims(SAMPLE_REPORT.reward_data)}</th>
-                <th className="w-[100px] grow border border-neutral-400">{calculateTotalClicks(SAMPLE_REPORT.reward_data)}</th>
+                <th className="w-[100px] grow border border-neutral-400">{calculateTotalClaims(data.reward_data)}</th>
+                <th className="w-[100px] grow border border-neutral-400">{calculateTotalClicks(data.reward_data)}</th>
                 <th className="w-[100px] grow border border-neutral-400"></th>
             </tr>
             <tr className="w-full flex justify-evenly">
                 <th className="w-[100px] grow border border-neutral-400">Average Conversion Rate</th>
                 <th className="w-[100px] grow border border-neutral-400"></th>
                 <th className="w-[100px] grow border border-neutral-400"></th>
-                <th className="w-[100px] grow border border-neutral-400">{`${calculateAverageConversionRate(SAMPLE_REPORT.reward_data).toFixed(1).toString()}%`}</th>
+                <th className="w-[100px] grow border border-neutral-400">{`${calculateAverageConversionRate(data.reward_data).toFixed(1).toString()}%`}</th>
             </tr>
             {/*
             <tr className="w-full flex justify-evenly">

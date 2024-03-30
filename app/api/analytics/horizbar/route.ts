@@ -54,7 +54,7 @@ export async function POST(req: NextRequest) {
             }
 
             output = await Promise.all(
-                brands.map(async (brand) => {
+                brands.map(async (brand: any) => {
                     // For each BRAND ID...
 
                     // Get the rewards associated with the brand
@@ -63,7 +63,7 @@ export async function POST(req: NextRequest) {
                     })
 
                     let claim_value: number = await temp_rewards.reduce(
-                        async (totalCountPromise, reward) => {
+                        async (totalCountPromise : any, reward : any) => {
                             let totalCount = await totalCountPromise
                             let count: number = 0
 
@@ -164,7 +164,7 @@ export async function POST(req: NextRequest) {
             output = await Promise.all(
                 branches.map(async (branch: string) => {
                     let claim_value: number = await rewards.reduce(
-                        async (totalCountPromise, reward) => {
+                        async (totalCountPromise : any, reward : any) => {
                             let totalCount = await totalCountPromise
                             let count: number = 0
 
