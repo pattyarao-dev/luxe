@@ -2,6 +2,7 @@ import { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import User from "@/app/(models)/User";
 import Rewards from "@/app/(models)/Rewards";
+import { TagsHelper } from "@/app/(services)/tags_helper";
 
 export async function PATCH(req: NextRequest, res: NextResponse) {
   const reward_id = req.nextUrl.searchParams.get('reward') as string
@@ -27,6 +28,7 @@ export async function PATCH(req: NextRequest, res: NextResponse) {
               $pull: { saved_rewards: reward_id}
           }
           )
+
           return NextResponse.json({
             status: 200,
             message: "SUCCESS: REWARD REMOVED FROM SAVED REWARDS",
@@ -41,7 +43,9 @@ export async function PATCH(req: NextRequest, res: NextResponse) {
             }
             )
 
-        return NextResponse.json({
+            TagsHelper(client_id, reward_id, "REWARD")
+      
+            return NextResponse.json({
               status: 200,
               message: "SUCCESS: REWARD SAVED",
           });

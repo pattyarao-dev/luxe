@@ -106,6 +106,10 @@ const RewardVerificationForm: React.FC<QRContentProps> = ({
         setPurchases(data)
     }
 
+    const handleCloseClick = () => {
+        window.location.reload(); // Reload the window when IoClose is clicked
+    };
+
     const submit = (e: any) => {
         e.preventDefault()
 
@@ -127,14 +131,16 @@ const RewardVerificationForm: React.FC<QRContentProps> = ({
             body: JSON.stringify(postData)
         })
             .then((response) => {
-                console.log(response)
+                console.log(response.json())
                 if (response.ok) {
                     // Brand added successfully, close the modal or perform any other actions
                     console.log("REWARD HAS BEEN REDEEMED`: ", response)
                     setFormSubmitted(true)
+                    setError(null)
                 } else {
                     // Handle errors if any
                     console.error("REWARD DID NOT VERIFY:", response)
+                    setError("Reward Conditions did not meet. Please try again.")
                 }
             })
             .catch((error) => {
@@ -148,7 +154,10 @@ const RewardVerificationForm: React.FC<QRContentProps> = ({
                 <h2 className=" text-white font-bold text-2xl">
                     Scanned QR Content:
                 </h2>
-                <IoClose className="text-2xl text-white" />
+                <IoClose
+                className="text-2xl text-white cursor-pointer"
+                onClick={handleCloseClick} // Attach onClick event handler
+            />
             </div>
             {/* <p>Client ID: {clientid}</p>
             <p>Reward ID: {rewardid}</p> */}
@@ -358,7 +367,7 @@ const RewardVerificationForm: React.FC<QRContentProps> = ({
                     </p>
                 )}
 
-                {formSubmitted && ( // Render freebies or discount only after form submission
+                {formSubmitted && !error && ( // Render freebies or discount only after form submission
                     <div className="w-full bg-white p-4 rounded-md drop-shadow-md flex flex-col gap-3">
                         <h1 className="font-bold text-2xl text-yellow-600">
                             Reward Claim Successful!

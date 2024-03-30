@@ -7,6 +7,7 @@ import { salesCounter } from "@/app/(services)/sales_counter";
 import { transactionEngine } from "@/app/(services)/transaction_engine";
 import { checkIfClaimedRewardByID } from "@/app/(services)/claimed_reward_checker";
 import Claim_Transaction from "@/app/(models)/Claim_Transaction";
+import { TagsHelper } from "@/app/(services)/tags_helper";
 
 interface SalesInfo {
     sales_total: number, 
@@ -142,6 +143,9 @@ export async function POST(req: NextRequest, res: NextResponse) {
                     }
 
                     await Claim_Transaction.create(transaction_info)
+
+                    
+                    TagsHelper(data.client_id, reward_id, "REWARD")
                 }
                 else {
         
@@ -178,6 +182,8 @@ export async function POST(req: NextRequest, res: NextResponse) {
                     }
     
                     await Claim_Transaction.create(transaction_info)
+
+                    TagsHelper(data.client_id, reward_id, "REWARD")
                 }
         }
         else {
@@ -188,14 +194,15 @@ export async function POST(req: NextRequest, res: NextResponse) {
 
         return NextResponse.json({
             status: 200,
-            message: "CLAIM SUCCESSFUL",
-        });
+            message: "CLAIM SUCCESSFUL",});
         
       } catch (err: any) { // Explicitly specify the type of err as any or Error
         console.log("err", err);
         return NextResponse.json({
           status: 500,
           message: err.message, // Return the error message
+        }, {
+            status: 500
         });
       }
     }

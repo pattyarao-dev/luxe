@@ -225,6 +225,7 @@ export default function ViewRewardsComp() {
                 if (response.ok) {
                     // Brand added successfully, close the modal or perform any other actions
                     closeModal()
+                    window.location.reload()
                 } else {
                     // Handle errors if any
                     console.error("Failed to add brand:", response.statusText)
@@ -234,7 +235,7 @@ export default function ViewRewardsComp() {
                 console.error("Error while adding brand:", error)
             })
         
-        window.location.reload()
+        
     }
 
     console.log(brandData)

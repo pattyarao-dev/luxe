@@ -137,7 +137,7 @@ const AnalyticsComp: React.FC<TokenContent> = ({ _id, user_type }) => {
                 )}
             </div>
 
-            <div className="w-3/4 grid grid-cols-3 gap-5">
+            <div className="w-5/6 grid grid-cols-3 gap-5">
                 <div className="h-full rounded-xl border-solid border-2 p-5 bg-white drop-shadow-md">
                     <h1 className="text-xl font-semibold">Total Claims</h1>
                     <div className="flex h-4/5 justify-center items-center">
@@ -153,7 +153,7 @@ const AnalyticsComp: React.FC<TokenContent> = ({ _id, user_type }) => {
                 </div>
                 <div className="h-full rounded-xl border-solid border-2 p-5 bg-white drop-shadow-md">
                     <h1 className="text-xl font-semibold">Total Claims by Reward Type</h1>
-                    <div className="p-4">
+                    <div className="p-4  h-full w-full">
                         <StackedBarChart
                             _id={_id}
                             user_type={user_type}
@@ -167,7 +167,7 @@ const AnalyticsComp: React.FC<TokenContent> = ({ _id, user_type }) => {
                 </div>
                 <div className="h-full rounded-xl border-solid border-2 p-5 bg-white drop-shadow-md">
                     <h1 className="text-xl font-semibold">Total Claims by Brand</h1>
-                    <div className="p-4">
+                    <div className="p-4 h-full w-full">
                         <HorizBarChart
                             _id={_id}
                             user_type={user_type}
@@ -195,7 +195,7 @@ const AnalyticsComp: React.FC<TokenContent> = ({ _id, user_type }) => {
                 </div>
                 <div className="h-full col-span-2 rounded-xl border-solid border-2 p-5 bg-white drop-shadow-md">
                     <h1 className="text-xl font-semibold">Number of Claims Over Time</h1>
-                    <div className="p-4">
+                    <div className="p-4 h-full">
                         <LineChart
                             _id={_id}
                             user_type={user_type}
