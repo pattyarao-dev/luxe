@@ -14,6 +14,7 @@ interface Reward {
     status: boolean
     brand_name: string
     claim_count: number
+    allowed_branches: string[]
 }
 
 interface APIResponse {
@@ -278,6 +279,9 @@ export default function ViewRewardsComp() {
         setConditionFields([...conditionFields, { condition: "" }])
     }
     const handleRemoveConditions = (index: any) => {
+        if (index === 0) {
+            return;
+        }
         const values = [...conditionFields]
         values.splice(index, 1)
         setConditionFields(values)
@@ -301,6 +305,9 @@ export default function ViewRewardsComp() {
         setFreebieFields([...freebieFields, { quantity: 0, name: "" }])
     }
     const handleRemoveFreebies = (index: any) => {
+        if (index === 0) {
+            return;
+        }
         const values = [...freebieFields]
         values.splice(index, 1)
         setFreebieFields(values)
@@ -309,6 +316,9 @@ export default function ViewRewardsComp() {
 
     //BOOLEAN CONDITIONS HANDLE CHANGES
     const handleRemoveBoolean = (indexToRemove: number) => {
+        if (indexToRemove === 0) {
+            return;
+        }
         setBooleanFields((prevFields) =>
             prevFields.filter((_, index) => index !== indexToRemove)
         )
@@ -355,6 +365,9 @@ export default function ViewRewardsComp() {
         ])
     }
     const handleRemoveValue = (index: any) => {
+        if (index === 0) {
+            return;
+        }
         const values = [...valueFields]
         values.splice(index, 1)
         setValueFields(values)
@@ -376,11 +389,6 @@ export default function ViewRewardsComp() {
 
     const topRef = useRef<HTMLDivElement>(null);
 
-    function scrollToTop() {
-        if (topRef && topRef.current) {
-            topRef.current.scrollIntoView({ behavior: 'smooth' });
-        }
-    }
 
     const [searchTerm, setSearchTerm] = useState<string>("")
     const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -746,7 +754,7 @@ export default function ViewRewardsComp() {
                                                                             key={
                                                                                 index
                                                                             }
-                                                                            className="flex flex-row gap-2"
+                                                                            className="flex flex-row mt-2 gap-2"
                                                                         >
                                                                             <button
                                                                                 onClick={() =>
@@ -1457,6 +1465,9 @@ export default function ViewRewardsComp() {
                             Reward name
                         </th>
                         <th scope="col" className="px-6 py-3 text-center">
+                            Allowed Branches
+                        </th>
+                        <th scope="col" className="px-6 py-3 text-center">
                             Expiry Date
                         </th>
                         <th scope="col" className="px-6 py-3 text-center">
@@ -1483,6 +1494,19 @@ export default function ViewRewardsComp() {
                                 >
                                     {reward.reward_name}
                                 </th>
+                                <td className="px-6 py-4 text-center">
+                                    {reward.allowed_branches.length === 1 ? (
+                                        <>
+                                            {reward.allowed_branches[0]}
+                                        </>
+                                    ) : (
+                                        <>
+                                            {reward.allowed_branches.slice(0, -1).join(", ")}
+                                            {", and "} 
+                                            {reward.allowed_branches.slice(-1)}
+                                        </>
+                                    )}
+                                </td>
                                 <td className="px-6 py-4 text-center">
                                     {new Date(
                                         reward.expiry

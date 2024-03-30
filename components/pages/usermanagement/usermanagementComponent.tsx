@@ -28,6 +28,8 @@ export default function UserManagementComp() {
     let [selectedUserType, setSelectedUserType] = useState('');
     const [pickedUserType, setPickedUserType] = useState<string | null>(null)
     const [pickedBranch, setPickedBranch] = useState<string | null>(null)
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [passwordError, setPasswordError] = useState('');
 
     function closeModal() {
         setIsOpen(false)
@@ -99,6 +101,11 @@ export default function UserManagementComp() {
     }
 
     function handleAddUser() {
+        if (addUserData.password !== confirmPassword) {
+            setPasswordError('Passwords do not match');
+            return;
+        }
+        
         // Prepare data for the POST request
         const postData = {
             first_name: addUserData.first_name,
@@ -146,14 +153,15 @@ export default function UserManagementComp() {
                     <h1 className="w-full px-10 text-4xl font-bold text-center">{brandData.data.brand_name}</h1>
                 )}
                 <div className='w-1/3 flex flex-row gap-4'>
-                    <button className='outlined-button w-full flex items-center justify-between tracking-wider active:border-white duration-300 active:text-white'>sort:branch</button>
-                    <button className='outlined-button w-full flex items-center justify-between tracking-wider active:border-white duration-300 active:text-white'>sort:type</button>
+                    {/* <button className='outlined-button w-full flex items-center justify-between tracking-wider active:border-white duration-300 active:text-white'>sort:branch</button>
+                    <button className='outlined-button w-full flex items-center justify-between tracking-wider active:border-white duration-300 active:text-white'>sort:type</button> */}
                 </div>
                 <div className='w-full px-64'>
                     {usersData.length > 0 ? (
                         usersData.map((user) => (
                             <UserCard
                                 key={user._id}
+                                id={user._id.toString()}
                                 first_name={user.first_name}
                                 last_name={user.last_name}
                                 user_type={user.user_type}
@@ -253,6 +261,17 @@ export default function UserManagementComp() {
                                                 value={addUserData.password}
                                                 onChange={handleChange}
                                             />
+                                        </div>
+
+                                        <div className='mt-4 justify-center items-center text-center'>
+                                            <input 
+                                                type="password" 
+                                                className='w-full input-style' 
+                                                placeholder='Confirm Password'
+                                                value={confirmPassword}
+                                                onChange={(e) => setConfirmPassword(e.target.value)}
+                                            />
+                                            {passwordError && <p className="text-red-500 text-xs mt-3">{passwordError}</p>}
                                         </div>
 
                                         <div className='mt-4 justify-center items-center text-center'>
