@@ -6,6 +6,7 @@ import { CgRemove, CgAdd } from "react-icons/cg"
 import { IoSearch } from "react-icons/io5"
 import { bool } from "prop-types"
 import { UploadButton } from "@uploadthing/react"
+import { OurFileRouter } from "@/app/api/uploadthing/core"
 
 
 interface Reward {
@@ -1232,7 +1233,7 @@ export default function ViewRewardsComp() {
                                                     {/* IMAGE UPLOAD */}
                                                     <div className="w-full justify-center items-center text-center">
                                                     <div className="text-white bg-fuchsia-950		" >
-                                                        <UploadButton 
+                                                    <UploadButton<OurFileRouter, "imageUploader">
                                                         endpoint="imageUploader"
                                                         onClientUploadComplete={(res) => {
                                                             // Do something with the response
@@ -1245,7 +1246,8 @@ export default function ViewRewardsComp() {
                                                         onUploadError={(error: Error) => {
                                                             // Do something with the error.
                                                             alert(`ERROR! ${error.message}`);
-                                                        }}/>
+                                                        }}
+                                                        />
                                                     </div>
                                                     </div>
 

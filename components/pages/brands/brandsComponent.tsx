@@ -5,6 +5,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { FaTags } from 'react-icons/fa'
 import { UploadButton } from "@uploadthing/react"
+import { OurFileRouter } from "@/app/api/uploadthing/core"
 
 interface Brand {
     _id: string;
@@ -233,20 +234,21 @@ export default function BrandComp({id, userType} : BrandCompProps) {
 
                                     <div className='mt-5 justify-center items-center text-center'>
                                         <div className="text-white bg-fuchsia-950		" >
-                                            <UploadButton 
-                                            endpoint="imageUploader"
-                                            onClientUploadComplete={(res) => {
-                                                // Do something with the response
-                                                console.log("Files: ", res);
-                                                console.log(res[0].url)
-                                                setImageUrl(res[0].url)
-                                                setUrlChanged(true)
-                                                alert("Image Uploaded!")
-                                            }}
-                                            onUploadError={(error: Error) => {
-                                                // Do something with the error.
-                                                alert(`ERROR! ${error.message}`);
-                                            }}/>
+                                        <UploadButton<OurFileRouter, "imageUploader">
+                                        endpoint="imageUploader"
+                                        onClientUploadComplete={(res) => {
+                                            // Do something with the response
+                                            console.log("Files: ", res);
+                                            console.log(res[0].url)
+                                            setImageUrl(res[0].url)
+                                            setUrlChanged(true)
+                                            alert("Image Uploaded!")
+                                        }}
+                                        onUploadError={(error: Error) => {
+                                            // Do something with the error.
+                                            alert(`ERROR! ${error.message}`);
+                                        }}
+                                        />
                                         </div>
                                     </div>
 
