@@ -84,7 +84,7 @@ export const ClientBrandProfile = ({
                     <div className="w-full flex flex-col gap-6">
                         <div className="w-full h-32">
                             <img
-                                src="/lv.png"
+                                src={brand.img_url}
                                 alt=""
                                 className="w-full h-full object-cover brightness-50"
                             />
@@ -94,7 +94,7 @@ export const ClientBrandProfile = ({
                                 <p className="text-2xl font-bold">
                                     {brand.brand_name}
                                 </p>
-                                <p>{brand.total_fcount} subscribers</p>
+                                <p>{brand.total_fcount} Followers</p>
                             </div>
                             <div className="w-full">
                                 {isSubscribed === false ? (

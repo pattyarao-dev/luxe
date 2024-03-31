@@ -15,13 +15,15 @@ interface RewardCardProps {
     reward_name: string
     brand_name: string
     userId: ObjectId
+    img_url: string
 }
 
 export const RewardCard: React.FC<RewardCardProps> = ({
     id,
     reward_name,
     brand_name,
-    userId
+    userId,
+    img_url
 }) => {
     const saveReward = async (rewardId: ObjectId) => {
         // Call your API endpoint to save the reward
@@ -48,7 +50,7 @@ export const RewardCard: React.FC<RewardCardProps> = ({
             <div className="reward-card">
                 <div className="w-full h-2/3 rounded-t-md flex justify-center">
                     <Image
-                        src="/reward-stockimage.jpg"
+                        src={img_url}
                         width={300}
                         height={300}
                         alt="reward image"

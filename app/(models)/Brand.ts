@@ -34,7 +34,8 @@ const brandSchema = new Schema({
         },
         branch_status: { type: Boolean, default: true }
     }],
-    status: { type: Boolean, default: true }
+    status: { type: Boolean, default: true },
+    img_url: { type: String, default: "https://utfs.io/f/5ad07e90-45cd-4b15-a8f8-bd25943e70f5-9r1sm9.jpg" }
 });
 
 // Index the location field for geospatial queries

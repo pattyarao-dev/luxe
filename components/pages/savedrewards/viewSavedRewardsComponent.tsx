@@ -58,6 +58,7 @@ export const UserSavedRewards = ({ userId }: { userId: ObjectId }) => {
                                 reward_name={reward.reward_name}
                                 brand_name={reward.brand_name}
                                 userId={userId}
+                                img_url={reward.img_url}
                             />
                         </div>
                     </Link>

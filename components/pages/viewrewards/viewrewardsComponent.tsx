@@ -5,6 +5,9 @@ import { Menu, Dialog, Transition, Switch } from "@headlessui/react"
 import { CgRemove, CgAdd } from "react-icons/cg"
 import { IoSearch } from "react-icons/io5"
 import { bool } from "prop-types"
+import { UploadButton } from "@uploadthing/react"
+import { OurFileRouter } from "@/app/api/uploadthing/core"
+
 
 interface Reward {
     _id: string
@@ -81,6 +84,10 @@ export default function ViewRewardsComp() {
     const [pickedClaimType, setPickedClaimType] = useState<string | null>(
         null
     )
+    const [urlChanged, setUrlChanged] = useState(false);
+    const [imageUrl, setImageUrl] = useState<string>("https://utfs.io/f/5ad07e90-45cd-4b15-a8f8-bd25943e70f5-9r1sm9.jpg")
+
+
 
     // API ROUTES
     useEffect(() => {
@@ -211,7 +218,8 @@ export default function ViewRewardsComp() {
             min_spent: addRewardData.min_spent,
             min_items: addRewardData.min_items,
             expiry: addRewardData.expiry,
-            reward_tags: rewardCheckedItems
+            reward_tags: rewardCheckedItems,
+            img_url: imageUrl
         }
         console.log(postData)
 
@@ -1222,6 +1230,36 @@ export default function ViewRewardsComp() {
                                                     id="section3"
                                                     className="w-full h-screen flex flex-col justify-start items-center pt-12 gap-4"
                                                 >
+                                                    {/* IMAGE UPLOAD */}
+                                                    <div className="w-full justify-center items-center text-center">
+                                                    <div className="text-white bg-fuchsia-950		" >
+                                                    <UploadButton<OurFileRouter, "imageUploader">
+                                                        endpoint="imageUploader"
+                                                        onClientUploadComplete={(res) => {
+                                                            // Do something with the response
+                                                            console.log("Files: ", res);
+                                                            console.log(res[0].url)
+                                                            setImageUrl(res[0].url)
+                                                            setUrlChanged(true)
+                                                            alert("Image Uploaded!")
+                                                        }}
+                                                        onUploadError={(error: Error) => {
+                                                            // Do something with the error.
+                                                            alert(`ERROR! ${error.message}`);
+                                                        }}
+                                                        />
+                                                    </div>
+                                                    </div>
+
+                                                    <div className="w-full justify-center items-center text-center">
+                                                        {urlChanged ? (
+                                                            <div>
+                                                                <p>Image Uploaded Successfully</p>
+                                                            </div>
+                                                        ) : null}
+                                                    </div>
+
+
                                                     {/* MINIMUM SPENT */}
                                                     <div className="w-full justify-center items-center text-center">
                                                         <input

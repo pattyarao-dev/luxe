@@ -39,7 +39,7 @@ export const ClientRewardPage = ({ reward }: { reward: RewardTypes }) => {
         <div className="w-full">
             <div className="w-full">
                 <Image
-                    src="/reward-stockimage.jpg"
+                    src={reward.img_url}
                     width={300}
                     height={300}
                     alt="stock image"

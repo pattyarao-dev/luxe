@@ -65,7 +65,7 @@ export const UserSubscriptions = ({ userId }: { userId: string }) => {
                     <div className="w-full h-[300px] flex flex-col items-center justify-start gap-2">
                         <div className="w-full h-1/2">
                             <Image
-                                src="/lv.png"
+                                src={brand.img_url}
                                 width={500}
                                 height={500}
                                 alt="brand image"

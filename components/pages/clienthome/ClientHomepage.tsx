@@ -120,6 +120,7 @@ export const ClientHomepage = ({ user }: { user: ObjectId }) => {
                                 id={reward._id}
                                 reward_name={reward.reward_name}
                                 brand_name={reward.brand_name}
+                                img_url={reward.img_url}
                                 userId={user}
                             />
                         </div>

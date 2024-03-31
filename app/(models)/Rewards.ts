@@ -56,7 +56,8 @@ const RewardDateSchema = new Schema({
     claim_buckets: [{ type: Schema.Types.ObjectId, ref: "Claim" }],
     claim_count: { type: Number, default: 0 },
     sales_total: { type: Number, default: 0 },
-    sales_count: { type: Number, default: 0 }
+    sales_count: { type: Number, default: 0 },
+    img_url: { type: String, default: "https://utfs.io/f/5ad07e90-45cd-4b15-a8f8-bd25943e70f5-9r1sm9.jpg" }
 })
 
 export default mongoose.models.Reward ||

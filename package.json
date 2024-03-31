@@ -5,6 +5,7 @@
   "main": "postcss.config.js",
   "dependencies": {
     "@headlessui/react": "^1.7.18",
+    "@uploadthing/react": "^6.4.1",
     "abbrev": "^1.1.1",
     "acorn": "^8.11.3",
     "acorn-jsx": "^5.3.2",
@@ -346,6 +347,7 @@
     "undici-types": "^5.26.5",
     "universal-cookie": "^7.0.2",
     "update-browserslist-db": "^1.0.13",
+    "uploadthing": "^6.7.0",
     "uri-js": "^4.4.1",
     "util-deprecate": "^1.0.2",
     "webidl-conversions": "^7.0.0",
