@@ -121,11 +121,13 @@ export async function POST(req: NextRequest) {
             // Sort By Descending Order
             const sortedBrandsData = output.sort((a, b) => b.claims - a.claims)
 
+            const topFiveBrands = sortedBrandsData.slice(0, 5);
+
             // Format as Horizontal Bar (Chart.js) format
-            const labels: string[] = sortedBrandsData.map(
+            const labels: string[] = topFiveBrands.map(
                 (brand) => brand.brand_name
             )
-            const claims: number[] = sortedBrandsData.map(
+            const claims: number[] = topFiveBrands.map(
                 (brand) => brand.claims
             )
 
@@ -240,11 +242,13 @@ export async function POST(req: NextRequest) {
                 )
             }
 
+            const topFiveBranch = sortedBrandsData.slice(0, 5);
+
             // Format as Horizontal Bar (Chart.js) format
-            const labels: string[] = sortedBrandsData.map(
+            const labels: string[] = topFiveBranch.map(
                 (brand) => brand.branch_name
             )
-            const claims: number[] = sortedBrandsData.map(
+            const claims: number[] = topFiveBranch.map(
                 (brand) => brand.claims
             )
 

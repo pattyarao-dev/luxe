@@ -139,9 +139,21 @@ export async function POST(req: NextRequest) {
                 })
             )
 
-            const labels = output.map((item) => item.brand_name)
-            const discountClaims = output.map((item) => item.discount_claims)
-            const freebiesClaims = output.map((item) => item.freebies_claims)
+            output.sort((a, b) => {
+                // Calculate the total count for each object
+                const totalCountA = a.discount_claims + a.freebies_claims;
+                const totalCountB = b.discount_claims + b.freebies_claims;
+            
+                // Sort in descending order based on the total count
+                return totalCountB - totalCountA;
+            });
+
+            const topFiveBrands = output.slice(0, 5);
+
+            const labels = topFiveBrands.map((item) => item.brand_name)
+            const discountClaims = topFiveBrands.map((item) => item.discount_claims)
+            const freebiesClaims = topFiveBrands.map((item) => item.freebies_claims)
+
 
             return Response.json({ labels, discountClaims, freebiesClaims })
         }
@@ -254,15 +266,23 @@ export async function POST(req: NextRequest) {
                 )
             }
 
-            const labels = output.map((item) => item.branch_name)
-            const discountClaims = output.map((item) => item.discount_claims)
-            const freebiesClaims = output.map((item) => item.freebies_claims)
+            output.sort((a, b) => {
+                // Calculate the total count for each object
+                const totalCountA = a.discount_claims + a.freebies_claims;
+                const totalCountB = b.discount_claims + b.freebies_claims;
+            
+                // Sort in descending order based on the total count
+                return totalCountB - totalCountA;
+            });
 
-            return Response.json({
-                labels,
-                discountClaims,
-                freebiesClaims
-            })
+            const topFiveBranch = output.slice(0, 5);
+
+            const labels = topFiveBranch.map((item) => item.branch_name)
+            const discountClaims = topFiveBranch.map((item) => item.discount_claims)
+            const freebiesClaims = topFiveBranch.map((item) => item.freebies_claims)
+
+
+            return Response.json({ labels, discountClaims, freebiesClaims })
         }
 
         // let brand_data = await Brand.findById(brand_id);

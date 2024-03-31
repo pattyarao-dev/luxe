@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useSearchParams } from 'next/navigation'
 import BranchCard from '@/components/reusable/branchCard'
 import {Menu, Dialog, Transition} from '@headlessui/react'
+import SubsLineChart from '../brands/subsLineChart';
 
 export default function BrandProfileComp() {
     const searchParams = useSearchParams();
@@ -223,6 +224,8 @@ export default function BrandProfileComp() {
                 <div className='w-full rounded-md items-center border-solid border-2 px-10 py-4 bg-white drop-shadow-md'>
                     <h1 className='text-center pt-6 text-3xl font-medium'>Subscriber Count</h1>
                     <h2 className='text-center text-4xl font-bold'>{data.total_fcount}</h2>
+
+                        <SubsLineChart brand_id={id} />
                 </div>
             </div>
     )

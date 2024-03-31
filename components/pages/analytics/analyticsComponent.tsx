@@ -152,9 +152,9 @@ const AnalyticsComp: React.FC<TokenContent> = ({ _id, user_type }) => {
                     </div>
                 </div>
                 <div className="h-full rounded-xl border-solid border-2 p-5 bg-white drop-shadow-md">
-                    <h1 className="text-xl font-semibold">Total Claims by Reward Type</h1>
-                    <div className="p-4  h-full w-full">
-                        <StackedBarChart
+                <h1 className="text-xl font-semibold">Top 5 Brands with the Highest Claims</h1>
+                    <div className="p-4 h-full w-full">
+                        <HorizBarChart
                             _id={_id}
                             user_type={user_type}
                             brand={brand}
@@ -166,9 +166,10 @@ const AnalyticsComp: React.FC<TokenContent> = ({ _id, user_type }) => {
                     
                 </div>
                 <div className="h-full rounded-xl border-solid border-2 p-5 bg-white drop-shadow-md">
-                    <h1 className="text-xl font-semibold">Total Claims by Brand</h1>
-                    <div className="p-4 h-full w-full">
-                        <HorizBarChart
+
+                    <h1 className="text-xl font-semibold">Top 5 Brands with the Highest Claims by Reward Type</h1>
+                    <div className="p-4  h-full w-full">
+                        <StackedBarChart
                             _id={_id}
                             user_type={user_type}
                             brand={brand}
