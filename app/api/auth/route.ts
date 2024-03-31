@@ -39,6 +39,8 @@ export async function POST(req: NextRequest, res: NextResponse) {
 
         const response = {
           message: "Authenticated!",
+          _id: user._id, 
+          user_type: user.user_type
         };
       
         return new Response(JSON.stringify(response), {

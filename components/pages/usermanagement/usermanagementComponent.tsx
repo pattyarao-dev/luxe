@@ -132,6 +132,7 @@ export default function UserManagementComp() {
             if (response.ok) {
                 // Brand added successfully, close the modal or perform any other actions
                 closeModal();
+                window.location.reload()
             } else {
                 // Handle errors if any
                 console.error('Failed to add user:', response.statusText);
@@ -141,7 +142,7 @@ export default function UserManagementComp() {
             console.error('Error while adding user:', error);
         });
 
-        window.location.reload()
+        
     }
 
     const { data } = brandData || {};

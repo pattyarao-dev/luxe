@@ -2,6 +2,7 @@ import { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import Brand from "@/app/(models)/Brand";
 import User from "@/app/(models)/User";
+import { TagsHelper } from "@/app/(services)/tags_helper";
 
 export async function PATCH(req: NextRequest, res: NextResponse) {
   const brand_id = req.nextUrl.searchParams.get('brand') as string
@@ -104,6 +105,8 @@ export async function PATCH(req: NextRequest, res: NextResponse) {
                     $push: {fcount_audit: {fcount: updated_fcount}}
                 }
             );
+
+            TagsHelper(client_id, brand_id, "BRAND")
 
             return NextResponse.json({
                 status: 200,
