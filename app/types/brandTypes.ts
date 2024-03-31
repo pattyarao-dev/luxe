@@ -26,5 +26,5 @@ export interface BrandTypes {
     is_full: boolean
     branches: BranchTypes[]
     status: boolean
-
+    img_url: string
 }

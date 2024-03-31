@@ -4,12 +4,21 @@ import {Menu, Dialog, Transition} from '@headlessui/react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { FaTags } from 'react-icons/fa'
+import { UploadButton } from "@uploadthing/react"
 
 interface Brand {
     _id: string;
     brand_name: string;
     brand_desc: string;
+    img_url: string;
 }
+
+interface PostData {
+    brand_name: string;
+    brand_desc: string;
+    brand_tags: string[];
+    img_url?: string; // Make img_url optional using '?'
+  }
 
 interface BrandCompProps {
     id: string,
@@ -20,9 +29,11 @@ export default function BrandComp({id, userType} : BrandCompProps) {
     console.log(id)
     console.log(userType)
     let [isOpen, setIsOpen] = useState(false);
+    const [urlChanged, setUrlChanged] = useState(false);
     const [checkedItems, setCheckedItems] = useState<string[]>([]);
     const [brands, setBrands] = useState<Brand[]>([]);
     const [tags, setTags] = useState<string[]>([]);
+    const [imageUrl, setImageUrl] = useState<string>("https://utfs.io/f/5ad07e90-45cd-4b15-a8f8-bd25943e70f5-9r1sm9.jpg")
 
     useEffect(() => {
         async function fetchBrands() {
@@ -99,11 +110,14 @@ export default function BrandComp({id, userType} : BrandCompProps) {
 
     function handleAddBrand() {
         // Prepare data for the POST request
-        const postData = {
+
+        let postData: PostData = {
             brand_name: brandData.brand_name,
             brand_desc: brandData.brand_desc,
             brand_tags: checkedItems,
-        };
+            img_url: imageUrl
+          };
+          
 
         console.log(postData)
     
@@ -119,6 +133,7 @@ export default function BrandComp({id, userType} : BrandCompProps) {
             if (response.ok) {
                 // Brand added successfully, close the modal or perform any other actions
                 closeModal();
+                window.location.reload()
             } else {
                 // Handle errors if any
                 console.error('Failed to add brand:', response.statusText);
@@ -128,7 +143,7 @@ export default function BrandComp({id, userType} : BrandCompProps) {
             console.error('Error while adding brand:', error);
         });
 
-        window.location.reload()
+
     }
 
     return (
@@ -138,7 +153,7 @@ export default function BrandComp({id, userType} : BrandCompProps) {
                 {brands.map((brand, index) => (
                     <div key={index} className="w-96 rounded overflow-hidden shadow-lg">
                         <Link href={`/brandprofile?id=${brand._id}&userType=${userType}`} passHref>
-                            <Image className="w-full" width={500} height={500} src="/lv.png" alt="Sunset in the mountains"></Image>
+                            <Image className="w-full" width={500} height={500} src={brand.img_url} priority={true} alt="Sunset in the mountains"></Image>
                             <div className="px-6 py-4">
                                 <div className="font-bold text-xl mb-2">{brand.brand_name}</div>
                                 <p className="text-gray-700 text-base">{brand.brand_desc}</p>
@@ -215,6 +230,34 @@ export default function BrandComp({id, userType} : BrandCompProps) {
                                             onChange={handleChange}
                                         />
                                     </div>
+
+                                    <div className='mt-5 justify-center items-center text-center'>
+                                        <div className="text-white bg-fuchsia-950		" >
+                                            <UploadButton 
+                                            endpoint="imageUploader"
+                                            onClientUploadComplete={(res) => {
+                                                // Do something with the response
+                                                console.log("Files: ", res);
+                                                console.log(res[0].url)
+                                                setImageUrl(res[0].url)
+                                                setUrlChanged(true)
+                                                alert("Image Uploaded!")
+                                            }}
+                                            onUploadError={(error: Error) => {
+                                                // Do something with the error.
+                                                alert(`ERROR! ${error.message}`);
+                                            }}/>
+                                        </div>
+                                    </div>
+
+                                    <div className='mt-5 justify-center items-center text-center'>
+                                        {urlChanged ? (
+                                        <div>
+                                            <p>Image Uploaded Successfully</p>
+                                        </div>
+                                    ) : null}
+                                    </div>
+
 
                                     <div className='mt-5 justify-center items-center text-center'>
                                         <Menu as="div" className="w-full relative inline-block text-left">
