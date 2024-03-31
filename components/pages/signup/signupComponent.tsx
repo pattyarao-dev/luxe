@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react"
 import PreferencesComponent from "../preferences/preferencesComponent"
 import { UserTypes } from "@/app/types/userTypes"
+import { useRouter } from "next/navigation"
 
 interface ClientUserTypes {
     first_name: string
@@ -28,6 +29,7 @@ interface MerchantUserTypes {
 export default function SignupComp() {
     const [users, setUsers] = useState<string[]>(["CLIENT", "ADMIN_ALL"])
     const [selectedUser, setSelectedUser] = useState<string>("")
+    const { push } = useRouter()
 
     // const [firstname, setFirstName] = useState<string>("")
     // const [lastName, setLastName] = useState<string>("")
@@ -153,6 +155,7 @@ export default function SignupComp() {
             if (response.ok) {
                 // Brand added successfully, close the modal or perform any other actions
                 setSignupMessage("Account created!")
+                push("/login")
             } else {
                 // Handle errors if any
                 console.error("Failed to add user:", response.statusText)
@@ -185,6 +188,7 @@ export default function SignupComp() {
             if (response.ok) {
                 // Brand added successfully, close the modal or perform any other actions
                 setSignupMessage("Account created!")
+                push("/login")
             } else {
                 // Handle errors if any
                 console.error("Failed to add user:", response.statusText)
@@ -281,7 +285,7 @@ export default function SignupComp() {
                     </div>
                     <button
                         onClick={() => scrollToSection(selectedUser)}
-                        className="w-2/3 text-left text-neutral-500 uppercase"
+                        className="w-fit text-left text-neutral-500 uppercase cursor-pointer transition-all ease-in-out duration-100 hover:text-dark-pink active:text-dark-pink hover:scale-105"
                     >
                         next
                     </button>
@@ -377,46 +381,49 @@ export default function SignupComp() {
                                 )}
                             </div>
                         </div>
-                        <p
-                            className="w-2/3 text-left text-neutral-500 uppercase"
-                            onClick={() =>
-                                scrollToSection("client__preferences__section")
-                            }
-                        >
-                            next
-                        </p>
+                        <div className="w-2/3 ">
+                            <p
+                                className="w-fit text-left text-neutral-500 uppercase cursor-pointer transition-all ease-in-out duration-100 hover:text-dark-pink active:text-dark-pink hover:scale-105"
+                                onClick={() =>
+                                    scrollToSection(
+                                        "client__preferences__section"
+                                    )
+                                }
+                            >
+                                next
+                            </p>
+                        </div>
                     </section>
                     <section
                         id="client__preferences__section"
-                        className="w-full h-screen p-4 flex flex-col justify-evenly items-center lg:gap-8"
+                        className="w-full h-screen p-4 flex flex-col justify-center items-center gap-8 lg:gap-16"
                     >
-                        <div>
-                            <div className="w-full p-4 flex flex-col justify-center items-center gap-6">
-                                <p className="text-sm">
-                                    Please set your preferences so we customize
-                                    your feed to your liking.
-                                </p>
-                            </div>
-                            <div className="w-full lg:w-2/5 p-4 flex flex-wrap justify-between items-center gap-6">
-                                {preferences.map((preference, index) => (
-                                    <button
-                                        key={index}
-                                        className={`w-fit flex-grow text-center py-2 px-6 rounded-3xl transition ease-in-out duration-200 ${
-                                            addUserData.preference_tags.includes(
-                                                preference
-                                            )
-                                                ? "bg-dark-pink text-white"
-                                                : "bg-white"
-                                        }`}
-                                        onClick={() =>
-                                            handlePreferenceClick(preference)
-                                        }
-                                    >
-                                        {preference}
-                                    </button>
-                                ))}
-                            </div>
+                        <div className="w-full px-4 flex flex-col justify-center items-center gap-6">
+                            <p className="text-sm">
+                                Please set your preferences so we customize your
+                                feed to your liking.
+                            </p>
                         </div>
+                        <div className="w-full lg:w-2/3 p-4 flex flex-wrap justify-between items-center gap-6">
+                            {preferences.map((preference, index) => (
+                                <button
+                                    key={index}
+                                    className={`w-fit flex-grow text-center py-2 px-6 rounded-3xl transition ease-in-out duration-200 ${
+                                        addUserData.preference_tags.includes(
+                                            preference
+                                        )
+                                            ? "bg-dark-pink text-white"
+                                            : "bg-white"
+                                    }`}
+                                    onClick={() =>
+                                        handlePreferenceClick(preference)
+                                    }
+                                >
+                                    {preference}
+                                </button>
+                            ))}
+                        </div>
+
                         <button
                             className="w-fit px-6 py-2 bg-dark-pink text-white rounded-md"
                             onClick={handleAddUser}

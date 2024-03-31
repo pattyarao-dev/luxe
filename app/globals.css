@@ -184,3 +184,29 @@
     word-wrap: break-word;
     margin-bottom: 5px;
 } */
+
+.loader {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+}
+
+.loader::after {
+    content: "";
+    width: 45px;
+    height: 45px;
+    border: 8px solid #d6e0f0;
+    border-top-color: grey;
+    border-radius: 50%;
+    animation: loading 0.75s ease infinite;
+}
+
+@keyframes loading {
+    from {
+        transform: rotate(0turn);
+    }
+    to {
+        transform: rotate(1turn);
+    }
+}

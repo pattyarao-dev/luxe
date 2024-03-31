@@ -7,6 +7,7 @@ import { RewardTypes } from "@/app/types/rewardTypes"
 import { ObjectId } from "mongoose"
 import { RewardCard } from "../clienthome/RewardCard"
 import Link from "next/link"
+import { LoadingComponent } from "@/components/reusable/LoadingComponent"
 
 export const ClientBrandProfile = ({
     brandId,
@@ -161,7 +162,10 @@ export const ClientBrandProfile = ({
                                     </div>
                                 ))
                             ) : (
-                                <p>Loading rewards</p>
+                                <div className="w-full p-6 flex flex-col items-center">
+                                    <LoadingComponent />
+                                    <p>Loading Rewards</p>
+                                </div>
                             )}
                         </div>
                     ) : (
