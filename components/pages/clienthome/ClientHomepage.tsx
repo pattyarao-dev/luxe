@@ -124,7 +124,7 @@ export const ClientHomepage = ({ user }: { user: ObjectId }) => {
                     </button>
                 </div>
             </div>
-            <p className="w-full px-4 text-neutral-400 text-xs">
+            <p className="w-full px-4 py-2 text-neutral-400 text-xs">
                 Showing results for "{searchTerm}"
             </p>
             {showRewards === "ALL REWARDS" ? (
