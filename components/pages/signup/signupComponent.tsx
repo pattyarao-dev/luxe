@@ -254,6 +254,11 @@ export default function SignupComp() {
                                     user_type: "CLIENT"
                                 }))
                             }}
+                            className={`font-bold uppercase text-2xl ${
+                                selectedUser === "CLIENT"
+                                    ? "text-dark-pink"
+                                    : "text-neutral-400"
+                            }`}
                         >
                             Buyer
                         </button>
@@ -265,6 +270,11 @@ export default function SignupComp() {
                                     user_type: "ADMIN_ALL"
                                 }))
                             }}
+                            className={`font-bold uppercase text-2xl ${
+                                selectedUser === "ADMIN_ALL"
+                                    ? "text-dark-pink"
+                                    : "text-neutral-400"
+                            }`}
                         >
                             Merchant
                         </button>
@@ -408,7 +418,7 @@ export default function SignupComp() {
                             </div>
                         </div>
                         <button
-                            className="bg-dark-pink text-white"
+                            className="w-fit px-6 py-2 bg-dark-pink text-white rounded-md"
                             onClick={handleAddUser}
                         >
                             Create Account
@@ -531,7 +541,7 @@ export default function SignupComp() {
                             </div>
                         </div>
                         <button
-                            className="bg-dark-pink text-white"
+                            className="w-fit px-6 py-2 bg-dark-pink text-white rounded-md"
                             onClick={handleAddMerchant}
                         >
                             Create Account
