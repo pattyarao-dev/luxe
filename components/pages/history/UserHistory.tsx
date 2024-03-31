@@ -1,12 +1,12 @@
 "use client"
 
-import { RewardTypes } from '@/app/types/rewardTypes'
-import { ObjectId } from 'mongoose'
-import React, {useState, useEffect} from 'react'
-import { RewardCard } from '../clienthome/RewardCard'
+import { RewardTypes } from "@/app/types/rewardTypes"
+import { ObjectId } from "mongoose"
+import React, { useState, useEffect } from "react"
+import { RewardCard } from "../clienthome/RewardCard"
+import { LoadingComponent } from "@/components/reusable/LoadingComponent"
 
-export const UserHistory = ({user}: {user: ObjectId}) => {
-
+export const UserHistory = ({ user }: { user: ObjectId }) => {
     const [claimedRewards, setClaimedRewards] = useState<RewardTypes[]>([])
     useEffect(() => {
         const fetchClaimedRewards = async () => {
@@ -24,20 +24,26 @@ export const UserHistory = ({user}: {user: ObjectId}) => {
         fetchClaimedRewards()
     }, [])
 
-
-
-  return (
-    <div className="w-full h-[70vh] overflow-y-auto flex flex-col gap-4">
-        
-         {claimedRewards.map((reward) => (
-         <RewardCard
+    return (
+        <>
+            {claimedRewards ? (
+                <div className="w-full h-[70vh] overflow-y-auto flex flex-col gap-4">
+                    {claimedRewards.map((reward) => (
+                        <RewardCard
                             id={reward._id}
                             reward_name={reward.reward_name}
                             brand_name={reward.brand_name}
                             userId={user}
                             img_url={reward.img_url}
                         />
-    ))}
-    </div>
-  )
+                    ))}
+                </div>
+            ) : (
+                <div>
+                    <LoadingComponent />
+                    <p>Loading</p>
+                </div>
+            )}
+        </>
+    )
 }

@@ -21,9 +21,7 @@ export const ClientHomepage = ({ user }: { user: ObjectId }) => {
             reward.reward_name
                 .toLowerCase()
                 .includes(searchTerm.toLowerCase()) ||
-            reward.brand_name.toLowerCase()
-        //     .includes(searchTerm.toLowerCase()) ||
-        // (selectedBrand && reward.brand_name === selectedBrand)
+            reward.brand_name.toLowerCase().includes(searchTerm.toLowerCase())
     )
 
     useEffect(() => {
@@ -112,23 +110,19 @@ export const ClientHomepage = ({ user }: { user: ObjectId }) => {
                 </div>
             </div>
 
-            {filteredRewards ? (
-                <div className="w-full h-[70vh] overflow-y-auto p-4 flex flex-col gap-3">
-                    {filteredRewards.map((reward, index) => (
-                        <div key={index} className="w-full h-full">
-                            <RewardCard
-                                id={reward._id}
-                                reward_name={reward.reward_name}
-                                brand_name={reward.brand_name}
-                                img_url={reward.img_url}
-                                userId={user}
-                            />
-                        </div>
-                    ))}
-                </div>
-            ) : (
-                <p>Loading rewards</p>
-            )}
+            <div className="w-full h-[70vh] overflow-y-auto p-4 flex flex-col gap-3">
+                {filteredRewards.map((reward, index) => (
+                    <div key={index} className="w-full h-full">
+                        <RewardCard
+                            id={reward._id}
+                            reward_name={reward.reward_name}
+                            brand_name={reward.brand_name}
+                            img_url={reward.img_url}
+                            userId={user}
+                        />
+                    </div>
+                ))}
+            </div>
         </div>
     )
 }
