@@ -28,6 +28,14 @@ export const ClientHomepage = ({ user }: { user: ObjectId }) => {
             reward.brand_name.toLowerCase().includes(searchTerm.toLowerCase())
     )
 
+    const filteredRecommendedRewards = recommendedRewards.filter(
+        (reward) =>
+            reward.reward_name
+                .toLowerCase()
+                .includes(searchTerm.toLowerCase()) ||
+            reward.brand_name.toLowerCase().includes(searchTerm.toLowerCase())
+    )
+
     useEffect(() => {
         const fetchUnclaimedRewards = async () => {
             try {
@@ -116,7 +124,9 @@ export const ClientHomepage = ({ user }: { user: ObjectId }) => {
                     </button>
                 </div>
             </div>
-
+            <p className="w-full px-4 text-neutral-400 text-xs">
+                Showing results for "{searchTerm}"
+            </p>
             {showRewards === "ALL REWARDS" ? (
                 <div className="w-full h-[65vh] overflow-y-auto p-4 flex flex-col gap-3">
                     {filteredRewards.map((reward, index) => (
@@ -133,7 +143,7 @@ export const ClientHomepage = ({ user }: { user: ObjectId }) => {
                 </div>
             ) : (
                 <div className="w-full h-[65vh] overflow-y-auto p-4 flex flex-col gap-3">
-                    {recommendedRewards.map((reward, index) => (
+                    {filteredRecommendedRewards.map((reward, index) => (
                         <div key={index} className="w-full h-full">
                             <RewardCard
                                 id={reward._id}
