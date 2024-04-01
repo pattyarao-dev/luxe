@@ -26,7 +26,7 @@ export const UserHistory = ({ user }: { user: ObjectId }) => {
 
     return (
         <>
-            {claimedRewards ? (
+            {claimedRewards.length > 0 ? (
                 <div className="w-full h-[70vh] overflow-y-auto flex flex-col gap-4">
                     {claimedRewards.map((reward) => (
                         <RewardCard
@@ -40,8 +40,7 @@ export const UserHistory = ({ user }: { user: ObjectId }) => {
                 </div>
             ) : (
                 <div>
-                    <LoadingComponent />
-                    <p>Loading</p>
+                    <p>You have not claimed any rewards yet</p>
                 </div>
             )}
         </>

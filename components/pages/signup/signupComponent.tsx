@@ -224,6 +224,12 @@ export default function SignupComp() {
                 >
                     Start
                 </button>
+                <p>
+                    Already have an account?{" "}
+                    <span className="text-dark-pink font-semibold">
+                        Sign in!
+                    </span>
+                </p>
             </section>
             <section
                 id="choose__user"
@@ -404,11 +410,11 @@ export default function SignupComp() {
                                 feed to your liking.
                             </p>
                         </div>
-                        <div className="w-full lg:w-2/3 p-4 flex flex-wrap justify-between items-center gap-6">
+                        <div className="w-full lg:w-2/3 py-2 flex flex-wrap justify-between items-center gap-6">
                             {preferences.map((preference, index) => (
                                 <button
                                     key={index}
-                                    className={`w-fit flex-grow text-center py-2 px-6 rounded-3xl transition ease-in-out duration-200 ${
+                                    className={`w-fit flex-grow text-center py-2 px-4 rounded-3xl transition ease-in-out duration-200 ${
                                         addUserData.preference_tags.includes(
                                             preference
                                         )
