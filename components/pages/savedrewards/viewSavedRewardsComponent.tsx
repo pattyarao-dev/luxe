@@ -7,6 +7,7 @@ import { RewardCard } from "../clienthome/RewardCard"
 import { ObjectId } from "mongoose"
 import Link from "next/link"
 import { IoSearch } from "react-icons/io5"
+import { LoadingComponent } from "@/components/reusable/LoadingComponent"
 
 export const UserSavedRewards = ({ userId }: { userId: ObjectId }) => {
     const [savedRewards, setSavedRewards] = useState<RewardTypes[]>([])
@@ -39,31 +40,40 @@ export const UserSavedRewards = ({ userId }: { userId: ObjectId }) => {
 
     return (
         <div className="w-full flex flex-col gap-6">
-            <div className="w-full flex items-center gap-2 border-2 p-3 rounded-lg border-dark-pink bg-white drop-shadow-lg">
-                <IoSearch className="text-dark-pink" />
-                <input
-                    type="text"
-                    className="appearance-none focus:outline-none grow text-sm"
-                    placeholder="Search a reward..."
-                    value={searchTerm}
-                    onChange={handleSearch}
-                />
-            </div>
-            <div className="w-full h-[69vh] overflow-y-auto flex flex-col gap-4">
-                {filteredRewards.map((reward, index) => (
-                    <Link href={`/reward/${reward._id}`}>
-                        <div key={index}>
-                            <RewardCard
-                                id={reward._id}
-                                reward_name={reward.reward_name}
-                                brand_name={reward.brand_name}
-                                userId={userId}
-                                img_url={reward.img_url}
-                            />
-                        </div>
-                    </Link>
-                ))}
-            </div>
+            {filteredRewards ? (
+                <>
+                    <div className="w-full flex items-center gap-2 border-2 p-3 rounded-lg border-dark-pink bg-white drop-shadow-lg">
+                        <IoSearch className="text-dark-pink" />
+                        <input
+                            type="text"
+                            className="appearance-none focus:outline-none grow text-sm"
+                            placeholder="Search a reward..."
+                            value={searchTerm}
+                            onChange={handleSearch}
+                        />
+                    </div>
+                    <div className="w-full h-[69vh] overflow-y-auto flex flex-col gap-4">
+                        {filteredRewards.map((reward, index) => (
+                            <Link href={`/reward/${reward._id}`}>
+                                <div key={index}>
+                                    <RewardCard
+                                        id={reward._id}
+                                        reward_name={reward.reward_name}
+                                        brand_name={reward.brand_name}
+                                        userId={userId}
+                                        img_url={reward.img_url}
+                                    />
+                                </div>
+                            </Link>
+                        ))}
+                    </div>
+                </>
+            ) : (
+                <div>
+                    <LoadingComponent />
+                    <p>Loading</p>
+                </div>
+            )}
         </div>
     )
 }

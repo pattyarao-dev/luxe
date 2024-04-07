@@ -23,7 +23,7 @@ export default async function Profile({
 }) {
     const user = await getUserProfile(params.id)
     return (
-        <main className="w-full min-h-screen">
+        <main className="w-full h-screen flex flex-col items-center justify-center gap-16 primary-background">
             {user && <ProfileDetails user={user} />}
         </main>
     )
