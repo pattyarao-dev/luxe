@@ -83,7 +83,7 @@ const SalesChart: React.FC<ChartParams> = ({
 
     return (
         <>
-            <h1 className="text-5xl font-bold">₱ {chartData?.sales.toFixed(2)}</h1>
+            <h1 className="text-5xl font-bold">₱ {chartData?.sales.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</h1>
         </>
     )
 }
