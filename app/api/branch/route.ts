@@ -24,6 +24,15 @@ export async function PATCH(req: NextRequest, res: NextResponse) {
         );
 
         console.log(response)
+        console.log("testtttttttttttttttttttttttttttt")
+        console.log("testtttttttttttttttttttttttttttt")
+        console.log("testtttttttttttttttttttttttttttt")
+        console.log("testtttttttttttttttttttttttttttt")
+        console.log("testtttttttttttttttttttttttttttt")
+        console.log("testtttttttttttttttttttttttttttt")
+        console.log("testtttttttttttttttttttttttttttt")
+        console.log("testtttttttttttttttttttttttttttt")
+        console.log("testtttttttttttttttttttttttttttt")
 
         return NextResponse.json({
             status: 200,
